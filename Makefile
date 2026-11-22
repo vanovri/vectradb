@@ -1,4 +1,5 @@
 SEEDS ?= 5000
+MIRI_TOOLCHAIN ?= nightly
 
 .PHONY: check test miri slt fuzz-oracle torture-spill tpch-bench wasm-studio verify-all
 
@@ -10,7 +11,7 @@ test:
 	cargo test --workspace --release
 
 miri:
-	cargo +nightly miri test -p vectra-types
+	cargo +$(MIRI_TOOLCHAIN) miri test -p vectra-types
 
 slt:
 	cargo test -p vectra-oracle --release --test slt_suite -- --nocapture
@@ -26,6 +27,7 @@ tpch-bench:
 
 wasm-studio:
 	cargo build --release -p vectra-wasm --target wasm32-unknown-unknown
+	wasm-bindgen target/wasm32-unknown-unknown/release/vectra_wasm.wasm --out-dir studio/src/wasm --target web
 	cd studio && npm run build && npm test
 
 verify-all: check test slt fuzz-oracle torture-spill tpch-bench wasm-studio

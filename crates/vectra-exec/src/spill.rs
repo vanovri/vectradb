@@ -50,13 +50,15 @@ impl SpillManager {
         plan_id: usize,
         metrics: Option<Arc<ExecutionMetrics>>,
     ) -> Result<SpillWriter> {
-        let id = self.next_id.fetch_add(1, Ordering::AcqRel);
+        let _id = self.next_id.fetch_add(1, Ordering::AcqRel);
         self.active_files.fetch_add(1, Ordering::AcqRel);
 
         #[cfg(not(target_arch = "wasm32"))]
         {
             let pid = std::process::id();
-            let path = self.dir.join(format!("vectra_{pid}_{plan_id}_{id}.vspill"));
+            let path = self
+                .dir
+                .join(format!("vectra_{pid}_{plan_id}_{_id}.vspill"));
             let file = std::fs::OpenOptions::new()
                 .create(true)
                 .truncate(true)

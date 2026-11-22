@@ -27,11 +27,8 @@ where
     }
 
     #[cfg(target_arch = "wasm32")]
-    let effective_threads = 1usize;
-    #[cfg(not(target_arch = "wasm32"))]
-    let effective_threads = threads.clamp(1, n);
-
-    if effective_threads <= 1 {
+    {
+        let _ = threads;
         let mut out = Vec::with_capacity(n);
         for (idx, item) in morsels.into_iter().enumerate() {
             if cancelled.load(Ordering::Relaxed) {
@@ -39,11 +36,22 @@ where
             }
             out.push(worker_fn(idx, item)?);
         }
-        return Ok(out);
+        Ok(out)
     }
 
     #[cfg(not(target_arch = "wasm32"))]
     {
+        let effective_threads = threads.clamp(1, n);
+        if effective_threads <= 1 {
+            let mut out = Vec::with_capacity(n);
+            for (idx, item) in morsels.into_iter().enumerate() {
+                if cancelled.load(Ordering::Relaxed) {
+                    return Err(VectraError::Cancelled);
+                }
+                out.push(worker_fn(idx, item)?);
+            }
+            return Ok(out);
+        }
         use crossbeam_deque::{Injector, Steal, Worker};
         use parking_lot::Mutex;
 

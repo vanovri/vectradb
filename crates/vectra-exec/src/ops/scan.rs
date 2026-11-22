@@ -5,9 +5,9 @@ use std::collections::VecDeque;
 use std::sync::Arc;
 use vectra_expr::{eval_expr, eval_filter, PhysicalExpr};
 use vectra_sql::TableFunctionKind;
-use vectra_storage::{
-    load_csv_chunks, read_parquet_bytes, CsvOptions, PruningPredicate, RowGroup, Table,
-};
+#[cfg(not(target_arch = "wasm32"))]
+use vectra_storage::{load_csv_chunks, read_parquet_bytes, CsvOptions};
+use vectra_storage::{PruningPredicate, RowGroup, Table};
 use vectra_types::{
     DataChunk, FlatVector, Result, ScalarValue, Schema, Vector, VectraError, VECTOR_CAPACITY,
 };

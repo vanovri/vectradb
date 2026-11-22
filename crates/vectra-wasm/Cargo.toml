@@ -1,0 +1,20 @@
+[package]
+name = "vectra-wasm"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+vectra-types = { path = "../vectra-types" }
+vectra-storage = { path = "../vectra-storage" }
+vectra-sql = { path = "../vectra-sql" }
+vectra-optimizer = { path = "../vectra-optimizer" }
+vectra-exec = { path = "../vectra-exec" }
+vectra-tpch = { path = "../vectra-tpch", default-features = false }
+wasm-bindgen = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }

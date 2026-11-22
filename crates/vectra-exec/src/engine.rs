@@ -9,14 +9,17 @@ use std::sync::atomic::AtomicBool;
 use std::sync::Arc;
 use vectra_expr::{cast_scalar, eval_expr_scalar_reference, PhysicalExpr};
 use vectra_optimizer::{OptimizedBundle, Optimizer, StatsCatalog};
+#[cfg(not(target_arch = "wasm32"))]
+use vectra_sql::CopyFormat;
 use vectra_sql::{
-    parse_sql, Binder, BoundCol, ColId, ColIdGen, CopyFormat, ExplainFormat, LogicalExpr,
-    LogicalPlan, LogicalStatement,
+    parse_sql, Binder, BoundCol, ColId, ColIdGen, ExplainFormat, LogicalExpr, LogicalPlan,
+    LogicalStatement,
 };
+#[cfg(not(target_arch = "wasm32"))]
 use vectra_storage::{
-    load_csv_chunks, read_parquet_bytes, write_parquet_bytes, Catalog, CsvOptions,
-    ParquetCompression, Snapshot,
+    load_csv_chunks, read_parquet_bytes, write_parquet_bytes, CsvOptions, ParquetCompression,
 };
+use vectra_storage::{Catalog, Snapshot};
 use vectra_types::{
     BoundedMemoryPool, DataChunk, Field, LogicalType, MemoryPool, Result, ScalarValue, Schema,
     VectraError, VECTOR_CAPACITY,
