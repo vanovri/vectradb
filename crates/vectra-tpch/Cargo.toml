@@ -1,0 +1,23 @@
+[package]
+name = "vectra-tpch"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+
+[features]
+default = ["oracle"]
+oracle = ["dep:vectra-oracle"]
+
+[dependencies]
+vectra-types = { path = "../vectra-types" }
+vectra-storage = { path = "../vectra-storage" }
+vectra-exec = { path = "../vectra-exec" }
+vectra-oracle = { path = "../vectra-oracle", optional = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+[[bin]]
+name = "vectra-tpch-bench"
+path = "src/bin/vectra-tpch-bench.rs"
+required-features = ["oracle"]

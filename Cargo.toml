@@ -8,6 +8,7 @@ members = [
     "crates/vectra-optimizer",
     "crates/vectra-exec",
     "crates/vectra-oracle",
+    "crates/vectra-tpch",
 ]
 
 [workspace.package]

@@ -1,0 +1,345 @@
+{
+  "scale_factor": 0.1,
+  "validate_sf": 0.01,
+  "validated_queries": 22,
+  "iterations": 3,
+  "threads": 8,
+  "load_ms": 5482.0486,
+  "summary": {
+    "scale_factor": 0.1,
+    "region_rows": 5,
+    "nation_rows": 25,
+    "supplier_rows": 1000,
+    "part_rows": 20000,
+    "partsupp_rows": 80000,
+    "customer_rows": 15000,
+    "orders_rows": 150000,
+    "lineitem_rows": 599273
+  },
+  "storage": [
+    {
+      "table": "region",
+      "rows": 5,
+      "uncompressed_bytes": 307,
+      "compressed_bytes": 354,
+      "ratio": 0.867231638418079
+    },
+    {
+      "table": "nation",
+      "rows": 25,
+      "uncompressed_bytes": 1429,
+      "compressed_bytes": 714,
+      "ratio": 2.0014005602240896
+    },
+    {
+      "table": "supplier",
+      "rows": 1000,
+      "uncompressed_bytes": 112985,
+      "compressed_bytes": 33158,
+      "ratio": 3.407473309608541
+    },
+    {
+      "table": "part",
+      "rows": 20000,
+      "uncompressed_bytes": 2750281,
+      "compressed_bytes": 472980,
+      "ratio": 5.814793437354645
+    },
+    {
+      "table": "partsupp",
+      "rows": 80000,
+      "uncompressed_bytes": 4427069,
+      "compressed_bytes": 1149106,
+      "ratio": 3.8526202108421677
+    },
+    {
+      "table": "customer",
+      "rows": 15000,
+      "uncompressed_bytes": 1807953,
+      "compressed_bytes": 489698,
+      "ratio": 3.691975462427864
+    },
+    {
+      "table": "orders",
+      "rows": 150000,
+      "uncompressed_bytes": 15724889,
+      "compressed_bytes": 2336955,
+      "ratio": 6.728794093168247
+    },
+    {
+      "table": "lineitem",
+      "rows": 599273,
+      "uncompressed_bytes": 93813424,
+      "compressed_bytes": 12554517,
+      "ratio": 7.472483728366452
+    }
+  ],
+  "queries": [
+    {
+      "query_id": 1,
+      "name": "Q01 Pricing Summary Report",
+      "rows_out": 4,
+      "min_ms": 1277.7722,
+      "median_ms": 1279.4407999999999,
+      "mean_ms": 1303.4279666666666,
+      "peak_mem_bytes": 2555268,
+      "spilled_bytes": 0,
+      "zonemap_skipped": 0,
+      "zonemap_total": 293
+    },
+    {
+      "query_id": 2,
+      "name": "Q02 Minimum Cost Supplier",
+      "rows_out": 48,
+      "min_ms": 44.0308,
+      "median_ms": 46.9445,
+      "mean_ms": 46.93186666666667,
+      "peak_mem_bytes": 1759808,
+      "spilled_bytes": 0,
+      "zonemap_skipped": 0,
+      "zonemap_total": 149
+    },
+    {
+      "query_id": 3,
+      "name": "Q03 Shipping Priority",
+      "rows_out": 10,
+      "min_ms": 102.0821,
+      "median_ms": 105.8766,
+      "mean_ms": 105.55186666666667,
+      "peak_mem_bytes": 3469556,
+      "spilled_bytes": 0,
+      "zonemap_skipped": 0,
+      "zonemap_total": 375
+    },
+    {
+      "query_id": 4,
+      "name": "Q04 Order Priority Checking",
+      "rows_out": 5,
+      "min_ms": 113.97749999999999,
+      "median_ms": 115.5052,
+      "mean_ms": 119.87983333333334,
+      "peak_mem_bytes": 2475086,
+      "spilled_bytes": 0,
+      "zonemap_skipped": 0,
+      "zonemap_total": 441
+    },
+    {
+      "query_id": 5,
+      "name": "Q05 Local Supplier Volume",
+      "rows_out": 5,
+      "min_ms": 272.3416,
+      "median_ms": 284.18719999999996,
+      "mean_ms": 297.69283333333334,
+      "peak_mem_bytes": 5315643,
+      "spilled_bytes": 0,
+      "zonemap_skipped": 0,
+      "zonemap_total": 378
+    },
+    {
+      "query_id": 6,
+      "name": "Q06 Forecasting Revenue Change",
+      "rows_out": 1,
+      "min_ms": 73.9186,
+      "median_ms": 74.10029999999999,
+      "mean_ms": 74.6856,
+      "peak_mem_bytes": 1015808,
+      "spilled_bytes": 0,
+      "zonemap_skipped": 0,
+      "zonemap_total": 293
+    },
+    {
+      "query_id": 7,
+      "name": "Q07 Volume Shipping",
+      "rows_out": 4,
+      "min_ms": 232.77419999999998,
+      "median_ms": 244.5748,
+      "mean_ms": 258.0179,
+      "peak_mem_bytes": 24627716,
+      "spilled_bytes": 0,
+      "zonemap_skipped": 0,
+      "zonemap_total": 378
+    },
+    {
+      "query_id": 8,
+      "name": "Q08 National Market Share",
+      "rows_out": 2,
+      "min_ms": 142.7667,
+      "median_ms": 151.39839999999998,
+      "mean_ms": 148.9456333333333,
+      "peak_mem_bytes": 19738452,
+      "spilled_bytes": 0,
+      "zonemap_skipped": 0,
+      "zonemap_total": 389
+    },
+    {
+      "query_id": 9,
+      "name": "Q09 Product Type Profit Measure",
+      "rows_out": 175,
+      "min_ms": 1554.7972,
+      "median_ms": 1993.9162999999999,
+      "mean_ms": 1886.9510666666665,
+      "peak_mem_bytes": 75449812,
+      "spilled_bytes": 0,
+      "zonemap_skipped": 0,
+      "zonemap_total": 419
+    },
+    {
+      "query_id": 10,
+      "name": "Q10 Returned Item Reporting",
+      "rows_out": 20,
+      "min_ms": 242.7072,
+      "median_ms": 250.2293,
+      "mean_ms": 248.13143333333335,
+      "peak_mem_bytes": 28384220,
+      "spilled_bytes": 0,
+      "zonemap_skipped": 0,
+      "zonemap_total": 376
+    },
+    {
+      "query_id": 11,
+      "name": "Q11 Important Stock Identification",
+      "rows_out": 2213,
+      "min_ms": 46.0722,
+      "median_ms": 52.354699999999994,
+      "mean_ms": 50.301666666666655,
+      "peak_mem_bytes": 1025676,
+      "spilled_bytes": 0,
+      "zonemap_skipped": 0,
+      "zonemap_total": 84
+    },
+    {
+      "query_id": 12,
+      "name": "Q12 Shipping Modes & Order Priority",
+      "rows_out": 2,
+      "min_ms": 226.9282,
+      "median_ms": 281.63280000000003,
+      "mean_ms": 358.0994333333333,
+      "peak_mem_bytes": 1359880,
+      "spilled_bytes": 0,
+      "zonemap_skipped": 0,
+      "zonemap_total": 367
+    },
+    {
+      "query_id": 13,
+      "name": "Q13 Customer Distribution",
+      "rows_out": 36,
+      "min_ms": 401.3848,
+      "median_ms": 502.41749999999996,
+      "mean_ms": 633.9517999999999,
+      "peak_mem_bytes": 4193516,
+      "spilled_bytes": 0,
+      "zonemap_skipped": 0,
+      "zonemap_total": 82
+    },
+    {
+      "query_id": 14,
+      "name": "Q14 Promotion Effect",
+      "rows_out": 1,
+      "min_ms": 102.4636,
+      "median_ms": 112.0962,
+      "mean_ms": 121.19313333333332,
+      "peak_mem_bytes": 3692672,
+      "spilled_bytes": 0,
+      "zonemap_skipped": 0,
+      "zonemap_total": 303
+    },
+    {
+      "query_id": 15,
+      "name": "Q15 Top Supplier",
+      "rows_out": 1,
+      "min_ms": 154.31990000000002,
+      "median_ms": 187.3243,
+      "mean_ms": 178.76343333333332,
+      "peak_mem_bytes": 1053248,
+      "spilled_bytes": 0,
+      "zonemap_skipped": 0,
+      "zonemap_total": 587
+    },
+    {
+      "query_id": 16,
+      "name": "Q16 Parts/Supplier Relationship",
+      "rows_out": 2849,
+      "min_ms": 76.13929999999999,
+      "median_ms": 90.0667,
+      "mean_ms": 89.01706666666666,
+      "peak_mem_bytes": 1964811,
+      "spilled_bytes": 0,
+      "zonemap_skipped": 0,
+      "zonemap_total": 51
+    },
+    {
+      "query_id": 17,
+      "name": "Q17 Small-Quantity-Order Revenue",
+      "rows_out": 1,
+      "min_ms": 447.9652,
+      "median_ms": 530.1028,
+      "mean_ms": 504.0471,
+      "peak_mem_bytes": 668424,
+      "spilled_bytes": 0,
+      "zonemap_skipped": 0,
+      "zonemap_total": 899
+    },
+    {
+      "query_id": 18,
+      "name": "Q18 Large Volume Customer",
+      "rows_out": 100,
+      "min_ms": 1010.9732,
+      "median_ms": 1052.2509,
+      "mean_ms": 1070.6080333333332,
+      "peak_mem_bytes": 59984600,
+      "spilled_bytes": 0,
+      "zonemap_skipped": 0,
+      "zonemap_total": 668
+    },
+    {
+      "query_id": 19,
+      "name": "Q19 Discounted Revenue",
+      "rows_out": 1,
+      "min_ms": 304.0656,
+      "median_ms": 322.1408,
+      "mean_ms": 317.5798333333334,
+      "peak_mem_bytes": 5961856,
+      "spilled_bytes": 0,
+      "zonemap_skipped": 0,
+      "zonemap_total": 303
+    },
+    {
+      "query_id": 20,
+      "name": "Q20 Potential Part Promotion",
+      "rows_out": 40,
+      "min_ms": 191.00410000000002,
+      "median_ms": 232.3699,
+      "mean_ms": 255.9523333333333,
+      "peak_mem_bytes": 2192292,
+      "spilled_bytes": 0,
+      "zonemap_skipped": 0,
+      "zonemap_total": 395
+    },
+    {
+      "query_id": 21,
+      "name": "Q21 Suppliers Who Kept Orders Waiting",
+      "rows_out": 40,
+      "min_ms": 870.9491,
+      "median_ms": 882.0064,
+      "mean_ms": 918.2956333333333,
+      "peak_mem_bytes": 20434992,
+      "spilled_bytes": 0,
+      "zonemap_skipped": 0,
+      "zonemap_total": 2355
+    },
+    {
+      "query_id": 22,
+      "name": "Q22 Global Sales Opportunity",
+      "rows_out": 7,
+      "min_ms": 64.2113,
+      "median_ms": 67.44210000000001,
+      "mean_ms": 66.68636666666667,
+      "peak_mem_bytes": 3612668,
+      "spilled_bytes": 0,
+      "zonemap_skipped": 0,
+      "zonemap_total": 106
+    }
+  ],
+  "total_median_ms": 8858.378499999999,
+  "geomean_ms": 230.95421763974576
+}
