@@ -2430,10 +2430,12 @@ impl<'a> Binder<'a> {
             }
             "round" => {
                 let a = take_arg(&bargs, 0, "round")?;
-                let ret = if matches!(a.data_type(), LogicalType::Decimal128 { .. }) {
-                    a.data_type()
-                } else {
-                    LogicalType::Float64
+                let ret = match a.data_type() {
+                    LogicalType::Decimal128 { precision, scale } => LogicalType::Decimal128 {
+                        precision: (precision + 1).min(MAX_DECIMAL_PRECISION),
+                        scale,
+                    },
+                    _ => LogicalType::Float64,
                 };
                 let mut fargs = vec![a];
                 if bargs.len() >= 2 {
@@ -2534,6 +2536,16 @@ impl<'a> Binder<'a> {
                     func: ScalarFunction::DateTrunc(part),
                     args: vec![target],
                     return_type: ret,
+                })
+            }
+            "date_diff" | "datediff" => {
+                let a = take_arg(&bargs, 0, &lower)?;
+                let b = take_arg(&bargs, 1, &lower)?;
+                let common = common_supertype(a.data_type(), b.data_type())?;
+                Ok(LogicalExpr::ScalarFunc {
+                    func: ScalarFunction::DateDiffDays,
+                    args: vec![coerce_expr(a, common), coerce_expr(b, common)],
+                    return_type: LogicalType::Int64,
                 })
             }
             _ => Err(VectraError::BindError(format!(
@@ -3323,10 +3335,12 @@ fn bind_scalar_func_from_bound_args(lower: &str, bargs: Vec<LogicalExpr>) -> Res
         }
         "round" => {
             let a = take_arg(&bargs, 0, "round")?;
-            let ty = if matches!(a.data_type(), LogicalType::Decimal128 { .. }) {
-                a.data_type()
-            } else {
-                LogicalType::Float64
+            let ty = match a.data_type() {
+                LogicalType::Decimal128 { precision, scale } => LogicalType::Decimal128 {
+                    precision: (precision + 1).min(MAX_DECIMAL_PRECISION),
+                    scale,
+                },
+                _ => LogicalType::Float64,
             };
             Ok(LogicalExpr::ScalarFunc {
                 func: ScalarFunction::Round,

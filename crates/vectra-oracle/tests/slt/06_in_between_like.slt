@@ -1,0 +1,1600 @@
+# 06_in_between_like.slt — VectraDB M07 sqllogictest suite
+
+statement ok
+CREATE TABLE items (id BIGINT, x BIGINT, s VARCHAR)
+
+statement ok
+INSERT INTO items VALUES (1, 1, 'alpha'), (2, 2, 'ALPHA'), (3, 3, 'alphabet'), (4, 5, 'beta_test'), (5, 10, 'aaaaaaaaaaaaaaaaaaaa'), (6, NULL, NULL), (7, 0, ''), (8, 9, 'long_german_string_for_like_testing_12345')
+
+query I rowsort
+SELECT id FROM items WHERE x IN (-1, 2, 5)
+----
+2
+4
+
+query I rowsort
+SELECT id FROM items WHERE x NOT IN (-1, 2, 5)
+----
+1
+3
+5
+7
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (-1, NULL)
+----
+
+query I rowsort
+SELECT id FROM items WHERE x NOT IN (-1, NULL)
+----
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, -1)
+----
+1
+2
+3
+4
+
+query I rowsort
+SELECT id FROM items WHERE x BETWEEN -3 AND 1
+----
+1
+7
+
+query I rowsort
+SELECT id FROM items WHERE x NOT BETWEEN -2 AND 0
+----
+1
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (0, 2, 5)
+----
+2
+4
+7
+
+query I rowsort
+SELECT id FROM items WHERE x NOT IN (0, 2, 5)
+----
+1
+3
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (0, NULL)
+----
+7
+
+query I rowsort
+SELECT id FROM items WHERE x NOT IN (0, NULL)
+----
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 0)
+----
+1
+2
+3
+4
+7
+
+query I rowsort
+SELECT id FROM items WHERE x BETWEEN -2 AND 2
+----
+1
+2
+7
+
+query I rowsort
+SELECT id FROM items WHERE x NOT BETWEEN -1 AND 1
+----
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 5)
+----
+1
+2
+4
+
+query I rowsort
+SELECT id FROM items WHERE x NOT IN (1, 2, 5)
+----
+3
+5
+7
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, NULL)
+----
+1
+
+query I rowsort
+SELECT id FROM items WHERE x NOT IN (1, NULL)
+----
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 1)
+----
+1
+2
+3
+4
+
+query I rowsort
+SELECT id FROM items WHERE x BETWEEN -1 AND 3
+----
+1
+2
+3
+7
+
+query I rowsort
+SELECT id FROM items WHERE x NOT BETWEEN 0 AND 2
+----
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (2, 2, 5)
+----
+2
+4
+
+query I rowsort
+SELECT id FROM items WHERE x NOT IN (2, 2, 5)
+----
+1
+3
+5
+7
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (2, NULL)
+----
+2
+
+query I rowsort
+SELECT id FROM items WHERE x NOT IN (2, NULL)
+----
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 2)
+----
+1
+2
+3
+4
+
+query I rowsort
+SELECT id FROM items WHERE x BETWEEN 0 AND 4
+----
+1
+2
+3
+7
+
+query I rowsort
+SELECT id FROM items WHERE x NOT BETWEEN 1 AND 3
+----
+4
+5
+7
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (3, 2, 5)
+----
+2
+3
+4
+
+query I rowsort
+SELECT id FROM items WHERE x NOT IN (3, 2, 5)
+----
+1
+5
+7
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (3, NULL)
+----
+3
+
+query I rowsort
+SELECT id FROM items WHERE x NOT IN (3, NULL)
+----
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 3)
+----
+1
+2
+3
+4
+
+query I rowsort
+SELECT id FROM items WHERE x BETWEEN 1 AND 5
+----
+1
+2
+3
+4
+
+query I rowsort
+SELECT id FROM items WHERE x NOT BETWEEN 2 AND 4
+----
+1
+4
+5
+7
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (4, 2, 5)
+----
+2
+4
+
+query I rowsort
+SELECT id FROM items WHERE x NOT IN (4, 2, 5)
+----
+1
+3
+5
+7
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (4, NULL)
+----
+
+query I rowsort
+SELECT id FROM items WHERE x NOT IN (4, NULL)
+----
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 4)
+----
+1
+2
+3
+4
+
+query I rowsort
+SELECT id FROM items WHERE x BETWEEN 2 AND 6
+----
+2
+3
+4
+
+query I rowsort
+SELECT id FROM items WHERE x NOT BETWEEN 3 AND 5
+----
+1
+2
+5
+7
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (5, 2, 5)
+----
+2
+4
+
+query I rowsort
+SELECT id FROM items WHERE x NOT IN (5, 2, 5)
+----
+1
+3
+5
+7
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (5, NULL)
+----
+4
+
+query I rowsort
+SELECT id FROM items WHERE x NOT IN (5, NULL)
+----
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 5)
+----
+1
+2
+3
+4
+
+query I rowsort
+SELECT id FROM items WHERE x BETWEEN 3 AND 7
+----
+3
+4
+
+query I rowsort
+SELECT id FROM items WHERE x NOT BETWEEN 4 AND 6
+----
+1
+2
+3
+5
+7
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (9, 2, 5)
+----
+2
+4
+8
+
+query I rowsort
+SELECT id FROM items WHERE x NOT IN (9, 2, 5)
+----
+1
+3
+5
+7
+
+query I rowsort
+SELECT id FROM items WHERE x IN (9, NULL)
+----
+8
+
+query I rowsort
+SELECT id FROM items WHERE x NOT IN (9, NULL)
+----
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9)
+----
+1
+2
+3
+4
+8
+
+query I rowsort
+SELECT id FROM items WHERE x BETWEEN 7 AND 11
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x NOT BETWEEN 8 AND 10
+----
+1
+2
+3
+4
+7
+
+query I rowsort
+SELECT id FROM items WHERE x IN (10, 2, 5)
+----
+2
+4
+5
+
+query I rowsort
+SELECT id FROM items WHERE x NOT IN (10, 2, 5)
+----
+1
+3
+7
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (10, NULL)
+----
+5
+
+query I rowsort
+SELECT id FROM items WHERE x NOT IN (10, NULL)
+----
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 10)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM items WHERE x BETWEEN 8 AND 12
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x NOT BETWEEN 9 AND 11
+----
+1
+2
+3
+4
+7
+
+query I rowsort
+SELECT id FROM items WHERE x IN (11, 2, 5)
+----
+2
+4
+
+query I rowsort
+SELECT id FROM items WHERE x NOT IN (11, 2, 5)
+----
+1
+3
+5
+7
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (11, NULL)
+----
+
+query I rowsort
+SELECT id FROM items WHERE x NOT IN (11, NULL)
+----
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 11)
+----
+1
+2
+3
+4
+
+query I rowsort
+SELECT id FROM items WHERE x BETWEEN 9 AND 13
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x NOT BETWEEN 10 AND 12
+----
+1
+2
+3
+4
+7
+8
+
+query I rowsort
+SELECT id FROM items WHERE s LIKE 'a%'
+----
+1
+3
+5
+
+query I rowsort
+SELECT id FROM items WHERE s NOT LIKE 'a%'
+----
+2
+4
+7
+8
+
+query I rowsort
+SELECT id FROM items WHERE s LIKE '%a'
+----
+1
+5
+
+query I rowsort
+SELECT id FROM items WHERE s NOT LIKE '%a'
+----
+2
+3
+4
+7
+8
+
+query I rowsort
+SELECT id FROM items WHERE s LIKE '%ph%'
+----
+1
+3
+
+query I rowsort
+SELECT id FROM items WHERE s NOT LIKE '%ph%'
+----
+2
+4
+5
+7
+8
+
+query I rowsort
+SELECT id FROM items WHERE s LIKE 'alpha'
+----
+1
+
+query I rowsort
+SELECT id FROM items WHERE s NOT LIKE 'alpha'
+----
+2
+3
+4
+5
+7
+8
+
+query I rowsort
+SELECT id FROM items WHERE s LIKE 'ALPHA'
+----
+2
+
+query I rowsort
+SELECT id FROM items WHERE s NOT LIKE 'ALPHA'
+----
+1
+3
+4
+5
+7
+8
+
+query I rowsort
+SELECT id FROM items WHERE s LIKE '_lpha'
+----
+1
+
+query I rowsort
+SELECT id FROM items WHERE s NOT LIKE '_lpha'
+----
+2
+3
+4
+5
+7
+8
+
+query I rowsort
+SELECT id FROM items WHERE s LIKE 'a____'
+----
+1
+
+query I rowsort
+SELECT id FROM items WHERE s NOT LIKE 'a____'
+----
+2
+3
+4
+5
+7
+8
+
+query I rowsort
+SELECT id FROM items WHERE s LIKE '%test'
+----
+4
+
+query I rowsort
+SELECT id FROM items WHERE s NOT LIKE '%test'
+----
+1
+2
+3
+5
+7
+8
+
+query I rowsort
+SELECT id FROM items WHERE s LIKE '%german%12345'
+----
+8
+
+query I rowsort
+SELECT id FROM items WHERE s NOT LIKE '%german%12345'
+----
+1
+2
+3
+4
+5
+7
+
+query I rowsort
+SELECT id FROM items WHERE s LIKE '%a%a%a%a%a%a%a%b'
+----
+
+query I rowsort
+SELECT id FROM items WHERE s NOT LIKE '%a%a%a%a%a%a%a%b'
+----
+1
+2
+3
+4
+5
+7
+8
+
+query I rowsort
+SELECT id FROM items WHERE s LIKE '%a%a%a%a%a%a%a'
+----
+5
+
+query I rowsort
+SELECT id FROM items WHERE s NOT LIKE '%a%a%a%a%a%a%a'
+----
+1
+2
+3
+4
+7
+8
+
+query I rowsort
+SELECT id FROM items WHERE s LIKE ''
+----
+7
+
+query I rowsort
+SELECT id FROM items WHERE s NOT LIKE ''
+----
+1
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE s LIKE '%'
+----
+1
+2
+3
+4
+5
+7
+8
+
+query I rowsort
+SELECT id FROM items WHERE s NOT LIKE '%'
+----
+
+query I rowsort
+SELECT id FROM items WHERE s LIKE '_'
+----
+
+query I rowsort
+SELECT id FROM items WHERE s NOT LIKE '_'
+----
+1
+2
+3
+4
+5
+7
+8
+
+query I rowsort
+SELECT id FROM items WHERE s LIKE 'beta_%'
+----
+4
+
+query I rowsort
+SELECT id FROM items WHERE s NOT LIKE 'beta_%'
+----
+1
+2
+3
+5
+7
+8
+
+query I rowsort
+SELECT id FROM items WHERE s LIKE 'long_%'
+----
+8
+
+query I rowsort
+SELECT id FROM items WHERE s NOT LIKE 'long_%'
+----
+1
+2
+3
+4
+5
+7
+
+query I rowsort
+SELECT id FROM items WHERE s LIKE '%_test'
+----
+4
+
+query I rowsort
+SELECT id FROM items WHERE s NOT LIKE '%_test'
+----
+1
+2
+3
+5
+7
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 21) AND x >= 1
+----
+1
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 22) AND x >= 2
+----
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 23) AND x >= 3
+----
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 24) AND x >= 4
+----
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 25) AND x >= 5
+----
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 26) AND x >= 6
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 27) AND x >= 7
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 28) AND x >= 8
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 29) AND x >= 9
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 30) AND x >= 0
+----
+1
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 31) AND x >= 1
+----
+1
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 32) AND x >= 2
+----
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 33) AND x >= 3
+----
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 34) AND x >= 4
+----
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 35) AND x >= 5
+----
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 36) AND x >= 6
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 37) AND x >= 7
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 38) AND x >= 8
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 39) AND x >= 9
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 40) AND x >= 0
+----
+1
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 41) AND x >= 1
+----
+1
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 42) AND x >= 2
+----
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 43) AND x >= 3
+----
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 44) AND x >= 4
+----
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 45) AND x >= 5
+----
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 46) AND x >= 6
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 47) AND x >= 7
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 48) AND x >= 8
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 49) AND x >= 9
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50) AND x >= 0
+----
+1
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 51) AND x >= 1
+----
+1
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 52) AND x >= 2
+----
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 53) AND x >= 3
+----
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 54) AND x >= 4
+----
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 55) AND x >= 5
+----
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 56) AND x >= 6
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 57) AND x >= 7
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 58) AND x >= 8
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 59) AND x >= 9
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 60) AND x >= 0
+----
+1
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 61) AND x >= 1
+----
+1
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 62) AND x >= 2
+----
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 63) AND x >= 3
+----
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 64) AND x >= 4
+----
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 65) AND x >= 5
+----
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 66) AND x >= 6
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 67) AND x >= 7
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 68) AND x >= 8
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 69) AND x >= 9
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 70) AND x >= 0
+----
+1
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 71) AND x >= 1
+----
+1
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 72) AND x >= 2
+----
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 73) AND x >= 3
+----
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 74) AND x >= 4
+----
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 75) AND x >= 5
+----
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 76) AND x >= 6
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 77) AND x >= 7
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 78) AND x >= 8
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 79) AND x >= 9
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 80) AND x >= 0
+----
+1
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 81) AND x >= 1
+----
+1
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 82) AND x >= 2
+----
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 83) AND x >= 3
+----
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 84) AND x >= 4
+----
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 85) AND x >= 5
+----
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 86) AND x >= 6
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 87) AND x >= 7
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 88) AND x >= 8
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 89) AND x >= 9
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 90) AND x >= 0
+----
+1
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 91) AND x >= 1
+----
+1
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 92) AND x >= 2
+----
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 93) AND x >= 3
+----
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 94) AND x >= 4
+----
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 95) AND x >= 5
+----
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 96) AND x >= 6
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 97) AND x >= 7
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 98) AND x >= 8
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 99) AND x >= 9
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 100) AND x >= 0
+----
+1
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 101) AND x >= 1
+----
+1
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 102) AND x >= 2
+----
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 103) AND x >= 3
+----
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 104) AND x >= 4
+----
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 105) AND x >= 5
+----
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 106) AND x >= 6
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 107) AND x >= 7
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 108) AND x >= 8
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 109) AND x >= 9
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 110) AND x >= 0
+----
+1
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 111) AND x >= 1
+----
+1
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 112) AND x >= 2
+----
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 113) AND x >= 3
+----
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 114) AND x >= 4
+----
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 115) AND x >= 5
+----
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 116) AND x >= 6
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 117) AND x >= 7
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 118) AND x >= 8
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 119) AND x >= 9
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 120) AND x >= 0
+----
+1
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 121) AND x >= 1
+----
+1
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 122) AND x >= 2
+----
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 123) AND x >= 3
+----
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 124) AND x >= 4
+----
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 125) AND x >= 5
+----
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 126) AND x >= 6
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 127) AND x >= 7
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 128) AND x >= 8
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 129) AND x >= 9
+----
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 130) AND x >= 0
+----
+1
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 131) AND x >= 1
+----
+1
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 132) AND x >= 2
+----
+2
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 133) AND x >= 3
+----
+3
+4
+5
+8
+
+query I rowsort
+SELECT id FROM items WHERE x IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 134) AND x >= 4
+----
+4
+5
+8

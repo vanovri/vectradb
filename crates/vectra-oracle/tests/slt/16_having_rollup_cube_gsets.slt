@@ -1,0 +1,2027 @@
+# 16_having_rollup_cube_gsets.slt — VectraDB M07 sqllogictest suite
+
+statement ok
+CREATE TABLE sales (id BIGINT, dept VARCHAR, region VARCHAR, amt BIGINT, qty BIGINT, f DOUBLE)
+
+statement ok
+INSERT INTO sales VALUES (1,'eng','us',100,2,1.5),(2,'eng','us',200,4,2.5),(3,'eng','eu',150,4,3.0),(4,'ops','us',50,1,0.5),(5,'ops','eu',NULL,NULL,NULL),(6,'hr','us',80,2,1.0),(7,'hr','eu',120,2,2.0),(8,NULL,'us',40,1,0.25)
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 0
+----
+NULL
+1
+40
+eng
+3
+450
+hr
+2
+200
+ops
+2
+50
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 4
+----
+NULL
+1
+40
+eng
+3
+450
+hr
+2
+200
+ops
+2
+50
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 8
+----
+NULL
+1
+40
+eng
+3
+450
+hr
+2
+200
+ops
+2
+50
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 12
+----
+NULL
+1
+40
+eng
+3
+450
+hr
+2
+200
+ops
+2
+50
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 16
+----
+NULL
+1
+40
+eng
+3
+450
+hr
+2
+200
+ops
+2
+50
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 20
+----
+NULL
+1
+40
+eng
+3
+450
+hr
+2
+200
+ops
+2
+50
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 24
+----
+NULL
+1
+40
+eng
+3
+450
+hr
+2
+200
+ops
+2
+50
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 28
+----
+NULL
+1
+40
+eng
+3
+450
+hr
+2
+200
+ops
+2
+50
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 32
+----
+NULL
+1
+40
+eng
+3
+450
+hr
+2
+200
+ops
+2
+50
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 36
+----
+NULL
+1
+40
+eng
+3
+450
+hr
+2
+200
+ops
+2
+50
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 40
+----
+NULL
+1
+40
+eng
+3
+450
+hr
+2
+200
+ops
+2
+50
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 44
+----
+eng
+3
+450
+hr
+2
+200
+ops
+2
+50
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 48
+----
+eng
+3
+450
+hr
+2
+200
+ops
+2
+50
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 52
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 56
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 60
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 64
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 68
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 72
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 76
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 80
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 84
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 88
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 92
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 96
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 100
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 104
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 108
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 112
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 116
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 120
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 124
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 128
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 132
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 136
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 140
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 144
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 148
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 152
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 156
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 160
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 164
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 168
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 172
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 176
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 180
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 184
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 188
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 192
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 196
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 200
+----
+eng
+3
+450
+hr
+2
+200
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 204
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 208
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 212
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 216
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 220
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 224
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 228
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 232
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 236
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 240
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 244
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 248
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 252
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 256
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 260
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 264
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 268
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 272
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 276
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 280
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 284
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 288
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 292
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 296
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 300
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 304
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 308
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 312
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 316
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 320
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 324
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 328
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 332
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 336
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 340
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 344
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 348
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 352
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 356
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 360
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 364
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 368
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 372
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 376
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 380
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 384
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 388
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 392
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 396
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 400
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 404
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 408
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 412
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 416
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 420
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 424
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 428
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 432
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 436
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 440
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 444
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 448
+----
+eng
+3
+450
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 452
+----
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 456
+----
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 460
+----
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 464
+----
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 468
+----
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 472
+----
+
+query TII rowsort
+SELECT dept, COUNT(*), SUM(amt) FROM sales GROUP BY dept HAVING COALESCE(SUM(amt), 0) >= 476
+----
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 0
+----
+NULL
+us
+40
+eng
+eu
+150
+eng
+us
+300
+hr
+eu
+120
+hr
+us
+80
+ops
+eu
+NULL
+ops
+us
+50
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 1
+----
+NULL
+us
+40
+eng
+eu
+150
+eng
+us
+300
+hr
+eu
+120
+hr
+us
+80
+ops
+eu
+NULL
+ops
+us
+50
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 2
+----
+eng
+us
+300
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 0
+----
+NULL
+us
+40
+eng
+eu
+150
+eng
+us
+300
+hr
+eu
+120
+hr
+us
+80
+ops
+eu
+NULL
+ops
+us
+50
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 1
+----
+NULL
+us
+40
+eng
+eu
+150
+eng
+us
+300
+hr
+eu
+120
+hr
+us
+80
+ops
+eu
+NULL
+ops
+us
+50
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 2
+----
+eng
+us
+300
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 0
+----
+NULL
+us
+40
+eng
+eu
+150
+eng
+us
+300
+hr
+eu
+120
+hr
+us
+80
+ops
+eu
+NULL
+ops
+us
+50
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 1
+----
+NULL
+us
+40
+eng
+eu
+150
+eng
+us
+300
+hr
+eu
+120
+hr
+us
+80
+ops
+eu
+NULL
+ops
+us
+50
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 2
+----
+eng
+us
+300
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 0
+----
+NULL
+us
+40
+eng
+eu
+150
+eng
+us
+300
+hr
+eu
+120
+hr
+us
+80
+ops
+eu
+NULL
+ops
+us
+50
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 1
+----
+NULL
+us
+40
+eng
+eu
+150
+eng
+us
+300
+hr
+eu
+120
+hr
+us
+80
+ops
+eu
+NULL
+ops
+us
+50
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 2
+----
+eng
+us
+300
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 0
+----
+NULL
+us
+40
+eng
+eu
+150
+eng
+us
+300
+hr
+eu
+120
+hr
+us
+80
+ops
+eu
+NULL
+ops
+us
+50
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 1
+----
+NULL
+us
+40
+eng
+eu
+150
+eng
+us
+300
+hr
+eu
+120
+hr
+us
+80
+ops
+eu
+NULL
+ops
+us
+50
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 2
+----
+eng
+us
+300
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 0
+----
+NULL
+us
+40
+eng
+eu
+150
+eng
+us
+300
+hr
+eu
+120
+hr
+us
+80
+ops
+eu
+NULL
+ops
+us
+50
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 1
+----
+NULL
+us
+40
+eng
+eu
+150
+eng
+us
+300
+hr
+eu
+120
+hr
+us
+80
+ops
+eu
+NULL
+ops
+us
+50
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 2
+----
+eng
+us
+300
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 0
+----
+NULL
+us
+40
+eng
+eu
+150
+eng
+us
+300
+hr
+eu
+120
+hr
+us
+80
+ops
+eu
+NULL
+ops
+us
+50
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 1
+----
+NULL
+us
+40
+eng
+eu
+150
+eng
+us
+300
+hr
+eu
+120
+hr
+us
+80
+ops
+eu
+NULL
+ops
+us
+50
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 2
+----
+eng
+us
+300
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 0
+----
+NULL
+us
+40
+eng
+eu
+150
+eng
+us
+300
+hr
+eu
+120
+hr
+us
+80
+ops
+eu
+NULL
+ops
+us
+50
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 1
+----
+NULL
+us
+40
+eng
+eu
+150
+eng
+us
+300
+hr
+eu
+120
+hr
+us
+80
+ops
+eu
+NULL
+ops
+us
+50
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 2
+----
+eng
+us
+300
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 0
+----
+NULL
+us
+40
+eng
+eu
+150
+eng
+us
+300
+hr
+eu
+120
+hr
+us
+80
+ops
+eu
+NULL
+ops
+us
+50
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 1
+----
+NULL
+us
+40
+eng
+eu
+150
+eng
+us
+300
+hr
+eu
+120
+hr
+us
+80
+ops
+eu
+NULL
+ops
+us
+50
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 2
+----
+eng
+us
+300
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 0
+----
+NULL
+us
+40
+eng
+eu
+150
+eng
+us
+300
+hr
+eu
+120
+hr
+us
+80
+ops
+eu
+NULL
+ops
+us
+50
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 1
+----
+NULL
+us
+40
+eng
+eu
+150
+eng
+us
+300
+hr
+eu
+120
+hr
+us
+80
+ops
+eu
+NULL
+ops
+us
+50
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 2
+----
+eng
+us
+300
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 0
+----
+NULL
+us
+40
+eng
+eu
+150
+eng
+us
+300
+hr
+eu
+120
+hr
+us
+80
+ops
+eu
+NULL
+ops
+us
+50
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 1
+----
+NULL
+us
+40
+eng
+eu
+150
+eng
+us
+300
+hr
+eu
+120
+hr
+us
+80
+ops
+eu
+NULL
+ops
+us
+50
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 2
+----
+eng
+us
+300
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 0
+----
+NULL
+us
+40
+eng
+eu
+150
+eng
+us
+300
+hr
+eu
+120
+hr
+us
+80
+ops
+eu
+NULL
+ops
+us
+50
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 1
+----
+NULL
+us
+40
+eng
+eu
+150
+eng
+us
+300
+hr
+eu
+120
+hr
+us
+80
+ops
+eu
+NULL
+ops
+us
+50
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 2
+----
+eng
+us
+300
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 0
+----
+NULL
+us
+40
+eng
+eu
+150
+eng
+us
+300
+hr
+eu
+120
+hr
+us
+80
+ops
+eu
+NULL
+ops
+us
+50
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 1
+----
+NULL
+us
+40
+eng
+eu
+150
+eng
+us
+300
+hr
+eu
+120
+hr
+us
+80
+ops
+eu
+NULL
+ops
+us
+50
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 2
+----
+eng
+us
+300
+
+query TTI rowsort
+SELECT dept, region, SUM(amt) FROM sales GROUP BY dept, region HAVING COUNT(*) >= 0
+----
+NULL
+us
+40
+eng
+eu
+150
+eng
+us
+300
+hr
+eu
+120
+hr
+us
+80
+ops
+eu
+NULL
+ops
+us
+50
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, region, SUM(amt) FROM sales GROUP BY ROLLUP(dept, region)) sub
+----
+12
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, region, SUM(amt) FROM sales GROUP BY CUBE(dept, region)) sub
+----
+14
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, region, SUM(amt) FROM sales GROUP BY GROUPING SETS ((dept), (region), ())) sub
+----
+7
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 2 GROUP BY ROLLUP(dept)) x
+----
+2
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 3 GROUP BY ROLLUP(dept)) x
+----
+2
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 4 GROUP BY ROLLUP(dept)) x
+----
+3
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 5 GROUP BY ROLLUP(dept)) x
+----
+3
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 6 GROUP BY ROLLUP(dept)) x
+----
+4
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 7 GROUP BY ROLLUP(dept)) x
+----
+4
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 8 GROUP BY ROLLUP(dept)) x
+----
+5
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 1 GROUP BY ROLLUP(dept)) x
+----
+2
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 2 GROUP BY ROLLUP(dept)) x
+----
+2
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 3 GROUP BY ROLLUP(dept)) x
+----
+2
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 4 GROUP BY ROLLUP(dept)) x
+----
+3
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 5 GROUP BY ROLLUP(dept)) x
+----
+3
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 6 GROUP BY ROLLUP(dept)) x
+----
+4
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 7 GROUP BY ROLLUP(dept)) x
+----
+4
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 8 GROUP BY ROLLUP(dept)) x
+----
+5
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 1 GROUP BY ROLLUP(dept)) x
+----
+2
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 2 GROUP BY ROLLUP(dept)) x
+----
+2
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 3 GROUP BY ROLLUP(dept)) x
+----
+2
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 4 GROUP BY ROLLUP(dept)) x
+----
+3
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 5 GROUP BY ROLLUP(dept)) x
+----
+3
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 6 GROUP BY ROLLUP(dept)) x
+----
+4
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 7 GROUP BY ROLLUP(dept)) x
+----
+4
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 8 GROUP BY ROLLUP(dept)) x
+----
+5
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 1 GROUP BY ROLLUP(dept)) x
+----
+2
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 2 GROUP BY ROLLUP(dept)) x
+----
+2
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 3 GROUP BY ROLLUP(dept)) x
+----
+2
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 4 GROUP BY ROLLUP(dept)) x
+----
+3
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 5 GROUP BY ROLLUP(dept)) x
+----
+3
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 6 GROUP BY ROLLUP(dept)) x
+----
+4
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 7 GROUP BY ROLLUP(dept)) x
+----
+4
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 8 GROUP BY ROLLUP(dept)) x
+----
+5
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 1 GROUP BY ROLLUP(dept)) x
+----
+2
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 2 GROUP BY ROLLUP(dept)) x
+----
+2
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 3 GROUP BY ROLLUP(dept)) x
+----
+2
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 4 GROUP BY ROLLUP(dept)) x
+----
+3
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 5 GROUP BY ROLLUP(dept)) x
+----
+3
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 6 GROUP BY ROLLUP(dept)) x
+----
+4
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 7 GROUP BY ROLLUP(dept)) x
+----
+4
+
+query I nosort
+SELECT COUNT(*) FROM (SELECT dept, COUNT(*) FROM sales WHERE id <= 8 GROUP BY ROLLUP(dept)) x
+----
+5

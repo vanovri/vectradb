@@ -1,0 +1,553 @@
+# 24_errors_and_diagnostics.slt — VectraDB M07 sqllogictest suite
+
+statement ok
+CREATE TABLE err_t (a BIGINT, b BIGINT)
+
+statement ok
+INSERT INTO err_t VALUES (1, 0), (1, 2), (2, 3)
+
+statement error division by zero
+SELECT 1 / 0
+
+statement error division by zero
+SELECT 1 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_1
+
+statement error
+SELECT missing_col_1 FROM err_t
+
+statement error division by zero
+SELECT 2 / 0
+
+statement error division by zero
+SELECT 2 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_2
+
+statement error
+SELECT missing_col_2 FROM err_t
+
+statement error division by zero
+SELECT 3 / 0
+
+statement error division by zero
+SELECT 3 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_3
+
+statement error
+SELECT missing_col_3 FROM err_t
+
+statement error division by zero
+SELECT 4 / 0
+
+statement error division by zero
+SELECT 4 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_4
+
+statement error
+SELECT missing_col_4 FROM err_t
+
+statement error division by zero
+SELECT 5 / 0
+
+statement error division by zero
+SELECT 5 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_5
+
+statement error
+SELECT missing_col_5 FROM err_t
+
+statement error division by zero
+SELECT 6 / 0
+
+statement error division by zero
+SELECT 6 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_6
+
+statement error
+SELECT missing_col_6 FROM err_t
+
+statement error division by zero
+SELECT 7 / 0
+
+statement error division by zero
+SELECT 7 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_7
+
+statement error
+SELECT missing_col_7 FROM err_t
+
+statement error division by zero
+SELECT 8 / 0
+
+statement error division by zero
+SELECT 8 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_8
+
+statement error
+SELECT missing_col_8 FROM err_t
+
+statement error division by zero
+SELECT 9 / 0
+
+statement error division by zero
+SELECT 9 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_9
+
+statement error
+SELECT missing_col_9 FROM err_t
+
+statement error division by zero
+SELECT 10 / 0
+
+statement error division by zero
+SELECT 10 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_10
+
+statement error
+SELECT missing_col_10 FROM err_t
+
+statement error division by zero
+SELECT 11 / 0
+
+statement error division by zero
+SELECT 11 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_11
+
+statement error
+SELECT missing_col_11 FROM err_t
+
+statement error division by zero
+SELECT 12 / 0
+
+statement error division by zero
+SELECT 12 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_12
+
+statement error
+SELECT missing_col_12 FROM err_t
+
+statement error division by zero
+SELECT 13 / 0
+
+statement error division by zero
+SELECT 13 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_13
+
+statement error
+SELECT missing_col_13 FROM err_t
+
+statement error division by zero
+SELECT 14 / 0
+
+statement error division by zero
+SELECT 14 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_14
+
+statement error
+SELECT missing_col_14 FROM err_t
+
+statement error division by zero
+SELECT 15 / 0
+
+statement error division by zero
+SELECT 15 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_15
+
+statement error
+SELECT missing_col_15 FROM err_t
+
+statement error division by zero
+SELECT 16 / 0
+
+statement error division by zero
+SELECT 16 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_16
+
+statement error
+SELECT missing_col_16 FROM err_t
+
+statement error division by zero
+SELECT 17 / 0
+
+statement error division by zero
+SELECT 17 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_17
+
+statement error
+SELECT missing_col_17 FROM err_t
+
+statement error division by zero
+SELECT 18 / 0
+
+statement error division by zero
+SELECT 18 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_18
+
+statement error
+SELECT missing_col_18 FROM err_t
+
+statement error division by zero
+SELECT 19 / 0
+
+statement error division by zero
+SELECT 19 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_19
+
+statement error
+SELECT missing_col_19 FROM err_t
+
+statement error division by zero
+SELECT 20 / 0
+
+statement error division by zero
+SELECT 20 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_20
+
+statement error
+SELECT missing_col_20 FROM err_t
+
+statement error division by zero
+SELECT 21 / 0
+
+statement error division by zero
+SELECT 21 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_21
+
+statement error
+SELECT missing_col_21 FROM err_t
+
+statement error division by zero
+SELECT 22 / 0
+
+statement error division by zero
+SELECT 22 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_22
+
+statement error
+SELECT missing_col_22 FROM err_t
+
+statement error division by zero
+SELECT 23 / 0
+
+statement error division by zero
+SELECT 23 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_23
+
+statement error
+SELECT missing_col_23 FROM err_t
+
+statement error division by zero
+SELECT 24 / 0
+
+statement error division by zero
+SELECT 24 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_24
+
+statement error
+SELECT missing_col_24 FROM err_t
+
+statement error division by zero
+SELECT 25 / 0
+
+statement error division by zero
+SELECT 25 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_25
+
+statement error
+SELECT missing_col_25 FROM err_t
+
+statement error division by zero
+SELECT 26 / 0
+
+statement error division by zero
+SELECT 26 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_26
+
+statement error
+SELECT missing_col_26 FROM err_t
+
+statement error division by zero
+SELECT 27 / 0
+
+statement error division by zero
+SELECT 27 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_27
+
+statement error
+SELECT missing_col_27 FROM err_t
+
+statement error division by zero
+SELECT 28 / 0
+
+statement error division by zero
+SELECT 28 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_28
+
+statement error
+SELECT missing_col_28 FROM err_t
+
+statement error division by zero
+SELECT 29 / 0
+
+statement error division by zero
+SELECT 29 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_29
+
+statement error
+SELECT missing_col_29 FROM err_t
+
+statement error division by zero
+SELECT 30 / 0
+
+statement error division by zero
+SELECT 30 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_30
+
+statement error
+SELECT missing_col_30 FROM err_t
+
+statement error division by zero
+SELECT 31 / 0
+
+statement error division by zero
+SELECT 31 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_31
+
+statement error
+SELECT missing_col_31 FROM err_t
+
+statement error division by zero
+SELECT 32 / 0
+
+statement error division by zero
+SELECT 32 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_32
+
+statement error
+SELECT missing_col_32 FROM err_t
+
+statement error division by zero
+SELECT 33 / 0
+
+statement error division by zero
+SELECT 33 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_33
+
+statement error
+SELECT missing_col_33 FROM err_t
+
+statement error division by zero
+SELECT 34 / 0
+
+statement error division by zero
+SELECT 34 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_34
+
+statement error
+SELECT missing_col_34 FROM err_t
+
+statement error division by zero
+SELECT 35 / 0
+
+statement error division by zero
+SELECT 35 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_35
+
+statement error
+SELECT missing_col_35 FROM err_t
+
+statement error division by zero
+SELECT 36 / 0
+
+statement error division by zero
+SELECT 36 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_36
+
+statement error
+SELECT missing_col_36 FROM err_t
+
+statement error division by zero
+SELECT 37 / 0
+
+statement error division by zero
+SELECT 37 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_37
+
+statement error
+SELECT missing_col_37 FROM err_t
+
+statement error division by zero
+SELECT 38 / 0
+
+statement error division by zero
+SELECT 38 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_38
+
+statement error
+SELECT missing_col_38 FROM err_t
+
+statement error division by zero
+SELECT 39 / 0
+
+statement error division by zero
+SELECT 39 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_39
+
+statement error
+SELECT missing_col_39 FROM err_t
+
+statement error division by zero
+SELECT 40 / 0
+
+statement error division by zero
+SELECT 40 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_40
+
+statement error
+SELECT missing_col_40 FROM err_t
+
+statement error division by zero
+SELECT 41 / 0
+
+statement error division by zero
+SELECT 41 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_41
+
+statement error
+SELECT missing_col_41 FROM err_t
+
+statement error division by zero
+SELECT 42 / 0
+
+statement error division by zero
+SELECT 42 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_42
+
+statement error
+SELECT missing_col_42 FROM err_t
+
+statement error division by zero
+SELECT 43 / 0
+
+statement error division by zero
+SELECT 43 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_43
+
+statement error
+SELECT missing_col_43 FROM err_t
+
+statement error division by zero
+SELECT 44 / 0
+
+statement error division by zero
+SELECT 44 % 0
+
+statement error does not exist
+SELECT * FROM nonexistent_table_44
+
+statement error
+SELECT missing_col_44 FROM err_t
+
+statement error more than one row
+SELECT (SELECT b FROM err_t WHERE a = 1)
+
+statement error ambiguous
+SELECT a FROM err_t t1 JOIN err_t t2 ON t1.a = t2.a
+
+statement error already exists
+CREATE TABLE err_t (x BIGINT)
+
+statement error does not exist
+DROP TABLE nope_tbl
+
+statement error invalid cast
+SELECT CAST('not_int' AS BIGINT)
+
+statement error step cannot be 0
+SELECT * FROM generate_series(1, 10, 0)

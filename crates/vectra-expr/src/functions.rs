@@ -267,12 +267,15 @@ pub fn eval_scalar_function(
                     scale,
                 } => {
                     let target_scale = digits.clamp(-38, 38) as i8;
-                    let r =
-                        vectra_types::decimal_rescale(*value, *scale, target_scale, *precision)?;
-                    let back = vectra_types::decimal_rescale(r, target_scale, *scale, *precision)?;
+                    let out_prec = match return_type {
+                        LogicalType::Decimal128 { precision: rp, .. } => rp.max(*precision),
+                        _ => (*precision + 1).min(vectra_types::MAX_DECIMAL_PRECISION),
+                    };
+                    let r = vectra_types::decimal_rescale(*value, *scale, target_scale, out_prec)?;
+                    let back = vectra_types::decimal_rescale(r, target_scale, *scale, out_prec)?;
                     Ok(ScalarValue::Decimal128 {
                         value: back,
-                        precision: *precision,
+                        precision: out_prec,
                         scale: *scale,
                     })
                 }

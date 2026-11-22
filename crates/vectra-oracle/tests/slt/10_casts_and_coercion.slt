@@ -1,0 +1,1266 @@
+# 10_casts_and_coercion.slt — VectraDB M07 sqllogictest suite
+
+query I nosort
+SELECT CAST('-40' AS BIGINT)
+----
+-40
+
+query T nosort
+SELECT CAST(-40 AS VARCHAR)
+----
+-40
+
+query R nosort
+SELECT CAST(-40 AS DOUBLE) + 0.5
+----
+-39.500
+
+query I nosort
+SELECT CAST('-39' AS BIGINT)
+----
+-39
+
+query T nosort
+SELECT CAST(-39 AS VARCHAR)
+----
+-39
+
+query R nosort
+SELECT CAST(-39 AS DOUBLE) + 0.5
+----
+-38.500
+
+query I nosort
+SELECT CAST('-38' AS BIGINT)
+----
+-38
+
+query T nosort
+SELECT CAST(-38 AS VARCHAR)
+----
+-38
+
+query R nosort
+SELECT CAST(-38 AS DOUBLE) + 0.5
+----
+-37.500
+
+query I nosort
+SELECT CAST('-37' AS BIGINT)
+----
+-37
+
+query T nosort
+SELECT CAST(-37 AS VARCHAR)
+----
+-37
+
+query R nosort
+SELECT CAST(-37 AS DOUBLE) + 0.5
+----
+-36.500
+
+query I nosort
+SELECT CAST('-36' AS BIGINT)
+----
+-36
+
+query T nosort
+SELECT CAST(-36 AS VARCHAR)
+----
+-36
+
+query R nosort
+SELECT CAST(-36 AS DOUBLE) + 0.5
+----
+-35.500
+
+query I nosort
+SELECT CAST('-35' AS BIGINT)
+----
+-35
+
+query T nosort
+SELECT CAST(-35 AS VARCHAR)
+----
+-35
+
+query R nosort
+SELECT CAST(-35 AS DOUBLE) + 0.5
+----
+-34.500
+
+query I nosort
+SELECT CAST('-34' AS BIGINT)
+----
+-34
+
+query T nosort
+SELECT CAST(-34 AS VARCHAR)
+----
+-34
+
+query R nosort
+SELECT CAST(-34 AS DOUBLE) + 0.5
+----
+-33.500
+
+query I nosort
+SELECT CAST('-33' AS BIGINT)
+----
+-33
+
+query T nosort
+SELECT CAST(-33 AS VARCHAR)
+----
+-33
+
+query R nosort
+SELECT CAST(-33 AS DOUBLE) + 0.5
+----
+-32.500
+
+query I nosort
+SELECT CAST('-32' AS BIGINT)
+----
+-32
+
+query T nosort
+SELECT CAST(-32 AS VARCHAR)
+----
+-32
+
+query R nosort
+SELECT CAST(-32 AS DOUBLE) + 0.5
+----
+-31.500
+
+query I nosort
+SELECT CAST('-31' AS BIGINT)
+----
+-31
+
+query T nosort
+SELECT CAST(-31 AS VARCHAR)
+----
+-31
+
+query R nosort
+SELECT CAST(-31 AS DOUBLE) + 0.5
+----
+-30.500
+
+query I nosort
+SELECT CAST('-30' AS BIGINT)
+----
+-30
+
+query T nosort
+SELECT CAST(-30 AS VARCHAR)
+----
+-30
+
+query R nosort
+SELECT CAST(-30 AS DOUBLE) + 0.5
+----
+-29.500
+
+query I nosort
+SELECT CAST('-29' AS BIGINT)
+----
+-29
+
+query T nosort
+SELECT CAST(-29 AS VARCHAR)
+----
+-29
+
+query R nosort
+SELECT CAST(-29 AS DOUBLE) + 0.5
+----
+-28.500
+
+query I nosort
+SELECT CAST('-28' AS BIGINT)
+----
+-28
+
+query T nosort
+SELECT CAST(-28 AS VARCHAR)
+----
+-28
+
+query R nosort
+SELECT CAST(-28 AS DOUBLE) + 0.5
+----
+-27.500
+
+query I nosort
+SELECT CAST('-27' AS BIGINT)
+----
+-27
+
+query T nosort
+SELECT CAST(-27 AS VARCHAR)
+----
+-27
+
+query R nosort
+SELECT CAST(-27 AS DOUBLE) + 0.5
+----
+-26.500
+
+query I nosort
+SELECT CAST('-26' AS BIGINT)
+----
+-26
+
+query T nosort
+SELECT CAST(-26 AS VARCHAR)
+----
+-26
+
+query R nosort
+SELECT CAST(-26 AS DOUBLE) + 0.5
+----
+-25.500
+
+query I nosort
+SELECT CAST('-25' AS BIGINT)
+----
+-25
+
+query T nosort
+SELECT CAST(-25 AS VARCHAR)
+----
+-25
+
+query R nosort
+SELECT CAST(-25 AS DOUBLE) + 0.5
+----
+-24.500
+
+query I nosort
+SELECT CAST('-24' AS BIGINT)
+----
+-24
+
+query T nosort
+SELECT CAST(-24 AS VARCHAR)
+----
+-24
+
+query R nosort
+SELECT CAST(-24 AS DOUBLE) + 0.5
+----
+-23.500
+
+query I nosort
+SELECT CAST('-23' AS BIGINT)
+----
+-23
+
+query T nosort
+SELECT CAST(-23 AS VARCHAR)
+----
+-23
+
+query R nosort
+SELECT CAST(-23 AS DOUBLE) + 0.5
+----
+-22.500
+
+query I nosort
+SELECT CAST('-22' AS BIGINT)
+----
+-22
+
+query T nosort
+SELECT CAST(-22 AS VARCHAR)
+----
+-22
+
+query R nosort
+SELECT CAST(-22 AS DOUBLE) + 0.5
+----
+-21.500
+
+query I nosort
+SELECT CAST('-21' AS BIGINT)
+----
+-21
+
+query T nosort
+SELECT CAST(-21 AS VARCHAR)
+----
+-21
+
+query R nosort
+SELECT CAST(-21 AS DOUBLE) + 0.5
+----
+-20.500
+
+query I nosort
+SELECT CAST('-20' AS BIGINT)
+----
+-20
+
+query T nosort
+SELECT CAST(-20 AS VARCHAR)
+----
+-20
+
+query R nosort
+SELECT CAST(-20 AS DOUBLE) + 0.5
+----
+-19.500
+
+query I nosort
+SELECT CAST('-19' AS BIGINT)
+----
+-19
+
+query T nosort
+SELECT CAST(-19 AS VARCHAR)
+----
+-19
+
+query R nosort
+SELECT CAST(-19 AS DOUBLE) + 0.5
+----
+-18.500
+
+query I nosort
+SELECT CAST('-18' AS BIGINT)
+----
+-18
+
+query T nosort
+SELECT CAST(-18 AS VARCHAR)
+----
+-18
+
+query R nosort
+SELECT CAST(-18 AS DOUBLE) + 0.5
+----
+-17.500
+
+query I nosort
+SELECT CAST('-17' AS BIGINT)
+----
+-17
+
+query T nosort
+SELECT CAST(-17 AS VARCHAR)
+----
+-17
+
+query R nosort
+SELECT CAST(-17 AS DOUBLE) + 0.5
+----
+-16.500
+
+query I nosort
+SELECT CAST('-16' AS BIGINT)
+----
+-16
+
+query T nosort
+SELECT CAST(-16 AS VARCHAR)
+----
+-16
+
+query R nosort
+SELECT CAST(-16 AS DOUBLE) + 0.5
+----
+-15.500
+
+query I nosort
+SELECT CAST('-15' AS BIGINT)
+----
+-15
+
+query T nosort
+SELECT CAST(-15 AS VARCHAR)
+----
+-15
+
+query R nosort
+SELECT CAST(-15 AS DOUBLE) + 0.5
+----
+-14.500
+
+query I nosort
+SELECT CAST('-14' AS BIGINT)
+----
+-14
+
+query T nosort
+SELECT CAST(-14 AS VARCHAR)
+----
+-14
+
+query R nosort
+SELECT CAST(-14 AS DOUBLE) + 0.5
+----
+-13.500
+
+query I nosort
+SELECT CAST('-13' AS BIGINT)
+----
+-13
+
+query T nosort
+SELECT CAST(-13 AS VARCHAR)
+----
+-13
+
+query R nosort
+SELECT CAST(-13 AS DOUBLE) + 0.5
+----
+-12.500
+
+query I nosort
+SELECT CAST('-12' AS BIGINT)
+----
+-12
+
+query T nosort
+SELECT CAST(-12 AS VARCHAR)
+----
+-12
+
+query R nosort
+SELECT CAST(-12 AS DOUBLE) + 0.5
+----
+-11.500
+
+query I nosort
+SELECT CAST('-11' AS BIGINT)
+----
+-11
+
+query T nosort
+SELECT CAST(-11 AS VARCHAR)
+----
+-11
+
+query R nosort
+SELECT CAST(-11 AS DOUBLE) + 0.5
+----
+-10.500
+
+query I nosort
+SELECT CAST('-10' AS BIGINT)
+----
+-10
+
+query T nosort
+SELECT CAST(-10 AS VARCHAR)
+----
+-10
+
+query R nosort
+SELECT CAST(-10 AS DOUBLE) + 0.5
+----
+-9.500
+
+query I nosort
+SELECT CAST('-9' AS BIGINT)
+----
+-9
+
+query T nosort
+SELECT CAST(-9 AS VARCHAR)
+----
+-9
+
+query R nosort
+SELECT CAST(-9 AS DOUBLE) + 0.5
+----
+-8.500
+
+query I nosort
+SELECT CAST('-8' AS BIGINT)
+----
+-8
+
+query T nosort
+SELECT CAST(-8 AS VARCHAR)
+----
+-8
+
+query R nosort
+SELECT CAST(-8 AS DOUBLE) + 0.5
+----
+-7.500
+
+query I nosort
+SELECT CAST('-7' AS BIGINT)
+----
+-7
+
+query T nosort
+SELECT CAST(-7 AS VARCHAR)
+----
+-7
+
+query R nosort
+SELECT CAST(-7 AS DOUBLE) + 0.5
+----
+-6.500
+
+query I nosort
+SELECT CAST('-6' AS BIGINT)
+----
+-6
+
+query T nosort
+SELECT CAST(-6 AS VARCHAR)
+----
+-6
+
+query R nosort
+SELECT CAST(-6 AS DOUBLE) + 0.5
+----
+-5.500
+
+query I nosort
+SELECT CAST('-5' AS BIGINT)
+----
+-5
+
+query T nosort
+SELECT CAST(-5 AS VARCHAR)
+----
+-5
+
+query R nosort
+SELECT CAST(-5 AS DOUBLE) + 0.5
+----
+-4.500
+
+query I nosort
+SELECT CAST('-4' AS BIGINT)
+----
+-4
+
+query T nosort
+SELECT CAST(-4 AS VARCHAR)
+----
+-4
+
+query R nosort
+SELECT CAST(-4 AS DOUBLE) + 0.5
+----
+-3.500
+
+query I nosort
+SELECT CAST('-3' AS BIGINT)
+----
+-3
+
+query T nosort
+SELECT CAST(-3 AS VARCHAR)
+----
+-3
+
+query R nosort
+SELECT CAST(-3 AS DOUBLE) + 0.5
+----
+-2.500
+
+query I nosort
+SELECT CAST('-2' AS BIGINT)
+----
+-2
+
+query T nosort
+SELECT CAST(-2 AS VARCHAR)
+----
+-2
+
+query R nosort
+SELECT CAST(-2 AS DOUBLE) + 0.5
+----
+-1.500
+
+query I nosort
+SELECT CAST('-1' AS BIGINT)
+----
+-1
+
+query T nosort
+SELECT CAST(-1 AS VARCHAR)
+----
+-1
+
+query R nosort
+SELECT CAST(-1 AS DOUBLE) + 0.5
+----
+-0.500
+
+query I nosort
+SELECT CAST('0' AS BIGINT)
+----
+0
+
+query T nosort
+SELECT CAST(0 AS VARCHAR)
+----
+0
+
+query R nosort
+SELECT CAST(0 AS DOUBLE) + 0.5
+----
+0.500
+
+query I nosort
+SELECT CAST('1' AS BIGINT)
+----
+1
+
+query T nosort
+SELECT CAST(1 AS VARCHAR)
+----
+1
+
+query R nosort
+SELECT CAST(1 AS DOUBLE) + 0.5
+----
+1.500
+
+query I nosort
+SELECT CAST('2' AS BIGINT)
+----
+2
+
+query T nosort
+SELECT CAST(2 AS VARCHAR)
+----
+2
+
+query R nosort
+SELECT CAST(2 AS DOUBLE) + 0.5
+----
+2.500
+
+query I nosort
+SELECT CAST('3' AS BIGINT)
+----
+3
+
+query T nosort
+SELECT CAST(3 AS VARCHAR)
+----
+3
+
+query R nosort
+SELECT CAST(3 AS DOUBLE) + 0.5
+----
+3.500
+
+query I nosort
+SELECT CAST('4' AS BIGINT)
+----
+4
+
+query T nosort
+SELECT CAST(4 AS VARCHAR)
+----
+4
+
+query R nosort
+SELECT CAST(4 AS DOUBLE) + 0.5
+----
+4.500
+
+query I nosort
+SELECT CAST('5' AS BIGINT)
+----
+5
+
+query T nosort
+SELECT CAST(5 AS VARCHAR)
+----
+5
+
+query R nosort
+SELECT CAST(5 AS DOUBLE) + 0.5
+----
+5.500
+
+query I nosort
+SELECT CAST('6' AS BIGINT)
+----
+6
+
+query T nosort
+SELECT CAST(6 AS VARCHAR)
+----
+6
+
+query R nosort
+SELECT CAST(6 AS DOUBLE) + 0.5
+----
+6.500
+
+query I nosort
+SELECT CAST('7' AS BIGINT)
+----
+7
+
+query T nosort
+SELECT CAST(7 AS VARCHAR)
+----
+7
+
+query R nosort
+SELECT CAST(7 AS DOUBLE) + 0.5
+----
+7.500
+
+query I nosort
+SELECT CAST('8' AS BIGINT)
+----
+8
+
+query T nosort
+SELECT CAST(8 AS VARCHAR)
+----
+8
+
+query R nosort
+SELECT CAST(8 AS DOUBLE) + 0.5
+----
+8.500
+
+query I nosort
+SELECT CAST('9' AS BIGINT)
+----
+9
+
+query T nosort
+SELECT CAST(9 AS VARCHAR)
+----
+9
+
+query R nosort
+SELECT CAST(9 AS DOUBLE) + 0.5
+----
+9.500
+
+query I nosort
+SELECT CAST('10' AS BIGINT)
+----
+10
+
+query T nosort
+SELECT CAST(10 AS VARCHAR)
+----
+10
+
+query R nosort
+SELECT CAST(10 AS DOUBLE) + 0.5
+----
+10.500
+
+query I nosort
+SELECT CAST('11' AS BIGINT)
+----
+11
+
+query T nosort
+SELECT CAST(11 AS VARCHAR)
+----
+11
+
+query R nosort
+SELECT CAST(11 AS DOUBLE) + 0.5
+----
+11.500
+
+query I nosort
+SELECT CAST('12' AS BIGINT)
+----
+12
+
+query T nosort
+SELECT CAST(12 AS VARCHAR)
+----
+12
+
+query R nosort
+SELECT CAST(12 AS DOUBLE) + 0.5
+----
+12.500
+
+query I nosort
+SELECT CAST('13' AS BIGINT)
+----
+13
+
+query T nosort
+SELECT CAST(13 AS VARCHAR)
+----
+13
+
+query R nosort
+SELECT CAST(13 AS DOUBLE) + 0.5
+----
+13.500
+
+query I nosort
+SELECT CAST('14' AS BIGINT)
+----
+14
+
+query T nosort
+SELECT CAST(14 AS VARCHAR)
+----
+14
+
+query R nosort
+SELECT CAST(14 AS DOUBLE) + 0.5
+----
+14.500
+
+query I nosort
+SELECT CAST('15' AS BIGINT)
+----
+15
+
+query T nosort
+SELECT CAST(15 AS VARCHAR)
+----
+15
+
+query R nosort
+SELECT CAST(15 AS DOUBLE) + 0.5
+----
+15.500
+
+query I nosort
+SELECT CAST('16' AS BIGINT)
+----
+16
+
+query T nosort
+SELECT CAST(16 AS VARCHAR)
+----
+16
+
+query R nosort
+SELECT CAST(16 AS DOUBLE) + 0.5
+----
+16.500
+
+query I nosort
+SELECT CAST('17' AS BIGINT)
+----
+17
+
+query T nosort
+SELECT CAST(17 AS VARCHAR)
+----
+17
+
+query R nosort
+SELECT CAST(17 AS DOUBLE) + 0.5
+----
+17.500
+
+query I nosort
+SELECT CAST('18' AS BIGINT)
+----
+18
+
+query T nosort
+SELECT CAST(18 AS VARCHAR)
+----
+18
+
+query R nosort
+SELECT CAST(18 AS DOUBLE) + 0.5
+----
+18.500
+
+query I nosort
+SELECT CAST('19' AS BIGINT)
+----
+19
+
+query T nosort
+SELECT CAST(19 AS VARCHAR)
+----
+19
+
+query R nosort
+SELECT CAST(19 AS DOUBLE) + 0.5
+----
+19.500
+
+query I nosort
+SELECT CAST('20' AS BIGINT)
+----
+20
+
+query T nosort
+SELECT CAST(20 AS VARCHAR)
+----
+20
+
+query R nosort
+SELECT CAST(20 AS DOUBLE) + 0.5
+----
+20.500
+
+query I nosort
+SELECT CAST('21' AS BIGINT)
+----
+21
+
+query T nosort
+SELECT CAST(21 AS VARCHAR)
+----
+21
+
+query R nosort
+SELECT CAST(21 AS DOUBLE) + 0.5
+----
+21.500
+
+query I nosort
+SELECT CAST('22' AS BIGINT)
+----
+22
+
+query T nosort
+SELECT CAST(22 AS VARCHAR)
+----
+22
+
+query R nosort
+SELECT CAST(22 AS DOUBLE) + 0.5
+----
+22.500
+
+query I nosort
+SELECT CAST('23' AS BIGINT)
+----
+23
+
+query T nosort
+SELECT CAST(23 AS VARCHAR)
+----
+23
+
+query R nosort
+SELECT CAST(23 AS DOUBLE) + 0.5
+----
+23.500
+
+query I nosort
+SELECT CAST('24' AS BIGINT)
+----
+24
+
+query T nosort
+SELECT CAST(24 AS VARCHAR)
+----
+24
+
+query R nosort
+SELECT CAST(24 AS DOUBLE) + 0.5
+----
+24.500
+
+query I nosort
+SELECT CAST('25' AS BIGINT)
+----
+25
+
+query T nosort
+SELECT CAST(25 AS VARCHAR)
+----
+25
+
+query R nosort
+SELECT CAST(25 AS DOUBLE) + 0.5
+----
+25.500
+
+query I nosort
+SELECT CAST('26' AS BIGINT)
+----
+26
+
+query T nosort
+SELECT CAST(26 AS VARCHAR)
+----
+26
+
+query R nosort
+SELECT CAST(26 AS DOUBLE) + 0.5
+----
+26.500
+
+query I nosort
+SELECT CAST('27' AS BIGINT)
+----
+27
+
+query T nosort
+SELECT CAST(27 AS VARCHAR)
+----
+27
+
+query R nosort
+SELECT CAST(27 AS DOUBLE) + 0.5
+----
+27.500
+
+query I nosort
+SELECT CAST('28' AS BIGINT)
+----
+28
+
+query T nosort
+SELECT CAST(28 AS VARCHAR)
+----
+28
+
+query R nosort
+SELECT CAST(28 AS DOUBLE) + 0.5
+----
+28.500
+
+query I nosort
+SELECT CAST('29' AS BIGINT)
+----
+29
+
+query T nosort
+SELECT CAST(29 AS VARCHAR)
+----
+29
+
+query R nosort
+SELECT CAST(29 AS DOUBLE) + 0.5
+----
+29.500
+
+query I nosort
+SELECT CAST('30' AS BIGINT)
+----
+30
+
+query T nosort
+SELECT CAST(30 AS VARCHAR)
+----
+30
+
+query R nosort
+SELECT CAST(30 AS DOUBLE) + 0.5
+----
+30.500
+
+query I nosort
+SELECT CAST('31' AS BIGINT)
+----
+31
+
+query T nosort
+SELECT CAST(31 AS VARCHAR)
+----
+31
+
+query R nosort
+SELECT CAST(31 AS DOUBLE) + 0.5
+----
+31.500
+
+query I nosort
+SELECT CAST('32' AS BIGINT)
+----
+32
+
+query T nosort
+SELECT CAST(32 AS VARCHAR)
+----
+32
+
+query R nosort
+SELECT CAST(32 AS DOUBLE) + 0.5
+----
+32.500
+
+query I nosort
+SELECT CAST('33' AS BIGINT)
+----
+33
+
+query T nosort
+SELECT CAST(33 AS VARCHAR)
+----
+33
+
+query R nosort
+SELECT CAST(33 AS DOUBLE) + 0.5
+----
+33.500
+
+query I nosort
+SELECT CAST('34' AS BIGINT)
+----
+34
+
+query T nosort
+SELECT CAST(34 AS VARCHAR)
+----
+34
+
+query R nosort
+SELECT CAST(34 AS DOUBLE) + 0.5
+----
+34.500
+
+query I nosort
+SELECT CAST('35' AS BIGINT)
+----
+35
+
+query T nosort
+SELECT CAST(35 AS VARCHAR)
+----
+35
+
+query R nosort
+SELECT CAST(35 AS DOUBLE) + 0.5
+----
+35.500
+
+query I nosort
+SELECT CAST('36' AS BIGINT)
+----
+36
+
+query T nosort
+SELECT CAST(36 AS VARCHAR)
+----
+36
+
+query R nosort
+SELECT CAST(36 AS DOUBLE) + 0.5
+----
+36.500
+
+query I nosort
+SELECT CAST('37' AS BIGINT)
+----
+37
+
+query T nosort
+SELECT CAST(37 AS VARCHAR)
+----
+37
+
+query R nosort
+SELECT CAST(37 AS DOUBLE) + 0.5
+----
+37.500
+
+query I nosort
+SELECT CAST('38' AS BIGINT)
+----
+38
+
+query T nosort
+SELECT CAST(38 AS VARCHAR)
+----
+38
+
+query R nosort
+SELECT CAST(38 AS DOUBLE) + 0.5
+----
+38.500
+
+query I nosort
+SELECT CAST('39' AS BIGINT)
+----
+39
+
+query T nosort
+SELECT CAST(39 AS VARCHAR)
+----
+39
+
+query R nosort
+SELECT CAST(39 AS DOUBLE) + 0.5
+----
+39.500
+
+query I nosort
+SELECT CAST('40' AS BIGINT)
+----
+40
+
+query T nosort
+SELECT CAST(40 AS VARCHAR)
+----
+40
+
+query R nosort
+SELECT CAST(40 AS DOUBLE) + 0.5
+----
+40.500
+
+query I nosort
+SELECT TRY_CAST('abc' AS BIGINT)
+----
+NULL
+
+query I nosort
+SELECT TRY_CAST('12.34.56' AS BIGINT)
+----
+NULL
+
+query I nosort
+SELECT TRY_CAST('' AS BIGINT)
+----
+NULL
+
+query I nosort
+SELECT TRY_CAST('not_a_number' AS BIGINT)
+----
+NULL
+
+query I nosort
+SELECT TRY_CAST('999999999999999999999999999' AS BIGINT)
+----
+NULL
+
+query R nosort
+SELECT TRY_CAST('abc' AS DOUBLE)
+----
+NULL
+
+query R nosort
+SELECT TRY_CAST('12.34.56' AS DOUBLE)
+----
+NULL
+
+query R nosort
+SELECT TRY_CAST('' AS DOUBLE)
+----
+NULL
+
+query R nosort
+SELECT TRY_CAST('not_a_number' AS DOUBLE)
+----
+NULL
+
+query R nosort
+SELECT TRY_CAST('1e999_bad' AS DOUBLE)
+----
+NULL

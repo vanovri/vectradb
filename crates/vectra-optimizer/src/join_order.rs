@@ -2,8 +2,8 @@
 //! - Genuine Moerkotte & Neumann (VLDB 2006) `DPccp` (`EnumerateCsg` / `EnumerateCmp`) over
 //!   connected subgraphs with zero tree/stats allocations in the DP hot loop (24-byte `Copy` table
 //!   entries, precomputed edge selectivities, bounded pair budget with seamless `GOO` fallback for
-//!   dense cliques or `N > 14`).
-//! - $O(N^2)$ Greedy Operator Ordering (`GOO`) for large graphs (`N > 14`, sub-5ms for 24-30 tables).
+//!   dense cliques or `N > 12`).
+//! - $O(N^2)$ Greedy Operator Ordering (`GOO`) for large graphs (`N > 12`, sub-5ms for 24-30 tables).
 //! - Build-side orientation invariant: smaller estimated cardinality ALWAYS placed on Right (Build)
 //!   side for symmetric `INNER` and flippable `LEFT <-> RIGHT` outer joins.
 
@@ -20,7 +20,7 @@ use vectra_sql::{ColId, JoinType, LogicalExpr, LogicalPlan};
 const DP_MAX_RELATIONS: usize = 12;
 const DPCCP_PAIR_BUDGET: usize = 8_000;
 
-/// Reorders all reorderable join hypergraphs bottom-up using DPccp (N<=14) or GOO (N>14).
+/// Reorders all reorderable join hypergraphs bottom-up using DPccp (N<=12) or GOO (N>12).
 pub fn reorder_joins(plan: LogicalPlan, stats_catalog: &StatsCatalog) -> LogicalPlan {
     match plan {
         LogicalPlan::Join {
@@ -519,7 +519,7 @@ fn precompute_edge_selectivity(expr: &LogicalExpr, rel_stats: &[PlanStats]) -> f
         .clamp(1e-6, 1.0)
 }
 
-/// $O(N^2)$ Greedy Operator Ordering (GOO) for large or dense join graphs (`N > 14`).
+/// $O(N^2)$ Greedy Operator Ordering (GOO) for large or dense join graphs (`N > 12`).
 fn optimize_goo(
     rels: Vec<LogicalPlan>,
     mut remaining_preds: Vec<LogicalExpr>,

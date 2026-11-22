@@ -1,0 +1,1051 @@
+# 04_comparisons_nulls.slt — VectraDB M07 sqllogictest suite
+
+query B nosort
+SELECT NULL IS NULL
+----
+true
+
+query B nosort
+SELECT NULL IS NOT NULL
+----
+false
+
+query B nosort
+SELECT NULL = NULL
+----
+NULL
+
+query B nosort
+SELECT NULL <> NULL
+----
+NULL
+
+query B nosort
+SELECT NULL < NULL
+----
+NULL
+
+query B nosort
+SELECT NULL <= NULL
+----
+NULL
+
+query B nosort
+SELECT NULL > NULL
+----
+NULL
+
+query B nosort
+SELECT NULL >= NULL
+----
+NULL
+
+query B nosort
+SELECT NULL IS DISTINCT FROM NULL
+----
+false
+
+query B nosort
+SELECT NULL IS NOT DISTINCT FROM NULL
+----
+true
+
+query B nosort
+SELECT NULL = -10
+----
+NULL
+
+query B nosort
+SELECT NULL <> -10
+----
+NULL
+
+query B nosort
+SELECT NULL < -10
+----
+NULL
+
+query B nosort
+SELECT NULL <= -10
+----
+NULL
+
+query B nosort
+SELECT NULL > -10
+----
+NULL
+
+query B nosort
+SELECT NULL >= -10
+----
+NULL
+
+query B nosort
+SELECT NULL IS DISTINCT FROM -10
+----
+true
+
+query B nosort
+SELECT NULL IS NOT DISTINCT FROM -10
+----
+false
+
+query B nosort
+SELECT NULL = 0
+----
+NULL
+
+query B nosort
+SELECT NULL <> 0
+----
+NULL
+
+query B nosort
+SELECT NULL < 0
+----
+NULL
+
+query B nosort
+SELECT NULL <= 0
+----
+NULL
+
+query B nosort
+SELECT NULL > 0
+----
+NULL
+
+query B nosort
+SELECT NULL >= 0
+----
+NULL
+
+query B nosort
+SELECT NULL IS DISTINCT FROM 0
+----
+true
+
+query B nosort
+SELECT NULL IS NOT DISTINCT FROM 0
+----
+false
+
+query B nosort
+SELECT NULL = 1
+----
+NULL
+
+query B nosort
+SELECT NULL <> 1
+----
+NULL
+
+query B nosort
+SELECT NULL < 1
+----
+NULL
+
+query B nosort
+SELECT NULL <= 1
+----
+NULL
+
+query B nosort
+SELECT NULL > 1
+----
+NULL
+
+query B nosort
+SELECT NULL >= 1
+----
+NULL
+
+query B nosort
+SELECT NULL IS DISTINCT FROM 1
+----
+true
+
+query B nosort
+SELECT NULL IS NOT DISTINCT FROM 1
+----
+false
+
+query B nosort
+SELECT NULL = 10
+----
+NULL
+
+query B nosort
+SELECT NULL <> 10
+----
+NULL
+
+query B nosort
+SELECT NULL < 10
+----
+NULL
+
+query B nosort
+SELECT NULL <= 10
+----
+NULL
+
+query B nosort
+SELECT NULL > 10
+----
+NULL
+
+query B nosort
+SELECT NULL >= 10
+----
+NULL
+
+query B nosort
+SELECT NULL IS DISTINCT FROM 10
+----
+true
+
+query B nosort
+SELECT NULL IS NOT DISTINCT FROM 10
+----
+false
+
+query B nosort
+SELECT -10 IS NULL
+----
+false
+
+query B nosort
+SELECT -10 IS NOT NULL
+----
+true
+
+query B nosort
+SELECT -10 = NULL
+----
+NULL
+
+query B nosort
+SELECT -10 <> NULL
+----
+NULL
+
+query B nosort
+SELECT -10 < NULL
+----
+NULL
+
+query B nosort
+SELECT -10 <= NULL
+----
+NULL
+
+query B nosort
+SELECT -10 > NULL
+----
+NULL
+
+query B nosort
+SELECT -10 >= NULL
+----
+NULL
+
+query B nosort
+SELECT -10 IS DISTINCT FROM NULL
+----
+true
+
+query B nosort
+SELECT -10 IS NOT DISTINCT FROM NULL
+----
+false
+
+query B nosort
+SELECT -10 = -10
+----
+true
+
+query B nosort
+SELECT -10 <> -10
+----
+false
+
+query B nosort
+SELECT -10 < -10
+----
+false
+
+query B nosort
+SELECT -10 <= -10
+----
+true
+
+query B nosort
+SELECT -10 > -10
+----
+false
+
+query B nosort
+SELECT -10 >= -10
+----
+true
+
+query B nosort
+SELECT -10 IS DISTINCT FROM -10
+----
+false
+
+query B nosort
+SELECT -10 IS NOT DISTINCT FROM -10
+----
+true
+
+query B nosort
+SELECT -10 = 0
+----
+false
+
+query B nosort
+SELECT -10 <> 0
+----
+true
+
+query B nosort
+SELECT -10 < 0
+----
+true
+
+query B nosort
+SELECT -10 <= 0
+----
+true
+
+query B nosort
+SELECT -10 > 0
+----
+false
+
+query B nosort
+SELECT -10 >= 0
+----
+false
+
+query B nosort
+SELECT -10 IS DISTINCT FROM 0
+----
+true
+
+query B nosort
+SELECT -10 IS NOT DISTINCT FROM 0
+----
+false
+
+query B nosort
+SELECT -10 = 1
+----
+false
+
+query B nosort
+SELECT -10 <> 1
+----
+true
+
+query B nosort
+SELECT -10 < 1
+----
+true
+
+query B nosort
+SELECT -10 <= 1
+----
+true
+
+query B nosort
+SELECT -10 > 1
+----
+false
+
+query B nosort
+SELECT -10 >= 1
+----
+false
+
+query B nosort
+SELECT -10 IS DISTINCT FROM 1
+----
+true
+
+query B nosort
+SELECT -10 IS NOT DISTINCT FROM 1
+----
+false
+
+query B nosort
+SELECT -10 = 10
+----
+false
+
+query B nosort
+SELECT -10 <> 10
+----
+true
+
+query B nosort
+SELECT -10 < 10
+----
+true
+
+query B nosort
+SELECT -10 <= 10
+----
+true
+
+query B nosort
+SELECT -10 > 10
+----
+false
+
+query B nosort
+SELECT -10 >= 10
+----
+false
+
+query B nosort
+SELECT -10 IS DISTINCT FROM 10
+----
+true
+
+query B nosort
+SELECT -10 IS NOT DISTINCT FROM 10
+----
+false
+
+query B nosort
+SELECT 0 IS NULL
+----
+false
+
+query B nosort
+SELECT 0 IS NOT NULL
+----
+true
+
+query B nosort
+SELECT 0 = NULL
+----
+NULL
+
+query B nosort
+SELECT 0 <> NULL
+----
+NULL
+
+query B nosort
+SELECT 0 < NULL
+----
+NULL
+
+query B nosort
+SELECT 0 <= NULL
+----
+NULL
+
+query B nosort
+SELECT 0 > NULL
+----
+NULL
+
+query B nosort
+SELECT 0 >= NULL
+----
+NULL
+
+query B nosort
+SELECT 0 IS DISTINCT FROM NULL
+----
+true
+
+query B nosort
+SELECT 0 IS NOT DISTINCT FROM NULL
+----
+false
+
+query B nosort
+SELECT 0 = -10
+----
+false
+
+query B nosort
+SELECT 0 <> -10
+----
+true
+
+query B nosort
+SELECT 0 < -10
+----
+false
+
+query B nosort
+SELECT 0 <= -10
+----
+false
+
+query B nosort
+SELECT 0 > -10
+----
+true
+
+query B nosort
+SELECT 0 >= -10
+----
+true
+
+query B nosort
+SELECT 0 IS DISTINCT FROM -10
+----
+true
+
+query B nosort
+SELECT 0 IS NOT DISTINCT FROM -10
+----
+false
+
+query B nosort
+SELECT 0 = 0
+----
+true
+
+query B nosort
+SELECT 0 <> 0
+----
+false
+
+query B nosort
+SELECT 0 < 0
+----
+false
+
+query B nosort
+SELECT 0 <= 0
+----
+true
+
+query B nosort
+SELECT 0 > 0
+----
+false
+
+query B nosort
+SELECT 0 >= 0
+----
+true
+
+query B nosort
+SELECT 0 IS DISTINCT FROM 0
+----
+false
+
+query B nosort
+SELECT 0 IS NOT DISTINCT FROM 0
+----
+true
+
+query B nosort
+SELECT 0 = 1
+----
+false
+
+query B nosort
+SELECT 0 <> 1
+----
+true
+
+query B nosort
+SELECT 0 < 1
+----
+true
+
+query B nosort
+SELECT 0 <= 1
+----
+true
+
+query B nosort
+SELECT 0 > 1
+----
+false
+
+query B nosort
+SELECT 0 >= 1
+----
+false
+
+query B nosort
+SELECT 0 IS DISTINCT FROM 1
+----
+true
+
+query B nosort
+SELECT 0 IS NOT DISTINCT FROM 1
+----
+false
+
+query B nosort
+SELECT 0 = 10
+----
+false
+
+query B nosort
+SELECT 0 <> 10
+----
+true
+
+query B nosort
+SELECT 0 < 10
+----
+true
+
+query B nosort
+SELECT 0 <= 10
+----
+true
+
+query B nosort
+SELECT 0 > 10
+----
+false
+
+query B nosort
+SELECT 0 >= 10
+----
+false
+
+query B nosort
+SELECT 0 IS DISTINCT FROM 10
+----
+true
+
+query B nosort
+SELECT 0 IS NOT DISTINCT FROM 10
+----
+false
+
+query B nosort
+SELECT 1 IS NULL
+----
+false
+
+query B nosort
+SELECT 1 IS NOT NULL
+----
+true
+
+query B nosort
+SELECT 1 = NULL
+----
+NULL
+
+query B nosort
+SELECT 1 <> NULL
+----
+NULL
+
+query B nosort
+SELECT 1 < NULL
+----
+NULL
+
+query B nosort
+SELECT 1 <= NULL
+----
+NULL
+
+query B nosort
+SELECT 1 > NULL
+----
+NULL
+
+query B nosort
+SELECT 1 >= NULL
+----
+NULL
+
+query B nosort
+SELECT 1 IS DISTINCT FROM NULL
+----
+true
+
+query B nosort
+SELECT 1 IS NOT DISTINCT FROM NULL
+----
+false
+
+query B nosort
+SELECT 1 = -10
+----
+false
+
+query B nosort
+SELECT 1 <> -10
+----
+true
+
+query B nosort
+SELECT 1 < -10
+----
+false
+
+query B nosort
+SELECT 1 <= -10
+----
+false
+
+query B nosort
+SELECT 1 > -10
+----
+true
+
+query B nosort
+SELECT 1 >= -10
+----
+true
+
+query B nosort
+SELECT 1 IS DISTINCT FROM -10
+----
+true
+
+query B nosort
+SELECT 1 IS NOT DISTINCT FROM -10
+----
+false
+
+query B nosort
+SELECT 1 = 0
+----
+false
+
+query B nosort
+SELECT 1 <> 0
+----
+true
+
+query B nosort
+SELECT 1 < 0
+----
+false
+
+query B nosort
+SELECT 1 <= 0
+----
+false
+
+query B nosort
+SELECT 1 > 0
+----
+true
+
+query B nosort
+SELECT 1 >= 0
+----
+true
+
+query B nosort
+SELECT 1 IS DISTINCT FROM 0
+----
+true
+
+query B nosort
+SELECT 1 IS NOT DISTINCT FROM 0
+----
+false
+
+query B nosort
+SELECT 1 = 1
+----
+true
+
+query B nosort
+SELECT 1 <> 1
+----
+false
+
+query B nosort
+SELECT 1 < 1
+----
+false
+
+query B nosort
+SELECT 1 <= 1
+----
+true
+
+query B nosort
+SELECT 1 > 1
+----
+false
+
+query B nosort
+SELECT 1 >= 1
+----
+true
+
+query B nosort
+SELECT 1 IS DISTINCT FROM 1
+----
+false
+
+query B nosort
+SELECT 1 IS NOT DISTINCT FROM 1
+----
+true
+
+query B nosort
+SELECT 1 = 10
+----
+false
+
+query B nosort
+SELECT 1 <> 10
+----
+true
+
+query B nosort
+SELECT 1 < 10
+----
+true
+
+query B nosort
+SELECT 1 <= 10
+----
+true
+
+query B nosort
+SELECT 1 > 10
+----
+false
+
+query B nosort
+SELECT 1 >= 10
+----
+false
+
+query B nosort
+SELECT 1 IS DISTINCT FROM 10
+----
+true
+
+query B nosort
+SELECT 1 IS NOT DISTINCT FROM 10
+----
+false
+
+query B nosort
+SELECT 10 IS NULL
+----
+false
+
+query B nosort
+SELECT 10 IS NOT NULL
+----
+true
+
+query B nosort
+SELECT 10 = NULL
+----
+NULL
+
+query B nosort
+SELECT 10 <> NULL
+----
+NULL
+
+query B nosort
+SELECT 10 < NULL
+----
+NULL
+
+query B nosort
+SELECT 10 <= NULL
+----
+NULL
+
+query B nosort
+SELECT 10 > NULL
+----
+NULL
+
+query B nosort
+SELECT 10 >= NULL
+----
+NULL
+
+query B nosort
+SELECT 10 IS DISTINCT FROM NULL
+----
+true
+
+query B nosort
+SELECT 10 IS NOT DISTINCT FROM NULL
+----
+false
+
+query B nosort
+SELECT 10 = -10
+----
+false
+
+query B nosort
+SELECT 10 <> -10
+----
+true
+
+query B nosort
+SELECT 10 < -10
+----
+false
+
+query B nosort
+SELECT 10 <= -10
+----
+false
+
+query B nosort
+SELECT 10 > -10
+----
+true
+
+query B nosort
+SELECT 10 >= -10
+----
+true
+
+query B nosort
+SELECT 10 IS DISTINCT FROM -10
+----
+true
+
+query B nosort
+SELECT 10 IS NOT DISTINCT FROM -10
+----
+false
+
+query B nosort
+SELECT 10 = 0
+----
+false
+
+query B nosort
+SELECT 10 <> 0
+----
+true
+
+query B nosort
+SELECT 10 < 0
+----
+false
+
+query B nosort
+SELECT 10 <= 0
+----
+false
+
+query B nosort
+SELECT 10 > 0
+----
+true
+
+query B nosort
+SELECT 10 >= 0
+----
+true
+
+query B nosort
+SELECT 10 IS DISTINCT FROM 0
+----
+true
+
+query B nosort
+SELECT 10 IS NOT DISTINCT FROM 0
+----
+false
+
+query B nosort
+SELECT 10 = 1
+----
+false
+
+query B nosort
+SELECT 10 <> 1
+----
+true
+
+query B nosort
+SELECT 10 < 1
+----
+false
+
+query B nosort
+SELECT 10 <= 1
+----
+false
+
+query B nosort
+SELECT 10 > 1
+----
+true
+
+query B nosort
+SELECT 10 >= 1
+----
+true
+
+query B nosort
+SELECT 10 IS DISTINCT FROM 1
+----
+true
+
+query B nosort
+SELECT 10 IS NOT DISTINCT FROM 1
+----
+false
+
+query B nosort
+SELECT 10 = 10
+----
+true
+
+query B nosort
+SELECT 10 <> 10
+----
+false
+
+query B nosort
+SELECT 10 < 10
+----
+false
+
+query B nosort
+SELECT 10 <= 10
+----
+true
+
+query B nosort
+SELECT 10 > 10
+----
+false
+
+query B nosort
+SELECT 10 >= 10
+----
+true
+
+query B nosort
+SELECT 10 IS DISTINCT FROM 10
+----
+false
+
+query B nosort
+SELECT 10 IS NOT DISTINCT FROM 10
+----
+true

@@ -1,0 +1,1186 @@
+# 03_kleene_3valued_logic.slt — VectraDB M07 sqllogictest suite
+
+query B nosort
+SELECT NOT (TRUE)
+----
+false
+
+query B nosort
+SELECT (TRUE) AND (TRUE)
+----
+true
+
+query B nosort
+SELECT (TRUE) OR (TRUE)
+----
+true
+
+query B nosort
+SELECT ((TRUE) AND (TRUE)) OR (TRUE)
+----
+true
+
+query B nosort
+SELECT ((TRUE) OR (TRUE)) AND (TRUE)
+----
+true
+
+query B nosort
+SELECT NOT ((TRUE) AND (TRUE)) OR (TRUE)
+----
+true
+
+query B nosort
+SELECT (NOT (TRUE) OR NOT (TRUE)) AND NOT (TRUE)
+----
+false
+
+query B nosort
+SELECT ((TRUE) OR NOT (TRUE)) OR ((TRUE) AND (TRUE))
+----
+true
+
+query B nosort
+SELECT NOT ((TRUE) OR (TRUE) OR (TRUE))
+----
+false
+
+query B nosort
+SELECT ((TRUE) AND (TRUE) AND (TRUE))
+----
+true
+
+query B nosort
+SELECT ((TRUE) IS NULL) OR (TRUE) OR (TRUE)
+----
+true
+
+query B nosort
+SELECT ((TRUE) AND (TRUE)) OR (FALSE)
+----
+true
+
+query B nosort
+SELECT ((TRUE) OR (TRUE)) AND (FALSE)
+----
+false
+
+query B nosort
+SELECT NOT ((TRUE) AND (TRUE)) OR (FALSE)
+----
+false
+
+query B nosort
+SELECT (NOT (TRUE) OR NOT (TRUE)) AND NOT (FALSE)
+----
+false
+
+query B nosort
+SELECT ((TRUE) OR NOT (TRUE)) OR ((TRUE) AND (FALSE))
+----
+true
+
+query B nosort
+SELECT NOT ((TRUE) OR (TRUE) OR (FALSE))
+----
+false
+
+query B nosort
+SELECT ((TRUE) AND (TRUE) AND (FALSE))
+----
+false
+
+query B nosort
+SELECT ((TRUE) IS NULL) OR (TRUE) OR (FALSE)
+----
+true
+
+query B nosort
+SELECT ((TRUE) AND (TRUE)) OR (CAST(NULL AS BOOLEAN))
+----
+true
+
+query B nosort
+SELECT ((TRUE) OR (TRUE)) AND (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT NOT ((TRUE) AND (TRUE)) OR (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT (NOT (TRUE) OR NOT (TRUE)) AND NOT (CAST(NULL AS BOOLEAN))
+----
+false
+
+query B nosort
+SELECT ((TRUE) OR NOT (TRUE)) OR ((TRUE) AND (CAST(NULL AS BOOLEAN)))
+----
+true
+
+query B nosort
+SELECT NOT ((TRUE) OR (TRUE) OR (CAST(NULL AS BOOLEAN)))
+----
+false
+
+query B nosort
+SELECT ((TRUE) AND (TRUE) AND (CAST(NULL AS BOOLEAN)))
+----
+NULL
+
+query B nosort
+SELECT ((TRUE) IS NULL) OR (TRUE) OR (CAST(NULL AS BOOLEAN))
+----
+true
+
+query B nosort
+SELECT (TRUE) AND (FALSE)
+----
+false
+
+query B nosort
+SELECT (TRUE) OR (FALSE)
+----
+true
+
+query B nosort
+SELECT ((TRUE) AND (FALSE)) OR (TRUE)
+----
+true
+
+query B nosort
+SELECT ((TRUE) OR (FALSE)) AND (TRUE)
+----
+true
+
+query B nosort
+SELECT NOT ((TRUE) AND (FALSE)) OR (TRUE)
+----
+true
+
+query B nosort
+SELECT (NOT (TRUE) OR NOT (FALSE)) AND NOT (TRUE)
+----
+false
+
+query B nosort
+SELECT ((TRUE) OR NOT (FALSE)) OR ((FALSE) AND (TRUE))
+----
+true
+
+query B nosort
+SELECT NOT ((TRUE) OR (FALSE) OR (TRUE))
+----
+false
+
+query B nosort
+SELECT ((TRUE) AND (FALSE) AND (TRUE))
+----
+false
+
+query B nosort
+SELECT ((TRUE) IS NULL) OR (FALSE) OR (TRUE)
+----
+true
+
+query B nosort
+SELECT ((TRUE) AND (FALSE)) OR (FALSE)
+----
+false
+
+query B nosort
+SELECT ((TRUE) OR (FALSE)) AND (FALSE)
+----
+false
+
+query B nosort
+SELECT NOT ((TRUE) AND (FALSE)) OR (FALSE)
+----
+true
+
+query B nosort
+SELECT (NOT (TRUE) OR NOT (FALSE)) AND NOT (FALSE)
+----
+true
+
+query B nosort
+SELECT ((TRUE) OR NOT (FALSE)) OR ((FALSE) AND (FALSE))
+----
+true
+
+query B nosort
+SELECT NOT ((TRUE) OR (FALSE) OR (FALSE))
+----
+false
+
+query B nosort
+SELECT ((TRUE) AND (FALSE) AND (FALSE))
+----
+false
+
+query B nosort
+SELECT ((TRUE) IS NULL) OR (FALSE) OR (FALSE)
+----
+false
+
+query B nosort
+SELECT ((TRUE) AND (FALSE)) OR (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT ((TRUE) OR (FALSE)) AND (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT NOT ((TRUE) AND (FALSE)) OR (CAST(NULL AS BOOLEAN))
+----
+true
+
+query B nosort
+SELECT (NOT (TRUE) OR NOT (FALSE)) AND NOT (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT ((TRUE) OR NOT (FALSE)) OR ((FALSE) AND (CAST(NULL AS BOOLEAN)))
+----
+true
+
+query B nosort
+SELECT NOT ((TRUE) OR (FALSE) OR (CAST(NULL AS BOOLEAN)))
+----
+false
+
+query B nosort
+SELECT ((TRUE) AND (FALSE) AND (CAST(NULL AS BOOLEAN)))
+----
+false
+
+query B nosort
+SELECT ((TRUE) IS NULL) OR (FALSE) OR (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT (TRUE) AND (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT (TRUE) OR (CAST(NULL AS BOOLEAN))
+----
+true
+
+query B nosort
+SELECT ((TRUE) AND (CAST(NULL AS BOOLEAN))) OR (TRUE)
+----
+true
+
+query B nosort
+SELECT ((TRUE) OR (CAST(NULL AS BOOLEAN))) AND (TRUE)
+----
+true
+
+query B nosort
+SELECT NOT ((TRUE) AND (CAST(NULL AS BOOLEAN))) OR (TRUE)
+----
+true
+
+query B nosort
+SELECT (NOT (TRUE) OR NOT (CAST(NULL AS BOOLEAN))) AND NOT (TRUE)
+----
+false
+
+query B nosort
+SELECT ((TRUE) OR NOT (CAST(NULL AS BOOLEAN))) OR ((CAST(NULL AS BOOLEAN)) AND (TRUE))
+----
+true
+
+query B nosort
+SELECT NOT ((TRUE) OR (CAST(NULL AS BOOLEAN)) OR (TRUE))
+----
+false
+
+query B nosort
+SELECT ((TRUE) AND (CAST(NULL AS BOOLEAN)) AND (TRUE))
+----
+NULL
+
+query B nosort
+SELECT ((TRUE) IS NULL) OR (CAST(NULL AS BOOLEAN)) OR (TRUE)
+----
+true
+
+query B nosort
+SELECT ((TRUE) AND (CAST(NULL AS BOOLEAN))) OR (FALSE)
+----
+NULL
+
+query B nosort
+SELECT ((TRUE) OR (CAST(NULL AS BOOLEAN))) AND (FALSE)
+----
+false
+
+query B nosort
+SELECT NOT ((TRUE) AND (CAST(NULL AS BOOLEAN))) OR (FALSE)
+----
+NULL
+
+query B nosort
+SELECT (NOT (TRUE) OR NOT (CAST(NULL AS BOOLEAN))) AND NOT (FALSE)
+----
+NULL
+
+query B nosort
+SELECT ((TRUE) OR NOT (CAST(NULL AS BOOLEAN))) OR ((CAST(NULL AS BOOLEAN)) AND (FALSE))
+----
+true
+
+query B nosort
+SELECT NOT ((TRUE) OR (CAST(NULL AS BOOLEAN)) OR (FALSE))
+----
+false
+
+query B nosort
+SELECT ((TRUE) AND (CAST(NULL AS BOOLEAN)) AND (FALSE))
+----
+false
+
+query B nosort
+SELECT ((TRUE) IS NULL) OR (CAST(NULL AS BOOLEAN)) OR (FALSE)
+----
+NULL
+
+query B nosort
+SELECT ((TRUE) AND (CAST(NULL AS BOOLEAN))) OR (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT ((TRUE) OR (CAST(NULL AS BOOLEAN))) AND (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT NOT ((TRUE) AND (CAST(NULL AS BOOLEAN))) OR (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT (NOT (TRUE) OR NOT (CAST(NULL AS BOOLEAN))) AND NOT (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT ((TRUE) OR NOT (CAST(NULL AS BOOLEAN))) OR ((CAST(NULL AS BOOLEAN)) AND (CAST(NULL AS BOOLEAN)))
+----
+true
+
+query B nosort
+SELECT NOT ((TRUE) OR (CAST(NULL AS BOOLEAN)) OR (CAST(NULL AS BOOLEAN)))
+----
+false
+
+query B nosort
+SELECT ((TRUE) AND (CAST(NULL AS BOOLEAN)) AND (CAST(NULL AS BOOLEAN)))
+----
+NULL
+
+query B nosort
+SELECT ((TRUE) IS NULL) OR (CAST(NULL AS BOOLEAN)) OR (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT NOT (FALSE)
+----
+true
+
+query B nosort
+SELECT (FALSE) AND (TRUE)
+----
+false
+
+query B nosort
+SELECT (FALSE) OR (TRUE)
+----
+true
+
+query B nosort
+SELECT ((FALSE) AND (TRUE)) OR (TRUE)
+----
+true
+
+query B nosort
+SELECT ((FALSE) OR (TRUE)) AND (TRUE)
+----
+true
+
+query B nosort
+SELECT NOT ((FALSE) AND (TRUE)) OR (TRUE)
+----
+true
+
+query B nosort
+SELECT (NOT (FALSE) OR NOT (TRUE)) AND NOT (TRUE)
+----
+false
+
+query B nosort
+SELECT ((FALSE) OR NOT (TRUE)) OR ((TRUE) AND (TRUE))
+----
+true
+
+query B nosort
+SELECT NOT ((FALSE) OR (TRUE) OR (TRUE))
+----
+false
+
+query B nosort
+SELECT ((FALSE) AND (TRUE) AND (TRUE))
+----
+false
+
+query B nosort
+SELECT ((FALSE) IS NULL) OR (TRUE) OR (TRUE)
+----
+true
+
+query B nosort
+SELECT ((FALSE) AND (TRUE)) OR (FALSE)
+----
+false
+
+query B nosort
+SELECT ((FALSE) OR (TRUE)) AND (FALSE)
+----
+false
+
+query B nosort
+SELECT NOT ((FALSE) AND (TRUE)) OR (FALSE)
+----
+true
+
+query B nosort
+SELECT (NOT (FALSE) OR NOT (TRUE)) AND NOT (FALSE)
+----
+true
+
+query B nosort
+SELECT ((FALSE) OR NOT (TRUE)) OR ((TRUE) AND (FALSE))
+----
+false
+
+query B nosort
+SELECT NOT ((FALSE) OR (TRUE) OR (FALSE))
+----
+false
+
+query B nosort
+SELECT ((FALSE) AND (TRUE) AND (FALSE))
+----
+false
+
+query B nosort
+SELECT ((FALSE) IS NULL) OR (TRUE) OR (FALSE)
+----
+true
+
+query B nosort
+SELECT ((FALSE) AND (TRUE)) OR (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT ((FALSE) OR (TRUE)) AND (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT NOT ((FALSE) AND (TRUE)) OR (CAST(NULL AS BOOLEAN))
+----
+true
+
+query B nosort
+SELECT (NOT (FALSE) OR NOT (TRUE)) AND NOT (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT ((FALSE) OR NOT (TRUE)) OR ((TRUE) AND (CAST(NULL AS BOOLEAN)))
+----
+NULL
+
+query B nosort
+SELECT NOT ((FALSE) OR (TRUE) OR (CAST(NULL AS BOOLEAN)))
+----
+false
+
+query B nosort
+SELECT ((FALSE) AND (TRUE) AND (CAST(NULL AS BOOLEAN)))
+----
+false
+
+query B nosort
+SELECT ((FALSE) IS NULL) OR (TRUE) OR (CAST(NULL AS BOOLEAN))
+----
+true
+
+query B nosort
+SELECT (FALSE) AND (FALSE)
+----
+false
+
+query B nosort
+SELECT (FALSE) OR (FALSE)
+----
+false
+
+query B nosort
+SELECT ((FALSE) AND (FALSE)) OR (TRUE)
+----
+true
+
+query B nosort
+SELECT ((FALSE) OR (FALSE)) AND (TRUE)
+----
+false
+
+query B nosort
+SELECT NOT ((FALSE) AND (FALSE)) OR (TRUE)
+----
+true
+
+query B nosort
+SELECT (NOT (FALSE) OR NOT (FALSE)) AND NOT (TRUE)
+----
+false
+
+query B nosort
+SELECT ((FALSE) OR NOT (FALSE)) OR ((FALSE) AND (TRUE))
+----
+true
+
+query B nosort
+SELECT NOT ((FALSE) OR (FALSE) OR (TRUE))
+----
+false
+
+query B nosort
+SELECT ((FALSE) AND (FALSE) AND (TRUE))
+----
+false
+
+query B nosort
+SELECT ((FALSE) IS NULL) OR (FALSE) OR (TRUE)
+----
+true
+
+query B nosort
+SELECT ((FALSE) AND (FALSE)) OR (FALSE)
+----
+false
+
+query B nosort
+SELECT ((FALSE) OR (FALSE)) AND (FALSE)
+----
+false
+
+query B nosort
+SELECT NOT ((FALSE) AND (FALSE)) OR (FALSE)
+----
+true
+
+query B nosort
+SELECT (NOT (FALSE) OR NOT (FALSE)) AND NOT (FALSE)
+----
+true
+
+query B nosort
+SELECT ((FALSE) OR NOT (FALSE)) OR ((FALSE) AND (FALSE))
+----
+true
+
+query B nosort
+SELECT NOT ((FALSE) OR (FALSE) OR (FALSE))
+----
+true
+
+query B nosort
+SELECT ((FALSE) AND (FALSE) AND (FALSE))
+----
+false
+
+query B nosort
+SELECT ((FALSE) IS NULL) OR (FALSE) OR (FALSE)
+----
+false
+
+query B nosort
+SELECT ((FALSE) AND (FALSE)) OR (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT ((FALSE) OR (FALSE)) AND (CAST(NULL AS BOOLEAN))
+----
+false
+
+query B nosort
+SELECT NOT ((FALSE) AND (FALSE)) OR (CAST(NULL AS BOOLEAN))
+----
+true
+
+query B nosort
+SELECT (NOT (FALSE) OR NOT (FALSE)) AND NOT (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT ((FALSE) OR NOT (FALSE)) OR ((FALSE) AND (CAST(NULL AS BOOLEAN)))
+----
+true
+
+query B nosort
+SELECT NOT ((FALSE) OR (FALSE) OR (CAST(NULL AS BOOLEAN)))
+----
+NULL
+
+query B nosort
+SELECT ((FALSE) AND (FALSE) AND (CAST(NULL AS BOOLEAN)))
+----
+false
+
+query B nosort
+SELECT ((FALSE) IS NULL) OR (FALSE) OR (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT (FALSE) AND (CAST(NULL AS BOOLEAN))
+----
+false
+
+query B nosort
+SELECT (FALSE) OR (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT ((FALSE) AND (CAST(NULL AS BOOLEAN))) OR (TRUE)
+----
+true
+
+query B nosort
+SELECT ((FALSE) OR (CAST(NULL AS BOOLEAN))) AND (TRUE)
+----
+NULL
+
+query B nosort
+SELECT NOT ((FALSE) AND (CAST(NULL AS BOOLEAN))) OR (TRUE)
+----
+true
+
+query B nosort
+SELECT (NOT (FALSE) OR NOT (CAST(NULL AS BOOLEAN))) AND NOT (TRUE)
+----
+false
+
+query B nosort
+SELECT ((FALSE) OR NOT (CAST(NULL AS BOOLEAN))) OR ((CAST(NULL AS BOOLEAN)) AND (TRUE))
+----
+NULL
+
+query B nosort
+SELECT NOT ((FALSE) OR (CAST(NULL AS BOOLEAN)) OR (TRUE))
+----
+false
+
+query B nosort
+SELECT ((FALSE) AND (CAST(NULL AS BOOLEAN)) AND (TRUE))
+----
+false
+
+query B nosort
+SELECT ((FALSE) IS NULL) OR (CAST(NULL AS BOOLEAN)) OR (TRUE)
+----
+true
+
+query B nosort
+SELECT ((FALSE) AND (CAST(NULL AS BOOLEAN))) OR (FALSE)
+----
+false
+
+query B nosort
+SELECT ((FALSE) OR (CAST(NULL AS BOOLEAN))) AND (FALSE)
+----
+false
+
+query B nosort
+SELECT NOT ((FALSE) AND (CAST(NULL AS BOOLEAN))) OR (FALSE)
+----
+true
+
+query B nosort
+SELECT (NOT (FALSE) OR NOT (CAST(NULL AS BOOLEAN))) AND NOT (FALSE)
+----
+true
+
+query B nosort
+SELECT ((FALSE) OR NOT (CAST(NULL AS BOOLEAN))) OR ((CAST(NULL AS BOOLEAN)) AND (FALSE))
+----
+NULL
+
+query B nosort
+SELECT NOT ((FALSE) OR (CAST(NULL AS BOOLEAN)) OR (FALSE))
+----
+NULL
+
+query B nosort
+SELECT ((FALSE) AND (CAST(NULL AS BOOLEAN)) AND (FALSE))
+----
+false
+
+query B nosort
+SELECT ((FALSE) IS NULL) OR (CAST(NULL AS BOOLEAN)) OR (FALSE)
+----
+NULL
+
+query B nosort
+SELECT ((FALSE) AND (CAST(NULL AS BOOLEAN))) OR (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT ((FALSE) OR (CAST(NULL AS BOOLEAN))) AND (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT NOT ((FALSE) AND (CAST(NULL AS BOOLEAN))) OR (CAST(NULL AS BOOLEAN))
+----
+true
+
+query B nosort
+SELECT (NOT (FALSE) OR NOT (CAST(NULL AS BOOLEAN))) AND NOT (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT ((FALSE) OR NOT (CAST(NULL AS BOOLEAN))) OR ((CAST(NULL AS BOOLEAN)) AND (CAST(NULL AS BOOLEAN)))
+----
+NULL
+
+query B nosort
+SELECT NOT ((FALSE) OR (CAST(NULL AS BOOLEAN)) OR (CAST(NULL AS BOOLEAN)))
+----
+NULL
+
+query B nosort
+SELECT ((FALSE) AND (CAST(NULL AS BOOLEAN)) AND (CAST(NULL AS BOOLEAN)))
+----
+false
+
+query B nosort
+SELECT ((FALSE) IS NULL) OR (CAST(NULL AS BOOLEAN)) OR (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT NOT (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT (CAST(NULL AS BOOLEAN)) AND (TRUE)
+----
+NULL
+
+query B nosort
+SELECT (CAST(NULL AS BOOLEAN)) OR (TRUE)
+----
+true
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) AND (TRUE)) OR (TRUE)
+----
+true
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) OR (TRUE)) AND (TRUE)
+----
+true
+
+query B nosort
+SELECT NOT ((CAST(NULL AS BOOLEAN)) AND (TRUE)) OR (TRUE)
+----
+true
+
+query B nosort
+SELECT (NOT (CAST(NULL AS BOOLEAN)) OR NOT (TRUE)) AND NOT (TRUE)
+----
+false
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) OR NOT (TRUE)) OR ((TRUE) AND (TRUE))
+----
+true
+
+query B nosort
+SELECT NOT ((CAST(NULL AS BOOLEAN)) OR (TRUE) OR (TRUE))
+----
+false
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) AND (TRUE) AND (TRUE))
+----
+NULL
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) IS NULL) OR (TRUE) OR (TRUE)
+----
+true
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) AND (TRUE)) OR (FALSE)
+----
+NULL
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) OR (TRUE)) AND (FALSE)
+----
+false
+
+query B nosort
+SELECT NOT ((CAST(NULL AS BOOLEAN)) AND (TRUE)) OR (FALSE)
+----
+NULL
+
+query B nosort
+SELECT (NOT (CAST(NULL AS BOOLEAN)) OR NOT (TRUE)) AND NOT (FALSE)
+----
+NULL
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) OR NOT (TRUE)) OR ((TRUE) AND (FALSE))
+----
+NULL
+
+query B nosort
+SELECT NOT ((CAST(NULL AS BOOLEAN)) OR (TRUE) OR (FALSE))
+----
+false
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) AND (TRUE) AND (FALSE))
+----
+false
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) IS NULL) OR (TRUE) OR (FALSE)
+----
+true
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) AND (TRUE)) OR (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) OR (TRUE)) AND (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT NOT ((CAST(NULL AS BOOLEAN)) AND (TRUE)) OR (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT (NOT (CAST(NULL AS BOOLEAN)) OR NOT (TRUE)) AND NOT (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) OR NOT (TRUE)) OR ((TRUE) AND (CAST(NULL AS BOOLEAN)))
+----
+NULL
+
+query B nosort
+SELECT NOT ((CAST(NULL AS BOOLEAN)) OR (TRUE) OR (CAST(NULL AS BOOLEAN)))
+----
+false
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) AND (TRUE) AND (CAST(NULL AS BOOLEAN)))
+----
+NULL
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) IS NULL) OR (TRUE) OR (CAST(NULL AS BOOLEAN))
+----
+true
+
+query B nosort
+SELECT (CAST(NULL AS BOOLEAN)) AND (FALSE)
+----
+false
+
+query B nosort
+SELECT (CAST(NULL AS BOOLEAN)) OR (FALSE)
+----
+NULL
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) AND (FALSE)) OR (TRUE)
+----
+true
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) OR (FALSE)) AND (TRUE)
+----
+NULL
+
+query B nosort
+SELECT NOT ((CAST(NULL AS BOOLEAN)) AND (FALSE)) OR (TRUE)
+----
+true
+
+query B nosort
+SELECT (NOT (CAST(NULL AS BOOLEAN)) OR NOT (FALSE)) AND NOT (TRUE)
+----
+false
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) OR NOT (FALSE)) OR ((FALSE) AND (TRUE))
+----
+true
+
+query B nosort
+SELECT NOT ((CAST(NULL AS BOOLEAN)) OR (FALSE) OR (TRUE))
+----
+false
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) AND (FALSE) AND (TRUE))
+----
+false
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) IS NULL) OR (FALSE) OR (TRUE)
+----
+true
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) AND (FALSE)) OR (FALSE)
+----
+false
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) OR (FALSE)) AND (FALSE)
+----
+false
+
+query B nosort
+SELECT NOT ((CAST(NULL AS BOOLEAN)) AND (FALSE)) OR (FALSE)
+----
+true
+
+query B nosort
+SELECT (NOT (CAST(NULL AS BOOLEAN)) OR NOT (FALSE)) AND NOT (FALSE)
+----
+true
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) OR NOT (FALSE)) OR ((FALSE) AND (FALSE))
+----
+true
+
+query B nosort
+SELECT NOT ((CAST(NULL AS BOOLEAN)) OR (FALSE) OR (FALSE))
+----
+NULL
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) AND (FALSE) AND (FALSE))
+----
+false
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) IS NULL) OR (FALSE) OR (FALSE)
+----
+true
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) AND (FALSE)) OR (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) OR (FALSE)) AND (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT NOT ((CAST(NULL AS BOOLEAN)) AND (FALSE)) OR (CAST(NULL AS BOOLEAN))
+----
+true
+
+query B nosort
+SELECT (NOT (CAST(NULL AS BOOLEAN)) OR NOT (FALSE)) AND NOT (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) OR NOT (FALSE)) OR ((FALSE) AND (CAST(NULL AS BOOLEAN)))
+----
+true
+
+query B nosort
+SELECT NOT ((CAST(NULL AS BOOLEAN)) OR (FALSE) OR (CAST(NULL AS BOOLEAN)))
+----
+NULL
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) AND (FALSE) AND (CAST(NULL AS BOOLEAN)))
+----
+false
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) IS NULL) OR (FALSE) OR (CAST(NULL AS BOOLEAN))
+----
+true
+
+query B nosort
+SELECT (CAST(NULL AS BOOLEAN)) AND (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT (CAST(NULL AS BOOLEAN)) OR (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) AND (CAST(NULL AS BOOLEAN))) OR (TRUE)
+----
+true
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) OR (CAST(NULL AS BOOLEAN))) AND (TRUE)
+----
+NULL
+
+query B nosort
+SELECT NOT ((CAST(NULL AS BOOLEAN)) AND (CAST(NULL AS BOOLEAN))) OR (TRUE)
+----
+true
+
+query B nosort
+SELECT (NOT (CAST(NULL AS BOOLEAN)) OR NOT (CAST(NULL AS BOOLEAN))) AND NOT (TRUE)
+----
+false
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) OR NOT (CAST(NULL AS BOOLEAN))) OR ((CAST(NULL AS BOOLEAN)) AND (TRUE))
+----
+NULL
+
+query B nosort
+SELECT NOT ((CAST(NULL AS BOOLEAN)) OR (CAST(NULL AS BOOLEAN)) OR (TRUE))
+----
+false
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) AND (CAST(NULL AS BOOLEAN)) AND (TRUE))
+----
+NULL
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) IS NULL) OR (CAST(NULL AS BOOLEAN)) OR (TRUE)
+----
+true
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) AND (CAST(NULL AS BOOLEAN))) OR (FALSE)
+----
+NULL
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) OR (CAST(NULL AS BOOLEAN))) AND (FALSE)
+----
+false
+
+query B nosort
+SELECT NOT ((CAST(NULL AS BOOLEAN)) AND (CAST(NULL AS BOOLEAN))) OR (FALSE)
+----
+NULL
+
+query B nosort
+SELECT (NOT (CAST(NULL AS BOOLEAN)) OR NOT (CAST(NULL AS BOOLEAN))) AND NOT (FALSE)
+----
+NULL
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) OR NOT (CAST(NULL AS BOOLEAN))) OR ((CAST(NULL AS BOOLEAN)) AND (FALSE))
+----
+NULL
+
+query B nosort
+SELECT NOT ((CAST(NULL AS BOOLEAN)) OR (CAST(NULL AS BOOLEAN)) OR (FALSE))
+----
+NULL
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) AND (CAST(NULL AS BOOLEAN)) AND (FALSE))
+----
+false
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) IS NULL) OR (CAST(NULL AS BOOLEAN)) OR (FALSE)
+----
+true
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) AND (CAST(NULL AS BOOLEAN))) OR (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) OR (CAST(NULL AS BOOLEAN))) AND (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT NOT ((CAST(NULL AS BOOLEAN)) AND (CAST(NULL AS BOOLEAN))) OR (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT (NOT (CAST(NULL AS BOOLEAN)) OR NOT (CAST(NULL AS BOOLEAN))) AND NOT (CAST(NULL AS BOOLEAN))
+----
+NULL
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) OR NOT (CAST(NULL AS BOOLEAN))) OR ((CAST(NULL AS BOOLEAN)) AND (CAST(NULL AS BOOLEAN)))
+----
+NULL
+
+query B nosort
+SELECT NOT ((CAST(NULL AS BOOLEAN)) OR (CAST(NULL AS BOOLEAN)) OR (CAST(NULL AS BOOLEAN)))
+----
+NULL
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) AND (CAST(NULL AS BOOLEAN)) AND (CAST(NULL AS BOOLEAN)))
+----
+NULL
+
+query B nosort
+SELECT ((CAST(NULL AS BOOLEAN)) IS NULL) OR (CAST(NULL AS BOOLEAN)) OR (CAST(NULL AS BOOLEAN))
+----
+true

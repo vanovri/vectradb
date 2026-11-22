@@ -8,7 +8,7 @@
 | **M04** | `crates/vectra-sql` | DONE | 4 suites (1,200+ grammar/binder + 22 TPC-H) | 2,000-query AST idempotence + Neumann-Kemper unnest proof | 0 warnings, `#![deny(unsafe_code)]`, 0 DependentJoin/corr vars on all 22 TPC-H |
 | **M05** | `crates/vectra-optimizer` | DONE | 3 suites (HLL/Hist, 22 TPC-H plan quality, 2..24-table join stress) | 14 join graphs (chain/star/clique/snowflake 2..24 tables) | 14.44ms total join stress (<20ms), HLL <1.8% err, Hist <4% err, build<=probe on all 22 TPC-H |
 | **M06** | `crates/vectra-exec` | DONE | 6 suites (all 11 joins, 12 aggs, windows, set ops, recursive CTE, MVCC, 3MB & 32MB spill torture) | 1.5M-row (~180MB) 32MB spill torture vs 2GB RAM across all 5 workloads | FULL OUTER peak 1.47MiB, LEFT MARK 9.62MiB, 1M-grp AGG 9.66MiB, 1.5M SORT 18.05MiB, 1.5M WIN 22.95MiB; 0 leaks, 0 `.vspill` leftovers |
-| **M07** | `crates/vectra-oracle` | IN PROGRESS | — | — | — |
-| **M08** | `crates/vectra-tpch` | PENDING | — | — | — |
+| **M07** | `crates/vectra-oracle` | DONE | 26 `.slt` files (5,794 SQL assertions) + MD5 + AST Shrinker | 25,000 consecutive `SQLsmith` seeds vs SQLite (2,500 in 4 MiB forced-spill) | 25,000/25,000 pass (0 mismatches, 0 panics); caught & fixed 2 real bugs (`ROUND(Decimal128)` carry + `FullOuter` null-rejection inversion) |
+| **M08** | `crates/vectra-tpch` | IN PROGRESS | — | — | — |
 | **M09** | `crates/vectra-server` | PENDING | — | — | — |
 | **M10** | `crates/vectra-wasm` & `studio/` | PENDING | — | — | — |

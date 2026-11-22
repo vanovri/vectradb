@@ -1,0 +1,1157 @@
+# 02_arithmetic_float_decimal.slt — VectraDB M07 sqllogictest suite
+
+statement ok
+CREATE TABLE nums (id BIGINT, d DECIMAL(10, 2), f DOUBLE)
+
+statement ok
+INSERT INTO nums VALUES (1, 10.25, 1.5), (2, -3.75, 2.25), (3, 0.00, 0.0), (4, 100.50, -4.5), (5, NULL, NULL)
+
+query R nosort
+SELECT d + 1.00 FROM nums WHERE id = 1
+----
+11.250
+
+query R nosort
+SELECT d - 1.00 FROM nums WHERE id = 1
+----
+9.250
+
+query R nosort
+SELECT d * 1.00 FROM nums WHERE id = 1
+----
+10.250
+
+query R nosort
+SELECT f + (1.50) FROM nums WHERE id = 1
+----
+3.000
+
+query R nosort
+SELECT f * (1.50) FROM nums WHERE id = 1
+----
+2.250
+
+query R nosort
+SELECT f - (1.25) FROM nums WHERE id = 1
+----
+0.250
+
+query R nosort
+SELECT d + 2.00 FROM nums WHERE id = 1
+----
+12.250
+
+query R nosort
+SELECT d - 2.00 FROM nums WHERE id = 1
+----
+8.250
+
+query R nosort
+SELECT d * 2.00 FROM nums WHERE id = 1
+----
+20.500
+
+query R nosort
+SELECT f + (2.50) FROM nums WHERE id = 1
+----
+4.000
+
+query R nosort
+SELECT f * (2.50) FROM nums WHERE id = 1
+----
+3.750
+
+query R nosort
+SELECT f - (2.25) FROM nums WHERE id = 1
+----
+-0.750
+
+query R nosort
+SELECT d + 5.00 FROM nums WHERE id = 1
+----
+15.250
+
+query R nosort
+SELECT d - 5.00 FROM nums WHERE id = 1
+----
+5.250
+
+query R nosort
+SELECT d * 5.00 FROM nums WHERE id = 1
+----
+51.250
+
+query R nosort
+SELECT f + (5.50) FROM nums WHERE id = 1
+----
+7.000
+
+query R nosort
+SELECT f * (5.50) FROM nums WHERE id = 1
+----
+8.250
+
+query R nosort
+SELECT f - (5.25) FROM nums WHERE id = 1
+----
+-3.750
+
+query R nosort
+SELECT d + 10.00 FROM nums WHERE id = 1
+----
+20.250
+
+query R nosort
+SELECT d - 10.00 FROM nums WHERE id = 1
+----
+0.250
+
+query R nosort
+SELECT d * 10.00 FROM nums WHERE id = 1
+----
+102.500
+
+query R nosort
+SELECT f + (10.50) FROM nums WHERE id = 1
+----
+12.000
+
+query R nosort
+SELECT f * (10.50) FROM nums WHERE id = 1
+----
+15.750
+
+query R nosort
+SELECT f - (10.25) FROM nums WHERE id = 1
+----
+-8.750
+
+query R nosort
+SELECT d + -3.00 FROM nums WHERE id = 1
+----
+7.250
+
+query R nosort
+SELECT d - -3.00 FROM nums WHERE id = 1
+----
+13.250
+
+query R nosort
+SELECT d * -3.00 FROM nums WHERE id = 1
+----
+-30.750
+
+query R nosort
+SELECT f + (-2.50) FROM nums WHERE id = 1
+----
+-1.000
+
+query R nosort
+SELECT f * (-2.50) FROM nums WHERE id = 1
+----
+-3.750
+
+query R nosort
+SELECT f - (-2.75) FROM nums WHERE id = 1
+----
+4.250
+
+query R nosort
+SELECT d + 1.00 FROM nums WHERE id = 2
+----
+-2.750
+
+query R nosort
+SELECT d - 1.00 FROM nums WHERE id = 2
+----
+-4.750
+
+query R nosort
+SELECT d * 1.00 FROM nums WHERE id = 2
+----
+-3.750
+
+query R nosort
+SELECT f + (1.50) FROM nums WHERE id = 2
+----
+3.750
+
+query R nosort
+SELECT f * (1.50) FROM nums WHERE id = 2
+----
+3.375
+
+query R nosort
+SELECT f - (1.25) FROM nums WHERE id = 2
+----
+1.000
+
+query R nosort
+SELECT d + 2.00 FROM nums WHERE id = 2
+----
+-1.750
+
+query R nosort
+SELECT d - 2.00 FROM nums WHERE id = 2
+----
+-5.750
+
+query R nosort
+SELECT d * 2.00 FROM nums WHERE id = 2
+----
+-7.500
+
+query R nosort
+SELECT f + (2.50) FROM nums WHERE id = 2
+----
+4.750
+
+query R nosort
+SELECT f * (2.50) FROM nums WHERE id = 2
+----
+5.625
+
+query R nosort
+SELECT f - (2.25) FROM nums WHERE id = 2
+----
+0.000
+
+query R nosort
+SELECT d + 5.00 FROM nums WHERE id = 2
+----
+1.250
+
+query R nosort
+SELECT d - 5.00 FROM nums WHERE id = 2
+----
+-8.750
+
+query R nosort
+SELECT d * 5.00 FROM nums WHERE id = 2
+----
+-18.750
+
+query R nosort
+SELECT f + (5.50) FROM nums WHERE id = 2
+----
+7.750
+
+query R nosort
+SELECT f * (5.50) FROM nums WHERE id = 2
+----
+12.375
+
+query R nosort
+SELECT f - (5.25) FROM nums WHERE id = 2
+----
+-3.000
+
+query R nosort
+SELECT d + 10.00 FROM nums WHERE id = 2
+----
+6.250
+
+query R nosort
+SELECT d - 10.00 FROM nums WHERE id = 2
+----
+-13.750
+
+query R nosort
+SELECT d * 10.00 FROM nums WHERE id = 2
+----
+-37.500
+
+query R nosort
+SELECT f + (10.50) FROM nums WHERE id = 2
+----
+12.750
+
+query R nosort
+SELECT f * (10.50) FROM nums WHERE id = 2
+----
+23.625
+
+query R nosort
+SELECT f - (10.25) FROM nums WHERE id = 2
+----
+-8.000
+
+query R nosort
+SELECT d + -3.00 FROM nums WHERE id = 2
+----
+-6.750
+
+query R nosort
+SELECT d - -3.00 FROM nums WHERE id = 2
+----
+-0.750
+
+query R nosort
+SELECT d * -3.00 FROM nums WHERE id = 2
+----
+11.250
+
+query R nosort
+SELECT f + (-2.50) FROM nums WHERE id = 2
+----
+-0.250
+
+query R nosort
+SELECT f * (-2.50) FROM nums WHERE id = 2
+----
+-5.625
+
+query R nosort
+SELECT f - (-2.75) FROM nums WHERE id = 2
+----
+5.000
+
+query R nosort
+SELECT d + 1.00 FROM nums WHERE id = 3
+----
+1.000
+
+query R nosort
+SELECT d - 1.00 FROM nums WHERE id = 3
+----
+-1.000
+
+query R nosort
+SELECT d * 1.00 FROM nums WHERE id = 3
+----
+0.000
+
+query R nosort
+SELECT f + (1.50) FROM nums WHERE id = 3
+----
+1.500
+
+query R nosort
+SELECT f * (1.50) FROM nums WHERE id = 3
+----
+0.000
+
+query R nosort
+SELECT f - (1.25) FROM nums WHERE id = 3
+----
+-1.250
+
+query R nosort
+SELECT d + 2.00 FROM nums WHERE id = 3
+----
+2.000
+
+query R nosort
+SELECT d - 2.00 FROM nums WHERE id = 3
+----
+-2.000
+
+query R nosort
+SELECT d * 2.00 FROM nums WHERE id = 3
+----
+0.000
+
+query R nosort
+SELECT f + (2.50) FROM nums WHERE id = 3
+----
+2.500
+
+query R nosort
+SELECT f * (2.50) FROM nums WHERE id = 3
+----
+0.000
+
+query R nosort
+SELECT f - (2.25) FROM nums WHERE id = 3
+----
+-2.250
+
+query R nosort
+SELECT d + 5.00 FROM nums WHERE id = 3
+----
+5.000
+
+query R nosort
+SELECT d - 5.00 FROM nums WHERE id = 3
+----
+-5.000
+
+query R nosort
+SELECT d * 5.00 FROM nums WHERE id = 3
+----
+0.000
+
+query R nosort
+SELECT f + (5.50) FROM nums WHERE id = 3
+----
+5.500
+
+query R nosort
+SELECT f * (5.50) FROM nums WHERE id = 3
+----
+0.000
+
+query R nosort
+SELECT f - (5.25) FROM nums WHERE id = 3
+----
+-5.250
+
+query R nosort
+SELECT d + 10.00 FROM nums WHERE id = 3
+----
+10.000
+
+query R nosort
+SELECT d - 10.00 FROM nums WHERE id = 3
+----
+-10.000
+
+query R nosort
+SELECT d * 10.00 FROM nums WHERE id = 3
+----
+0.000
+
+query R nosort
+SELECT f + (10.50) FROM nums WHERE id = 3
+----
+10.500
+
+query R nosort
+SELECT f * (10.50) FROM nums WHERE id = 3
+----
+0.000
+
+query R nosort
+SELECT f - (10.25) FROM nums WHERE id = 3
+----
+-10.250
+
+query R nosort
+SELECT d + -3.00 FROM nums WHERE id = 3
+----
+-3.000
+
+query R nosort
+SELECT d - -3.00 FROM nums WHERE id = 3
+----
+3.000
+
+query R nosort
+SELECT d * -3.00 FROM nums WHERE id = 3
+----
+0.000
+
+query R nosort
+SELECT f + (-2.50) FROM nums WHERE id = 3
+----
+-2.500
+
+query R nosort
+SELECT f * (-2.50) FROM nums WHERE id = 3
+----
+0.000
+
+query R nosort
+SELECT f - (-2.75) FROM nums WHERE id = 3
+----
+2.750
+
+query R nosort
+SELECT d + 1.00 FROM nums WHERE id = 4
+----
+101.500
+
+query R nosort
+SELECT d - 1.00 FROM nums WHERE id = 4
+----
+99.500
+
+query R nosort
+SELECT d * 1.00 FROM nums WHERE id = 4
+----
+100.500
+
+query R nosort
+SELECT f + (1.50) FROM nums WHERE id = 4
+----
+-3.000
+
+query R nosort
+SELECT f * (1.50) FROM nums WHERE id = 4
+----
+-6.750
+
+query R nosort
+SELECT f - (1.25) FROM nums WHERE id = 4
+----
+-5.750
+
+query R nosort
+SELECT d + 2.00 FROM nums WHERE id = 4
+----
+102.500
+
+query R nosort
+SELECT d - 2.00 FROM nums WHERE id = 4
+----
+98.500
+
+query R nosort
+SELECT d * 2.00 FROM nums WHERE id = 4
+----
+201.000
+
+query R nosort
+SELECT f + (2.50) FROM nums WHERE id = 4
+----
+-2.000
+
+query R nosort
+SELECT f * (2.50) FROM nums WHERE id = 4
+----
+-11.250
+
+query R nosort
+SELECT f - (2.25) FROM nums WHERE id = 4
+----
+-6.750
+
+query R nosort
+SELECT d + 5.00 FROM nums WHERE id = 4
+----
+105.500
+
+query R nosort
+SELECT d - 5.00 FROM nums WHERE id = 4
+----
+95.500
+
+query R nosort
+SELECT d * 5.00 FROM nums WHERE id = 4
+----
+502.500
+
+query R nosort
+SELECT f + (5.50) FROM nums WHERE id = 4
+----
+1.000
+
+query R nosort
+SELECT f * (5.50) FROM nums WHERE id = 4
+----
+-24.750
+
+query R nosort
+SELECT f - (5.25) FROM nums WHERE id = 4
+----
+-9.750
+
+query R nosort
+SELECT d + 10.00 FROM nums WHERE id = 4
+----
+110.500
+
+query R nosort
+SELECT d - 10.00 FROM nums WHERE id = 4
+----
+90.500
+
+query R nosort
+SELECT d * 10.00 FROM nums WHERE id = 4
+----
+1005.000
+
+query R nosort
+SELECT f + (10.50) FROM nums WHERE id = 4
+----
+6.000
+
+query R nosort
+SELECT f * (10.50) FROM nums WHERE id = 4
+----
+-47.250
+
+query R nosort
+SELECT f - (10.25) FROM nums WHERE id = 4
+----
+-14.750
+
+query R nosort
+SELECT d + -3.00 FROM nums WHERE id = 4
+----
+97.500
+
+query R nosort
+SELECT d - -3.00 FROM nums WHERE id = 4
+----
+103.500
+
+query R nosort
+SELECT d * -3.00 FROM nums WHERE id = 4
+----
+-301.500
+
+query R nosort
+SELECT f + (-2.50) FROM nums WHERE id = 4
+----
+-7.000
+
+query R nosort
+SELECT f * (-2.50) FROM nums WHERE id = 4
+----
+11.250
+
+query R nosort
+SELECT f - (-2.75) FROM nums WHERE id = 4
+----
+-1.750
+
+query R nosort
+SELECT d + 1.00 FROM nums WHERE id = 5
+----
+NULL
+
+query R nosort
+SELECT f + 1.5 FROM nums WHERE id = 5
+----
+NULL
+
+query R nosort
+SELECT d + 2.00 FROM nums WHERE id = 5
+----
+NULL
+
+query R nosort
+SELECT f + 2.5 FROM nums WHERE id = 5
+----
+NULL
+
+query R nosort
+SELECT d + 5.00 FROM nums WHERE id = 5
+----
+NULL
+
+query R nosort
+SELECT f + 5.5 FROM nums WHERE id = 5
+----
+NULL
+
+query R nosort
+SELECT d + 10.00 FROM nums WHERE id = 5
+----
+NULL
+
+query R nosort
+SELECT f + 10.5 FROM nums WHERE id = 5
+----
+NULL
+
+query R nosort
+SELECT d + -3.00 FROM nums WHERE id = 5
+----
+NULL
+
+query R nosort
+SELECT f + -3.5 FROM nums WHERE id = 5
+----
+NULL
+
+query R nosort
+SELECT 1.25 + 1.00
+----
+2.250
+
+query R nosort
+SELECT 1.25 * 1.00
+----
+1.250
+
+query R nosort
+SELECT 2.50 + 1.50
+----
+4.000
+
+query R nosort
+SELECT 2.50 * 1.50
+----
+3.750
+
+query R nosort
+SELECT 3.75 + 2.00
+----
+5.750
+
+query R nosort
+SELECT 3.75 * 2.00
+----
+7.500
+
+query R nosort
+SELECT 5.00 + 2.50
+----
+7.500
+
+query R nosort
+SELECT 5.00 * 2.50
+----
+12.500
+
+query R nosort
+SELECT 6.25 + 3.00
+----
+9.250
+
+query R nosort
+SELECT 6.25 * 3.00
+----
+18.750
+
+query R nosort
+SELECT 7.50 + 3.50
+----
+11.000
+
+query R nosort
+SELECT 7.50 * 3.50
+----
+26.250
+
+query R nosort
+SELECT 8.75 + 0.50
+----
+9.250
+
+query R nosort
+SELECT 8.75 * 0.50
+----
+4.375
+
+query R nosort
+SELECT 10.00 + 1.00
+----
+11.000
+
+query R nosort
+SELECT 10.00 * 1.00
+----
+10.000
+
+query R nosort
+SELECT 11.25 + 1.50
+----
+12.750
+
+query R nosort
+SELECT 11.25 * 1.50
+----
+16.875
+
+query R nosort
+SELECT 12.50 + 2.00
+----
+14.500
+
+query R nosort
+SELECT 12.50 * 2.00
+----
+25.000
+
+query R nosort
+SELECT 13.75 + 2.50
+----
+16.250
+
+query R nosort
+SELECT 13.75 * 2.50
+----
+34.375
+
+query R nosort
+SELECT 15.00 + 3.00
+----
+18.000
+
+query R nosort
+SELECT 15.00 * 3.00
+----
+45.000
+
+query R nosort
+SELECT 16.25 + 3.50
+----
+19.750
+
+query R nosort
+SELECT 16.25 * 3.50
+----
+56.875
+
+query R nosort
+SELECT 17.50 + 0.50
+----
+18.000
+
+query R nosort
+SELECT 17.50 * 0.50
+----
+8.750
+
+query R nosort
+SELECT 18.75 + 1.00
+----
+19.750
+
+query R nosort
+SELECT 18.75 * 1.00
+----
+18.750
+
+query R nosort
+SELECT 20.00 + 1.50
+----
+21.500
+
+query R nosort
+SELECT 20.00 * 1.50
+----
+30.000
+
+query R nosort
+SELECT 21.25 + 2.00
+----
+23.250
+
+query R nosort
+SELECT 21.25 * 2.00
+----
+42.500
+
+query R nosort
+SELECT 22.50 + 2.50
+----
+25.000
+
+query R nosort
+SELECT 22.50 * 2.50
+----
+56.250
+
+query R nosort
+SELECT 23.75 + 3.00
+----
+26.750
+
+query R nosort
+SELECT 23.75 * 3.00
+----
+71.250
+
+query R nosort
+SELECT 25.00 + 3.50
+----
+28.500
+
+query R nosort
+SELECT 25.00 * 3.50
+----
+87.500
+
+query R nosort
+SELECT 26.25 + 0.50
+----
+26.750
+
+query R nosort
+SELECT 26.25 * 0.50
+----
+13.125
+
+query R nosort
+SELECT 27.50 + 1.00
+----
+28.500
+
+query R nosort
+SELECT 27.50 * 1.00
+----
+27.500
+
+query R nosort
+SELECT 28.75 + 1.50
+----
+30.250
+
+query R nosort
+SELECT 28.75 * 1.50
+----
+43.125
+
+query R nosort
+SELECT 30.00 + 2.00
+----
+32.000
+
+query R nosort
+SELECT 30.00 * 2.00
+----
+60.000
+
+query R nosort
+SELECT 31.25 + 2.50
+----
+33.750
+
+query R nosort
+SELECT 31.25 * 2.50
+----
+78.125
+
+query R nosort
+SELECT 32.50 + 3.00
+----
+35.500
+
+query R nosort
+SELECT 32.50 * 3.00
+----
+97.500
+
+query R nosort
+SELECT 33.75 + 3.50
+----
+37.250
+
+query R nosort
+SELECT 33.75 * 3.50
+----
+118.125
+
+query R nosort
+SELECT 35.00 + 0.50
+----
+35.500
+
+query R nosort
+SELECT 35.00 * 0.50
+----
+17.500
+
+query R nosort
+SELECT 36.25 + 1.00
+----
+37.250
+
+query R nosort
+SELECT 36.25 * 1.00
+----
+36.250
+
+query R nosort
+SELECT 37.50 + 1.50
+----
+39.000
+
+query R nosort
+SELECT 37.50 * 1.50
+----
+56.250
+
+query R nosort
+SELECT 38.75 + 2.00
+----
+40.750
+
+query R nosort
+SELECT 38.75 * 2.00
+----
+77.500
+
+query R nosort
+SELECT 40.00 + 2.50
+----
+42.500
+
+query R nosort
+SELECT 40.00 * 2.50
+----
+100.000
+
+query R nosort
+SELECT 41.25 + 3.00
+----
+44.250
+
+query R nosort
+SELECT 41.25 * 3.00
+----
+123.750
+
+query R nosort
+SELECT 42.50 + 3.50
+----
+46.000
+
+query R nosort
+SELECT 42.50 * 3.50
+----
+148.750
+
+query R nosort
+SELECT 43.75 + 0.50
+----
+44.250
+
+query R nosort
+SELECT 43.75 * 0.50
+----
+21.875
+
+query R nosort
+SELECT 45.00 + 1.00
+----
+46.000
+
+query R nosort
+SELECT 45.00 * 1.00
+----
+45.000
+
+query R nosort
+SELECT 46.25 + 1.50
+----
+47.750
+
+query R nosort
+SELECT 46.25 * 1.50
+----
+69.375
+
+query R nosort
+SELECT 47.50 + 2.00
+----
+49.500
+
+query R nosort
+SELECT 47.50 * 2.00
+----
+95.000
+
+query R nosort
+SELECT 48.75 + 2.50
+----
+51.250
+
+query R nosort
+SELECT 48.75 * 2.50
+----
+121.875
+
+query R nosort
+SELECT 50.00 + 3.00
+----
+53.000
+
+query R nosort
+SELECT 50.00 * 3.00
+----
+150.000
+
+query R nosort
+SELECT 51.25 + 3.50
+----
+54.750
+
+query R nosort
+SELECT 51.25 * 3.50
+----
+179.375
+
+query R nosort
+SELECT 52.50 + 0.50
+----
+53.000
+
+query R nosort
+SELECT 52.50 * 0.50
+----
+26.250
+
+query R nosort
+SELECT 53.75 + 1.00
+----
+54.750
+
+query R nosort
+SELECT 53.75 * 1.00
+----
+53.750
+
+query R nosort
+SELECT 55.00 + 1.50
+----
+56.500
+
+query R nosort
+SELECT 55.00 * 1.50
+----
+82.500
+
+query R nosort
+SELECT 56.25 + 2.00
+----
+58.250
+
+query R nosort
+SELECT 56.25 * 2.00
+----
+112.500
+
+query R nosort
+SELECT 57.50 + 2.50
+----
+60.000
+
+query R nosort
+SELECT 57.50 * 2.50
+----
+143.750
+
+query R nosort
+SELECT 58.75 + 3.00
+----
+61.750
+
+query R nosort
+SELECT 58.75 * 3.00
+----
+176.250
+
+query R nosort
+SELECT 60.00 + 3.50
+----
+63.500
+
+query R nosort
+SELECT 60.00 * 3.50
+----
+210.000
+
+query R nosort
+SELECT 61.25 + 0.50
+----
+61.750
+
+query R nosort
+SELECT 61.25 * 0.50
+----
+30.625
+
+query R nosort
+SELECT 62.50 + 1.00
+----
+63.500
+
+query R nosort
+SELECT 62.50 * 1.00
+----
+62.500

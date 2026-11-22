@@ -1,0 +1,1465 @@
+# 13_semi_anti_mark_joins.slt — VectraDB M07 sqllogictest suite
+
+statement ok
+CREATE TABLE j1 (id BIGINT, k1 BIGINT, k2 BIGINT, v BIGINT)
+
+statement ok
+CREATE TABLE j2 (id BIGINT, k1 BIGINT, k2 BIGINT, v BIGINT)
+
+statement ok
+CREATE TABLE j3 (id BIGINT, k1 BIGINT, v BIGINT)
+
+statement ok
+CREATE TABLE j4 (id BIGINT, k1 BIGINT, v BIGINT)
+
+statement ok
+INSERT INTO j1 VALUES (1, 1, 10, 100), (2, 1, 20, 200), (3, 2, 10, 300), (4, 3, 30, 400), (5, NULL, 10, 500)
+
+statement ok
+INSERT INTO j2 VALUES (1, 1, 10, 10), (2, 1, 10, 11), (3, 2, 10, 20), (4, 4, 40, 40), (5, NULL, 10, 50)
+
+statement ok
+INSERT INTO j3 VALUES (1, 1, 7), (2, 2, 8), (3, 3, 9), (4, 5, 10)
+
+statement ok
+INSERT INTO j4 VALUES (1, 1, 1), (2, 2, 2), (3, 3, 3)
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 0)
+----
+1
+2
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 0)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 0)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 0)
+----
+1
+2
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 0)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 1)
+----
+1
+2
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 1)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 1)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 1)
+----
+1
+2
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 1)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 2)
+----
+1
+2
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 2)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 2)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 2)
+----
+1
+2
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 2)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 3)
+----
+1
+2
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 3)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 3)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 3)
+----
+1
+2
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 3)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 4)
+----
+1
+2
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 4)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 4)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 4)
+----
+1
+2
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 4)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 5)
+----
+1
+2
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 5)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 5)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 5)
+----
+1
+2
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 5)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 6)
+----
+1
+2
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 6)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 6)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 6)
+----
+1
+2
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 6)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 7)
+----
+1
+2
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 7)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 7)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 7)
+----
+1
+2
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 7)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 8)
+----
+1
+2
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 8)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 8)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 8)
+----
+1
+2
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 8)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 9)
+----
+1
+2
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 9)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 9)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 9)
+----
+1
+2
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 9)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 10)
+----
+1
+2
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 10)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 10)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 10)
+----
+1
+2
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 10)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 11)
+----
+1
+2
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 11)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 11)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 11)
+----
+1
+2
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 11)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 12)
+----
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 12)
+----
+1
+2
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 12)
+----
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 12)
+----
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 12)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 13)
+----
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 13)
+----
+1
+2
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 13)
+----
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 13)
+----
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 13)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 14)
+----
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 14)
+----
+1
+2
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 14)
+----
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 14)
+----
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 14)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 15)
+----
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 15)
+----
+1
+2
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 15)
+----
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 15)
+----
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 15)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 16)
+----
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 16)
+----
+1
+2
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 16)
+----
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 16)
+----
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 16)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 17)
+----
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 17)
+----
+1
+2
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 17)
+----
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 17)
+----
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 17)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 18)
+----
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 18)
+----
+1
+2
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 18)
+----
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 18)
+----
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 18)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 19)
+----
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 19)
+----
+1
+2
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 19)
+----
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 19)
+----
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 19)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 20)
+----
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 20)
+----
+1
+2
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 20)
+----
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 20)
+----
+3
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 20)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 21)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 21)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 21)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 21)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 21)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 22)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 22)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 22)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 22)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 22)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 23)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 23)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 23)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 23)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 23)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 24)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 24)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 24)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 24)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 24)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 25)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 25)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 25)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 25)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 25)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 26)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 26)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 26)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 26)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 26)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 27)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 27)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 27)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 27)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 27)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 28)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 28)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 28)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 28)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 28)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 29)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 29)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 29)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 29)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 29)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 30)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 30)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 30)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 30)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 30)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 31)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 31)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 31)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 31)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 31)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 32)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 32)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 32)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 32)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 32)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 33)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 33)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 33)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 33)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 33)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 34)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 34)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 34)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 34)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 34)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 35)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 35)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 35)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 35)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 35)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 36)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 36)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 36)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 36)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 36)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 37)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 37)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 37)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 37)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 37)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 38)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 38)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 38)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 38)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 38)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 39)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 39)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 39)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 39)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 39)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 40)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 40)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 40)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 40)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 40)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 41)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 41)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 41)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 41)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 41)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 42)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 42)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 42)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 42)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 42)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 43)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 43)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 43)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 43)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 43)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 44)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 44)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 44)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 44)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 44)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 45)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 45)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 45)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 45)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 45)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 46)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 46)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 46)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 46)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 46)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 47)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 47)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 47)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 47)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 47)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 48)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 48)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 48)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 48)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 48)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 49)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE NOT EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 49)
+----
+1
+2
+3
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE j1.v > 350 OR EXISTS (SELECT 1 FROM j2 WHERE j2.k1 = j1.k1 AND j2.v >= 49)
+----
+4
+5
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 IN (SELECT k1 FROM j2 WHERE v >= 49)
+----
+
+query I rowsort
+SELECT id FROM j1 WHERE k1 NOT IN (SELECT k1 FROM j2 WHERE v >= 49)
+----

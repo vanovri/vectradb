@@ -1,0 +1,990 @@
+# 07_string_functions.slt — VectraDB M07 sqllogictest suite
+
+statement ok
+CREATE TABLE strs (id BIGINT, s VARCHAR)
+
+statement ok
+INSERT INTO strs VALUES (1, 'hello')
+
+statement ok
+INSERT INTO strs VALUES (2, 'WORLD')
+
+statement ok
+INSERT INTO strs VALUES (3, '  trimmed  ')
+
+statement ok
+INSERT INTO strs VALUES (4, 'VectraDB_Columnar_Engine_2026')
+
+statement ok
+INSERT INTO strs VALUES (5, 'short')
+
+statement ok
+INSERT INTO strs VALUES (6, 'a')
+
+statement ok
+INSERT INTO strs VALUES (7, '')
+
+statement ok
+INSERT INTO strs VALUES (8, 'AbCdEfGhIjKlMnOpQrSt')
+
+statement ok
+INSERT INTO strs VALUES (9, 'foo bar baz')
+
+statement ok
+INSERT INTO strs VALUES (10, '123456789012')
+
+statement ok
+INSERT INTO strs VALUES (11, '1234567890123')
+
+statement ok
+INSERT INTO strs VALUES (99, NULL)
+
+query T nosort
+SELECT LOWER(s) FROM strs WHERE id = 1
+----
+hello
+
+query T nosort
+SELECT UPPER(s) FROM strs WHERE id = 1
+----
+HELLO
+
+query I nosort
+SELECT LENGTH(s) FROM strs WHERE id = 1
+----
+5
+
+query T nosort
+SELECT TRIM(s) FROM strs WHERE id = 1
+----
+hello
+
+query T nosort
+SELECT LTRIM(s) FROM strs WHERE id = 1
+----
+hello
+
+query T nosort
+SELECT RTRIM(s) FROM strs WHERE id = 1
+----
+hello
+
+query T nosort
+SELECT SUBSTRING(s, 1, 4) FROM strs WHERE id = 1
+----
+hell
+
+query T nosort
+SELECT SUBSTRING(s, 2, 5) FROM strs WHERE id = 1
+----
+ello
+
+query T nosort
+SELECT LEFT(s, 3) FROM strs WHERE id = 1
+----
+hel
+
+query T nosort
+SELECT RIGHT(s, 3) FROM strs WHERE id = 1
+----
+llo
+
+query T nosort
+SELECT REPLACE(s, 'a', 'X') FROM strs WHERE id = 1
+----
+hello
+
+query T nosort
+SELECT CONCAT(s, '_tail') FROM strs WHERE id = 1
+----
+hello_tail
+
+query T nosort
+SELECT s || '!' FROM strs WHERE id = 1
+----
+hello!
+
+query B nosort
+SELECT STARTS_WITH(s, 'Ve') FROM strs WHERE id = 1
+----
+false
+
+query B nosort
+SELECT ENDS_WITH(s, '26') FROM strs WHERE id = 1
+----
+false
+
+query I nosort
+SELECT POSITION('o' IN s) FROM strs WHERE id = 1
+----
+5
+
+query T nosort
+SELECT CONCAT_WS('-', s, 'ok') FROM strs WHERE id = 1
+----
+hello-ok
+
+query T nosort
+SELECT LOWER(s) FROM strs WHERE id = 2
+----
+world
+
+query T nosort
+SELECT UPPER(s) FROM strs WHERE id = 2
+----
+WORLD
+
+query I nosort
+SELECT LENGTH(s) FROM strs WHERE id = 2
+----
+5
+
+query T nosort
+SELECT TRIM(s) FROM strs WHERE id = 2
+----
+WORLD
+
+query T nosort
+SELECT LTRIM(s) FROM strs WHERE id = 2
+----
+WORLD
+
+query T nosort
+SELECT RTRIM(s) FROM strs WHERE id = 2
+----
+WORLD
+
+query T nosort
+SELECT SUBSTRING(s, 1, 4) FROM strs WHERE id = 2
+----
+WORL
+
+query T nosort
+SELECT SUBSTRING(s, 2, 5) FROM strs WHERE id = 2
+----
+ORLD
+
+query T nosort
+SELECT LEFT(s, 3) FROM strs WHERE id = 2
+----
+WOR
+
+query T nosort
+SELECT RIGHT(s, 3) FROM strs WHERE id = 2
+----
+RLD
+
+query T nosort
+SELECT REPLACE(s, 'a', 'X') FROM strs WHERE id = 2
+----
+WORLD
+
+query T nosort
+SELECT CONCAT(s, '_tail') FROM strs WHERE id = 2
+----
+WORLD_tail
+
+query T nosort
+SELECT s || '!' FROM strs WHERE id = 2
+----
+WORLD!
+
+query B nosort
+SELECT STARTS_WITH(s, 'Ve') FROM strs WHERE id = 2
+----
+false
+
+query B nosort
+SELECT ENDS_WITH(s, '26') FROM strs WHERE id = 2
+----
+false
+
+query I nosort
+SELECT POSITION('o' IN s) FROM strs WHERE id = 2
+----
+0
+
+query T nosort
+SELECT CONCAT_WS('-', s, 'ok') FROM strs WHERE id = 2
+----
+WORLD-ok
+
+query T nosort
+SELECT LOWER(s) FROM strs WHERE id = 3
+----
+  trimmed  
+
+query T nosort
+SELECT UPPER(s) FROM strs WHERE id = 3
+----
+  TRIMMED  
+
+query I nosort
+SELECT LENGTH(s) FROM strs WHERE id = 3
+----
+11
+
+query T nosort
+SELECT TRIM(s) FROM strs WHERE id = 3
+----
+trimmed
+
+query T nosort
+SELECT LTRIM(s) FROM strs WHERE id = 3
+----
+trimmed  
+
+query T nosort
+SELECT RTRIM(s) FROM strs WHERE id = 3
+----
+  trimmed
+
+query T nosort
+SELECT SUBSTRING(s, 1, 4) FROM strs WHERE id = 3
+----
+  tr
+
+query T nosort
+SELECT SUBSTRING(s, 2, 5) FROM strs WHERE id = 3
+----
+ trim
+
+query T nosort
+SELECT LEFT(s, 3) FROM strs WHERE id = 3
+----
+  t
+
+query T nosort
+SELECT RIGHT(s, 3) FROM strs WHERE id = 3
+----
+d  
+
+query T nosort
+SELECT REPLACE(s, 'a', 'X') FROM strs WHERE id = 3
+----
+  trimmed  
+
+query T nosort
+SELECT CONCAT(s, '_tail') FROM strs WHERE id = 3
+----
+  trimmed  _tail
+
+query T nosort
+SELECT s || '!' FROM strs WHERE id = 3
+----
+  trimmed  !
+
+query B nosort
+SELECT STARTS_WITH(s, 'Ve') FROM strs WHERE id = 3
+----
+false
+
+query B nosort
+SELECT ENDS_WITH(s, '26') FROM strs WHERE id = 3
+----
+false
+
+query I nosort
+SELECT POSITION('o' IN s) FROM strs WHERE id = 3
+----
+0
+
+query T nosort
+SELECT CONCAT_WS('-', s, 'ok') FROM strs WHERE id = 3
+----
+  trimmed  -ok
+
+query T nosort
+SELECT LOWER(s) FROM strs WHERE id = 4
+----
+vectradb_columnar_engine_2026
+
+query T nosort
+SELECT UPPER(s) FROM strs WHERE id = 4
+----
+VECTRADB_COLUMNAR_ENGINE_2026
+
+query I nosort
+SELECT LENGTH(s) FROM strs WHERE id = 4
+----
+29
+
+query T nosort
+SELECT TRIM(s) FROM strs WHERE id = 4
+----
+VectraDB_Columnar_Engine_2026
+
+query T nosort
+SELECT LTRIM(s) FROM strs WHERE id = 4
+----
+VectraDB_Columnar_Engine_2026
+
+query T nosort
+SELECT RTRIM(s) FROM strs WHERE id = 4
+----
+VectraDB_Columnar_Engine_2026
+
+query T nosort
+SELECT SUBSTRING(s, 1, 4) FROM strs WHERE id = 4
+----
+Vect
+
+query T nosort
+SELECT SUBSTRING(s, 2, 5) FROM strs WHERE id = 4
+----
+ectra
+
+query T nosort
+SELECT LEFT(s, 3) FROM strs WHERE id = 4
+----
+Vec
+
+query T nosort
+SELECT RIGHT(s, 3) FROM strs WHERE id = 4
+----
+026
+
+query T nosort
+SELECT REPLACE(s, 'a', 'X') FROM strs WHERE id = 4
+----
+VectrXDB_ColumnXr_Engine_2026
+
+query T nosort
+SELECT CONCAT(s, '_tail') FROM strs WHERE id = 4
+----
+VectraDB_Columnar_Engine_2026_tail
+
+query T nosort
+SELECT s || '!' FROM strs WHERE id = 4
+----
+VectraDB_Columnar_Engine_2026!
+
+query B nosort
+SELECT STARTS_WITH(s, 'Ve') FROM strs WHERE id = 4
+----
+true
+
+query B nosort
+SELECT ENDS_WITH(s, '26') FROM strs WHERE id = 4
+----
+true
+
+query I nosort
+SELECT POSITION('o' IN s) FROM strs WHERE id = 4
+----
+11
+
+query T nosort
+SELECT CONCAT_WS('-', s, 'ok') FROM strs WHERE id = 4
+----
+VectraDB_Columnar_Engine_2026-ok
+
+query T nosort
+SELECT LOWER(s) FROM strs WHERE id = 5
+----
+short
+
+query T nosort
+SELECT UPPER(s) FROM strs WHERE id = 5
+----
+SHORT
+
+query I nosort
+SELECT LENGTH(s) FROM strs WHERE id = 5
+----
+5
+
+query T nosort
+SELECT TRIM(s) FROM strs WHERE id = 5
+----
+short
+
+query T nosort
+SELECT LTRIM(s) FROM strs WHERE id = 5
+----
+short
+
+query T nosort
+SELECT RTRIM(s) FROM strs WHERE id = 5
+----
+short
+
+query T nosort
+SELECT SUBSTRING(s, 1, 4) FROM strs WHERE id = 5
+----
+shor
+
+query T nosort
+SELECT SUBSTRING(s, 2, 5) FROM strs WHERE id = 5
+----
+hort
+
+query T nosort
+SELECT LEFT(s, 3) FROM strs WHERE id = 5
+----
+sho
+
+query T nosort
+SELECT RIGHT(s, 3) FROM strs WHERE id = 5
+----
+ort
+
+query T nosort
+SELECT REPLACE(s, 'a', 'X') FROM strs WHERE id = 5
+----
+short
+
+query T nosort
+SELECT CONCAT(s, '_tail') FROM strs WHERE id = 5
+----
+short_tail
+
+query T nosort
+SELECT s || '!' FROM strs WHERE id = 5
+----
+short!
+
+query B nosort
+SELECT STARTS_WITH(s, 'Ve') FROM strs WHERE id = 5
+----
+false
+
+query B nosort
+SELECT ENDS_WITH(s, '26') FROM strs WHERE id = 5
+----
+false
+
+query I nosort
+SELECT POSITION('o' IN s) FROM strs WHERE id = 5
+----
+3
+
+query T nosort
+SELECT CONCAT_WS('-', s, 'ok') FROM strs WHERE id = 5
+----
+short-ok
+
+query T nosort
+SELECT LOWER(s) FROM strs WHERE id = 6
+----
+a
+
+query T nosort
+SELECT UPPER(s) FROM strs WHERE id = 6
+----
+A
+
+query I nosort
+SELECT LENGTH(s) FROM strs WHERE id = 6
+----
+1
+
+query T nosort
+SELECT TRIM(s) FROM strs WHERE id = 6
+----
+a
+
+query T nosort
+SELECT LTRIM(s) FROM strs WHERE id = 6
+----
+a
+
+query T nosort
+SELECT RTRIM(s) FROM strs WHERE id = 6
+----
+a
+
+query T nosort
+SELECT SUBSTRING(s, 1, 4) FROM strs WHERE id = 6
+----
+a
+
+query T nosort
+SELECT SUBSTRING(s, 2, 5) FROM strs WHERE id = 6
+----
+(empty)
+
+query T nosort
+SELECT LEFT(s, 3) FROM strs WHERE id = 6
+----
+a
+
+query T nosort
+SELECT RIGHT(s, 3) FROM strs WHERE id = 6
+----
+a
+
+query T nosort
+SELECT REPLACE(s, 'a', 'X') FROM strs WHERE id = 6
+----
+X
+
+query T nosort
+SELECT CONCAT(s, '_tail') FROM strs WHERE id = 6
+----
+a_tail
+
+query T nosort
+SELECT s || '!' FROM strs WHERE id = 6
+----
+a!
+
+query B nosort
+SELECT STARTS_WITH(s, 'Ve') FROM strs WHERE id = 6
+----
+false
+
+query B nosort
+SELECT ENDS_WITH(s, '26') FROM strs WHERE id = 6
+----
+false
+
+query I nosort
+SELECT POSITION('o' IN s) FROM strs WHERE id = 6
+----
+0
+
+query T nosort
+SELECT CONCAT_WS('-', s, 'ok') FROM strs WHERE id = 6
+----
+a-ok
+
+query T nosort
+SELECT LOWER(s) FROM strs WHERE id = 7
+----
+(empty)
+
+query T nosort
+SELECT UPPER(s) FROM strs WHERE id = 7
+----
+(empty)
+
+query I nosort
+SELECT LENGTH(s) FROM strs WHERE id = 7
+----
+0
+
+query T nosort
+SELECT TRIM(s) FROM strs WHERE id = 7
+----
+(empty)
+
+query T nosort
+SELECT LTRIM(s) FROM strs WHERE id = 7
+----
+(empty)
+
+query T nosort
+SELECT RTRIM(s) FROM strs WHERE id = 7
+----
+(empty)
+
+query T nosort
+SELECT SUBSTRING(s, 1, 4) FROM strs WHERE id = 7
+----
+(empty)
+
+query T nosort
+SELECT SUBSTRING(s, 2, 5) FROM strs WHERE id = 7
+----
+(empty)
+
+query T nosort
+SELECT LEFT(s, 3) FROM strs WHERE id = 7
+----
+(empty)
+
+query T nosort
+SELECT RIGHT(s, 3) FROM strs WHERE id = 7
+----
+(empty)
+
+query T nosort
+SELECT REPLACE(s, 'a', 'X') FROM strs WHERE id = 7
+----
+(empty)
+
+query T nosort
+SELECT CONCAT(s, '_tail') FROM strs WHERE id = 7
+----
+_tail
+
+query T nosort
+SELECT s || '!' FROM strs WHERE id = 7
+----
+!
+
+query B nosort
+SELECT STARTS_WITH(s, 'Ve') FROM strs WHERE id = 7
+----
+false
+
+query B nosort
+SELECT ENDS_WITH(s, '26') FROM strs WHERE id = 7
+----
+false
+
+query I nosort
+SELECT POSITION('o' IN s) FROM strs WHERE id = 7
+----
+0
+
+query T nosort
+SELECT CONCAT_WS('-', s, 'ok') FROM strs WHERE id = 7
+----
+-ok
+
+query T nosort
+SELECT LOWER(s) FROM strs WHERE id = 8
+----
+abcdefghijklmnopqrst
+
+query T nosort
+SELECT UPPER(s) FROM strs WHERE id = 8
+----
+ABCDEFGHIJKLMNOPQRST
+
+query I nosort
+SELECT LENGTH(s) FROM strs WHERE id = 8
+----
+20
+
+query T nosort
+SELECT TRIM(s) FROM strs WHERE id = 8
+----
+AbCdEfGhIjKlMnOpQrSt
+
+query T nosort
+SELECT LTRIM(s) FROM strs WHERE id = 8
+----
+AbCdEfGhIjKlMnOpQrSt
+
+query T nosort
+SELECT RTRIM(s) FROM strs WHERE id = 8
+----
+AbCdEfGhIjKlMnOpQrSt
+
+query T nosort
+SELECT SUBSTRING(s, 1, 4) FROM strs WHERE id = 8
+----
+AbCd
+
+query T nosort
+SELECT SUBSTRING(s, 2, 5) FROM strs WHERE id = 8
+----
+bCdEf
+
+query T nosort
+SELECT LEFT(s, 3) FROM strs WHERE id = 8
+----
+AbC
+
+query T nosort
+SELECT RIGHT(s, 3) FROM strs WHERE id = 8
+----
+rSt
+
+query T nosort
+SELECT REPLACE(s, 'a', 'X') FROM strs WHERE id = 8
+----
+AbCdEfGhIjKlMnOpQrSt
+
+query T nosort
+SELECT CONCAT(s, '_tail') FROM strs WHERE id = 8
+----
+AbCdEfGhIjKlMnOpQrSt_tail
+
+query T nosort
+SELECT s || '!' FROM strs WHERE id = 8
+----
+AbCdEfGhIjKlMnOpQrSt!
+
+query B nosort
+SELECT STARTS_WITH(s, 'Ve') FROM strs WHERE id = 8
+----
+false
+
+query B nosort
+SELECT ENDS_WITH(s, '26') FROM strs WHERE id = 8
+----
+false
+
+query I nosort
+SELECT POSITION('o' IN s) FROM strs WHERE id = 8
+----
+0
+
+query T nosort
+SELECT CONCAT_WS('-', s, 'ok') FROM strs WHERE id = 8
+----
+AbCdEfGhIjKlMnOpQrSt-ok
+
+query T nosort
+SELECT LOWER(s) FROM strs WHERE id = 9
+----
+foo bar baz
+
+query T nosort
+SELECT UPPER(s) FROM strs WHERE id = 9
+----
+FOO BAR BAZ
+
+query I nosort
+SELECT LENGTH(s) FROM strs WHERE id = 9
+----
+11
+
+query T nosort
+SELECT TRIM(s) FROM strs WHERE id = 9
+----
+foo bar baz
+
+query T nosort
+SELECT LTRIM(s) FROM strs WHERE id = 9
+----
+foo bar baz
+
+query T nosort
+SELECT RTRIM(s) FROM strs WHERE id = 9
+----
+foo bar baz
+
+query T nosort
+SELECT SUBSTRING(s, 1, 4) FROM strs WHERE id = 9
+----
+foo 
+
+query T nosort
+SELECT SUBSTRING(s, 2, 5) FROM strs WHERE id = 9
+----
+oo ba
+
+query T nosort
+SELECT LEFT(s, 3) FROM strs WHERE id = 9
+----
+foo
+
+query T nosort
+SELECT RIGHT(s, 3) FROM strs WHERE id = 9
+----
+baz
+
+query T nosort
+SELECT REPLACE(s, 'a', 'X') FROM strs WHERE id = 9
+----
+foo bXr bXz
+
+query T nosort
+SELECT CONCAT(s, '_tail') FROM strs WHERE id = 9
+----
+foo bar baz_tail
+
+query T nosort
+SELECT s || '!' FROM strs WHERE id = 9
+----
+foo bar baz!
+
+query B nosort
+SELECT STARTS_WITH(s, 'Ve') FROM strs WHERE id = 9
+----
+false
+
+query B nosort
+SELECT ENDS_WITH(s, '26') FROM strs WHERE id = 9
+----
+false
+
+query I nosort
+SELECT POSITION('o' IN s) FROM strs WHERE id = 9
+----
+2
+
+query T nosort
+SELECT CONCAT_WS('-', s, 'ok') FROM strs WHERE id = 9
+----
+foo bar baz-ok
+
+query T nosort
+SELECT LOWER(s) FROM strs WHERE id = 10
+----
+123456789012
+
+query T nosort
+SELECT UPPER(s) FROM strs WHERE id = 10
+----
+123456789012
+
+query I nosort
+SELECT LENGTH(s) FROM strs WHERE id = 10
+----
+12
+
+query T nosort
+SELECT TRIM(s) FROM strs WHERE id = 10
+----
+123456789012
+
+query T nosort
+SELECT LTRIM(s) FROM strs WHERE id = 10
+----
+123456789012
+
+query T nosort
+SELECT RTRIM(s) FROM strs WHERE id = 10
+----
+123456789012
+
+query T nosort
+SELECT SUBSTRING(s, 1, 4) FROM strs WHERE id = 10
+----
+1234
+
+query T nosort
+SELECT SUBSTRING(s, 2, 5) FROM strs WHERE id = 10
+----
+23456
+
+query T nosort
+SELECT LEFT(s, 3) FROM strs WHERE id = 10
+----
+123
+
+query T nosort
+SELECT RIGHT(s, 3) FROM strs WHERE id = 10
+----
+012
+
+query T nosort
+SELECT REPLACE(s, 'a', 'X') FROM strs WHERE id = 10
+----
+123456789012
+
+query T nosort
+SELECT CONCAT(s, '_tail') FROM strs WHERE id = 10
+----
+123456789012_tail
+
+query T nosort
+SELECT s || '!' FROM strs WHERE id = 10
+----
+123456789012!
+
+query B nosort
+SELECT STARTS_WITH(s, 'Ve') FROM strs WHERE id = 10
+----
+false
+
+query B nosort
+SELECT ENDS_WITH(s, '26') FROM strs WHERE id = 10
+----
+false
+
+query I nosort
+SELECT POSITION('o' IN s) FROM strs WHERE id = 10
+----
+0
+
+query T nosort
+SELECT CONCAT_WS('-', s, 'ok') FROM strs WHERE id = 10
+----
+123456789012-ok
+
+query T nosort
+SELECT LOWER(s) FROM strs WHERE id = 11
+----
+1234567890123
+
+query T nosort
+SELECT UPPER(s) FROM strs WHERE id = 11
+----
+1234567890123
+
+query I nosort
+SELECT LENGTH(s) FROM strs WHERE id = 11
+----
+13
+
+query T nosort
+SELECT TRIM(s) FROM strs WHERE id = 11
+----
+1234567890123
+
+query T nosort
+SELECT LTRIM(s) FROM strs WHERE id = 11
+----
+1234567890123
+
+query T nosort
+SELECT RTRIM(s) FROM strs WHERE id = 11
+----
+1234567890123
+
+query T nosort
+SELECT SUBSTRING(s, 1, 4) FROM strs WHERE id = 11
+----
+1234
+
+query T nosort
+SELECT SUBSTRING(s, 2, 5) FROM strs WHERE id = 11
+----
+23456
+
+query T nosort
+SELECT LEFT(s, 3) FROM strs WHERE id = 11
+----
+123
+
+query T nosort
+SELECT RIGHT(s, 3) FROM strs WHERE id = 11
+----
+123
+
+query T nosort
+SELECT REPLACE(s, 'a', 'X') FROM strs WHERE id = 11
+----
+1234567890123
+
+query T nosort
+SELECT CONCAT(s, '_tail') FROM strs WHERE id = 11
+----
+1234567890123_tail
+
+query T nosort
+SELECT s || '!' FROM strs WHERE id = 11
+----
+1234567890123!
+
+query B nosort
+SELECT STARTS_WITH(s, 'Ve') FROM strs WHERE id = 11
+----
+false
+
+query B nosort
+SELECT ENDS_WITH(s, '26') FROM strs WHERE id = 11
+----
+false
+
+query I nosort
+SELECT POSITION('o' IN s) FROM strs WHERE id = 11
+----
+0
+
+query T nosort
+SELECT CONCAT_WS('-', s, 'ok') FROM strs WHERE id = 11
+----
+1234567890123-ok
+
+query T nosort
+SELECT LOWER(s) FROM strs WHERE id = 99
+----
+NULL
+
+query I nosort
+SELECT LENGTH(s) FROM strs WHERE id = 99
+----
+NULL
+
+query T nosort
+SELECT CONCAT(s, 'x') FROM strs WHERE id = 99
+----
+x

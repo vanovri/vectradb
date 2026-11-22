@@ -1,0 +1,1060 @@
+# 09_date_timestamp_intervals.slt — VectraDB M07 sqllogictest suite
+
+statement ok
+CREATE TABLE dt (id BIGINT, d DATE)
+
+statement ok
+INSERT INTO dt VALUES (1, DATE '1970-01-01')
+
+statement ok
+INSERT INTO dt VALUES (2, DATE '1998-09-02')
+
+statement ok
+INSERT INTO dt VALUES (3, DATE '2000-02-29')
+
+statement ok
+INSERT INTO dt VALUES (4, DATE '2024-02-29')
+
+statement ok
+INSERT INTO dt VALUES (5, DATE '2023-12-31')
+
+statement ok
+INSERT INTO dt VALUES (6, DATE '1995-03-15')
+
+statement ok
+INSERT INTO dt VALUES (7, DATE '2026-07-04')
+
+statement ok
+INSERT INTO dt VALUES (8, DATE '1969-12-31')
+
+statement ok
+INSERT INTO dt VALUES (9, DATE '2025-01-31')
+
+statement ok
+INSERT INTO dt VALUES (10, DATE '1992-06-15')
+
+statement ok
+INSERT INTO dt VALUES (11, DATE '2010-10-10')
+
+statement ok
+INSERT INTO dt VALUES (12, DATE '2020-05-20')
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d) FROM dt WHERE id = 1
+----
+1970
+
+query I nosort
+SELECT EXTRACT(QUARTER FROM d) FROM dt WHERE id = 1
+----
+1
+
+query I nosort
+SELECT EXTRACT(MONTH FROM d) FROM dt WHERE id = 1
+----
+1
+
+query I nosort
+SELECT EXTRACT(DAY FROM d) FROM dt WHERE id = 1
+----
+1
+
+query T nosort
+SELECT DATE_TRUNC('year', d) FROM dt WHERE id = 1
+----
+1970-01-01
+
+query T nosort
+SELECT DATE_TRUNC('month', d) FROM dt WHERE id = 1
+----
+1970-01-01
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '10' DAY, d) FROM dt WHERE id = 1
+----
+10
+
+query I nosort
+SELECT DATE_DIFF(d, d - INTERVAL '5' DAY) FROM dt WHERE id = 1
+----
+5
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d + INTERVAL '1' YEAR) FROM dt WHERE id = 1
+----
+1971
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d - INTERVAL '1' YEAR) FROM dt WHERE id = 1
+----
+1969
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '1' DAY, d) FROM dt WHERE id = 1
+----
+1
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '7' DAY, d) FROM dt WHERE id = 1
+----
+7
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '30' DAY, d) FROM dt WHERE id = 1
+----
+30
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '90' DAY, d) FROM dt WHERE id = 1
+----
+90
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '365' DAY, d) FROM dt WHERE id = 1
+----
+365
+
+query I nosort
+SELECT DATE_DIFF(d - INTERVAL '1' DAY, d) FROM dt WHERE id = 1
+----
+-1
+
+query I nosort
+SELECT DATE_DIFF(d - INTERVAL '30' DAY, d) FROM dt WHERE id = 1
+----
+-30
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d) FROM dt WHERE id = 2
+----
+1998
+
+query I nosort
+SELECT EXTRACT(QUARTER FROM d) FROM dt WHERE id = 2
+----
+3
+
+query I nosort
+SELECT EXTRACT(MONTH FROM d) FROM dt WHERE id = 2
+----
+9
+
+query I nosort
+SELECT EXTRACT(DAY FROM d) FROM dt WHERE id = 2
+----
+2
+
+query T nosort
+SELECT DATE_TRUNC('year', d) FROM dt WHERE id = 2
+----
+1998-01-01
+
+query T nosort
+SELECT DATE_TRUNC('month', d) FROM dt WHERE id = 2
+----
+1998-09-01
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '10' DAY, d) FROM dt WHERE id = 2
+----
+10
+
+query I nosort
+SELECT DATE_DIFF(d, d - INTERVAL '5' DAY) FROM dt WHERE id = 2
+----
+5
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d + INTERVAL '1' YEAR) FROM dt WHERE id = 2
+----
+1999
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d - INTERVAL '1' YEAR) FROM dt WHERE id = 2
+----
+1997
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '1' DAY, d) FROM dt WHERE id = 2
+----
+1
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '7' DAY, d) FROM dt WHERE id = 2
+----
+7
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '30' DAY, d) FROM dt WHERE id = 2
+----
+30
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '90' DAY, d) FROM dt WHERE id = 2
+----
+90
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '365' DAY, d) FROM dt WHERE id = 2
+----
+365
+
+query I nosort
+SELECT DATE_DIFF(d - INTERVAL '1' DAY, d) FROM dt WHERE id = 2
+----
+-1
+
+query I nosort
+SELECT DATE_DIFF(d - INTERVAL '30' DAY, d) FROM dt WHERE id = 2
+----
+-30
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d) FROM dt WHERE id = 3
+----
+2000
+
+query I nosort
+SELECT EXTRACT(QUARTER FROM d) FROM dt WHERE id = 3
+----
+1
+
+query I nosort
+SELECT EXTRACT(MONTH FROM d) FROM dt WHERE id = 3
+----
+2
+
+query I nosort
+SELECT EXTRACT(DAY FROM d) FROM dt WHERE id = 3
+----
+29
+
+query T nosort
+SELECT DATE_TRUNC('year', d) FROM dt WHERE id = 3
+----
+2000-01-01
+
+query T nosort
+SELECT DATE_TRUNC('month', d) FROM dt WHERE id = 3
+----
+2000-02-01
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '10' DAY, d) FROM dt WHERE id = 3
+----
+10
+
+query I nosort
+SELECT DATE_DIFF(d, d - INTERVAL '5' DAY) FROM dt WHERE id = 3
+----
+5
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d + INTERVAL '1' YEAR) FROM dt WHERE id = 3
+----
+2001
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d - INTERVAL '1' YEAR) FROM dt WHERE id = 3
+----
+1999
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '1' DAY, d) FROM dt WHERE id = 3
+----
+1
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '7' DAY, d) FROM dt WHERE id = 3
+----
+7
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '30' DAY, d) FROM dt WHERE id = 3
+----
+30
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '90' DAY, d) FROM dt WHERE id = 3
+----
+90
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '365' DAY, d) FROM dt WHERE id = 3
+----
+365
+
+query I nosort
+SELECT DATE_DIFF(d - INTERVAL '1' DAY, d) FROM dt WHERE id = 3
+----
+-1
+
+query I nosort
+SELECT DATE_DIFF(d - INTERVAL '30' DAY, d) FROM dt WHERE id = 3
+----
+-30
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d) FROM dt WHERE id = 4
+----
+2024
+
+query I nosort
+SELECT EXTRACT(QUARTER FROM d) FROM dt WHERE id = 4
+----
+1
+
+query I nosort
+SELECT EXTRACT(MONTH FROM d) FROM dt WHERE id = 4
+----
+2
+
+query I nosort
+SELECT EXTRACT(DAY FROM d) FROM dt WHERE id = 4
+----
+29
+
+query T nosort
+SELECT DATE_TRUNC('year', d) FROM dt WHERE id = 4
+----
+2024-01-01
+
+query T nosort
+SELECT DATE_TRUNC('month', d) FROM dt WHERE id = 4
+----
+2024-02-01
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '10' DAY, d) FROM dt WHERE id = 4
+----
+10
+
+query I nosort
+SELECT DATE_DIFF(d, d - INTERVAL '5' DAY) FROM dt WHERE id = 4
+----
+5
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d + INTERVAL '1' YEAR) FROM dt WHERE id = 4
+----
+2025
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d - INTERVAL '1' YEAR) FROM dt WHERE id = 4
+----
+2023
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '1' DAY, d) FROM dt WHERE id = 4
+----
+1
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '7' DAY, d) FROM dt WHERE id = 4
+----
+7
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '30' DAY, d) FROM dt WHERE id = 4
+----
+30
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '90' DAY, d) FROM dt WHERE id = 4
+----
+90
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '365' DAY, d) FROM dt WHERE id = 4
+----
+365
+
+query I nosort
+SELECT DATE_DIFF(d - INTERVAL '1' DAY, d) FROM dt WHERE id = 4
+----
+-1
+
+query I nosort
+SELECT DATE_DIFF(d - INTERVAL '30' DAY, d) FROM dt WHERE id = 4
+----
+-30
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d) FROM dt WHERE id = 5
+----
+2023
+
+query I nosort
+SELECT EXTRACT(QUARTER FROM d) FROM dt WHERE id = 5
+----
+4
+
+query I nosort
+SELECT EXTRACT(MONTH FROM d) FROM dt WHERE id = 5
+----
+12
+
+query I nosort
+SELECT EXTRACT(DAY FROM d) FROM dt WHERE id = 5
+----
+31
+
+query T nosort
+SELECT DATE_TRUNC('year', d) FROM dt WHERE id = 5
+----
+2023-01-01
+
+query T nosort
+SELECT DATE_TRUNC('month', d) FROM dt WHERE id = 5
+----
+2023-12-01
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '10' DAY, d) FROM dt WHERE id = 5
+----
+10
+
+query I nosort
+SELECT DATE_DIFF(d, d - INTERVAL '5' DAY) FROM dt WHERE id = 5
+----
+5
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d + INTERVAL '1' YEAR) FROM dt WHERE id = 5
+----
+2024
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d - INTERVAL '1' YEAR) FROM dt WHERE id = 5
+----
+2022
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '1' DAY, d) FROM dt WHERE id = 5
+----
+1
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '7' DAY, d) FROM dt WHERE id = 5
+----
+7
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '30' DAY, d) FROM dt WHERE id = 5
+----
+30
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '90' DAY, d) FROM dt WHERE id = 5
+----
+90
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '365' DAY, d) FROM dt WHERE id = 5
+----
+365
+
+query I nosort
+SELECT DATE_DIFF(d - INTERVAL '1' DAY, d) FROM dt WHERE id = 5
+----
+-1
+
+query I nosort
+SELECT DATE_DIFF(d - INTERVAL '30' DAY, d) FROM dt WHERE id = 5
+----
+-30
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d) FROM dt WHERE id = 6
+----
+1995
+
+query I nosort
+SELECT EXTRACT(QUARTER FROM d) FROM dt WHERE id = 6
+----
+1
+
+query I nosort
+SELECT EXTRACT(MONTH FROM d) FROM dt WHERE id = 6
+----
+3
+
+query I nosort
+SELECT EXTRACT(DAY FROM d) FROM dt WHERE id = 6
+----
+15
+
+query T nosort
+SELECT DATE_TRUNC('year', d) FROM dt WHERE id = 6
+----
+1995-01-01
+
+query T nosort
+SELECT DATE_TRUNC('month', d) FROM dt WHERE id = 6
+----
+1995-03-01
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '10' DAY, d) FROM dt WHERE id = 6
+----
+10
+
+query I nosort
+SELECT DATE_DIFF(d, d - INTERVAL '5' DAY) FROM dt WHERE id = 6
+----
+5
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d + INTERVAL '1' YEAR) FROM dt WHERE id = 6
+----
+1996
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d - INTERVAL '1' YEAR) FROM dt WHERE id = 6
+----
+1994
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '1' DAY, d) FROM dt WHERE id = 6
+----
+1
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '7' DAY, d) FROM dt WHERE id = 6
+----
+7
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '30' DAY, d) FROM dt WHERE id = 6
+----
+30
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '90' DAY, d) FROM dt WHERE id = 6
+----
+90
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '365' DAY, d) FROM dt WHERE id = 6
+----
+365
+
+query I nosort
+SELECT DATE_DIFF(d - INTERVAL '1' DAY, d) FROM dt WHERE id = 6
+----
+-1
+
+query I nosort
+SELECT DATE_DIFF(d - INTERVAL '30' DAY, d) FROM dt WHERE id = 6
+----
+-30
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d) FROM dt WHERE id = 7
+----
+2026
+
+query I nosort
+SELECT EXTRACT(QUARTER FROM d) FROM dt WHERE id = 7
+----
+3
+
+query I nosort
+SELECT EXTRACT(MONTH FROM d) FROM dt WHERE id = 7
+----
+7
+
+query I nosort
+SELECT EXTRACT(DAY FROM d) FROM dt WHERE id = 7
+----
+4
+
+query T nosort
+SELECT DATE_TRUNC('year', d) FROM dt WHERE id = 7
+----
+2026-01-01
+
+query T nosort
+SELECT DATE_TRUNC('month', d) FROM dt WHERE id = 7
+----
+2026-07-01
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '10' DAY, d) FROM dt WHERE id = 7
+----
+10
+
+query I nosort
+SELECT DATE_DIFF(d, d - INTERVAL '5' DAY) FROM dt WHERE id = 7
+----
+5
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d + INTERVAL '1' YEAR) FROM dt WHERE id = 7
+----
+2027
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d - INTERVAL '1' YEAR) FROM dt WHERE id = 7
+----
+2025
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '1' DAY, d) FROM dt WHERE id = 7
+----
+1
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '7' DAY, d) FROM dt WHERE id = 7
+----
+7
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '30' DAY, d) FROM dt WHERE id = 7
+----
+30
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '90' DAY, d) FROM dt WHERE id = 7
+----
+90
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '365' DAY, d) FROM dt WHERE id = 7
+----
+365
+
+query I nosort
+SELECT DATE_DIFF(d - INTERVAL '1' DAY, d) FROM dt WHERE id = 7
+----
+-1
+
+query I nosort
+SELECT DATE_DIFF(d - INTERVAL '30' DAY, d) FROM dt WHERE id = 7
+----
+-30
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d) FROM dt WHERE id = 8
+----
+1969
+
+query I nosort
+SELECT EXTRACT(QUARTER FROM d) FROM dt WHERE id = 8
+----
+4
+
+query I nosort
+SELECT EXTRACT(MONTH FROM d) FROM dt WHERE id = 8
+----
+12
+
+query I nosort
+SELECT EXTRACT(DAY FROM d) FROM dt WHERE id = 8
+----
+31
+
+query T nosort
+SELECT DATE_TRUNC('year', d) FROM dt WHERE id = 8
+----
+1969-01-01
+
+query T nosort
+SELECT DATE_TRUNC('month', d) FROM dt WHERE id = 8
+----
+1969-12-01
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '10' DAY, d) FROM dt WHERE id = 8
+----
+10
+
+query I nosort
+SELECT DATE_DIFF(d, d - INTERVAL '5' DAY) FROM dt WHERE id = 8
+----
+5
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d + INTERVAL '1' YEAR) FROM dt WHERE id = 8
+----
+1970
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d - INTERVAL '1' YEAR) FROM dt WHERE id = 8
+----
+1968
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '1' DAY, d) FROM dt WHERE id = 8
+----
+1
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '7' DAY, d) FROM dt WHERE id = 8
+----
+7
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '30' DAY, d) FROM dt WHERE id = 8
+----
+30
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '90' DAY, d) FROM dt WHERE id = 8
+----
+90
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '365' DAY, d) FROM dt WHERE id = 8
+----
+365
+
+query I nosort
+SELECT DATE_DIFF(d - INTERVAL '1' DAY, d) FROM dt WHERE id = 8
+----
+-1
+
+query I nosort
+SELECT DATE_DIFF(d - INTERVAL '30' DAY, d) FROM dt WHERE id = 8
+----
+-30
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d) FROM dt WHERE id = 9
+----
+2025
+
+query I nosort
+SELECT EXTRACT(QUARTER FROM d) FROM dt WHERE id = 9
+----
+1
+
+query I nosort
+SELECT EXTRACT(MONTH FROM d) FROM dt WHERE id = 9
+----
+1
+
+query I nosort
+SELECT EXTRACT(DAY FROM d) FROM dt WHERE id = 9
+----
+31
+
+query T nosort
+SELECT DATE_TRUNC('year', d) FROM dt WHERE id = 9
+----
+2025-01-01
+
+query T nosort
+SELECT DATE_TRUNC('month', d) FROM dt WHERE id = 9
+----
+2025-01-01
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '10' DAY, d) FROM dt WHERE id = 9
+----
+10
+
+query I nosort
+SELECT DATE_DIFF(d, d - INTERVAL '5' DAY) FROM dt WHERE id = 9
+----
+5
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d + INTERVAL '1' YEAR) FROM dt WHERE id = 9
+----
+2026
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d - INTERVAL '1' YEAR) FROM dt WHERE id = 9
+----
+2024
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '1' DAY, d) FROM dt WHERE id = 9
+----
+1
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '7' DAY, d) FROM dt WHERE id = 9
+----
+7
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '30' DAY, d) FROM dt WHERE id = 9
+----
+30
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '90' DAY, d) FROM dt WHERE id = 9
+----
+90
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '365' DAY, d) FROM dt WHERE id = 9
+----
+365
+
+query I nosort
+SELECT DATE_DIFF(d - INTERVAL '1' DAY, d) FROM dt WHERE id = 9
+----
+-1
+
+query I nosort
+SELECT DATE_DIFF(d - INTERVAL '30' DAY, d) FROM dt WHERE id = 9
+----
+-30
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d) FROM dt WHERE id = 10
+----
+1992
+
+query I nosort
+SELECT EXTRACT(QUARTER FROM d) FROM dt WHERE id = 10
+----
+2
+
+query I nosort
+SELECT EXTRACT(MONTH FROM d) FROM dt WHERE id = 10
+----
+6
+
+query I nosort
+SELECT EXTRACT(DAY FROM d) FROM dt WHERE id = 10
+----
+15
+
+query T nosort
+SELECT DATE_TRUNC('year', d) FROM dt WHERE id = 10
+----
+1992-01-01
+
+query T nosort
+SELECT DATE_TRUNC('month', d) FROM dt WHERE id = 10
+----
+1992-06-01
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '10' DAY, d) FROM dt WHERE id = 10
+----
+10
+
+query I nosort
+SELECT DATE_DIFF(d, d - INTERVAL '5' DAY) FROM dt WHERE id = 10
+----
+5
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d + INTERVAL '1' YEAR) FROM dt WHERE id = 10
+----
+1993
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d - INTERVAL '1' YEAR) FROM dt WHERE id = 10
+----
+1991
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '1' DAY, d) FROM dt WHERE id = 10
+----
+1
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '7' DAY, d) FROM dt WHERE id = 10
+----
+7
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '30' DAY, d) FROM dt WHERE id = 10
+----
+30
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '90' DAY, d) FROM dt WHERE id = 10
+----
+90
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '365' DAY, d) FROM dt WHERE id = 10
+----
+365
+
+query I nosort
+SELECT DATE_DIFF(d - INTERVAL '1' DAY, d) FROM dt WHERE id = 10
+----
+-1
+
+query I nosort
+SELECT DATE_DIFF(d - INTERVAL '30' DAY, d) FROM dt WHERE id = 10
+----
+-30
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d) FROM dt WHERE id = 11
+----
+2010
+
+query I nosort
+SELECT EXTRACT(QUARTER FROM d) FROM dt WHERE id = 11
+----
+4
+
+query I nosort
+SELECT EXTRACT(MONTH FROM d) FROM dt WHERE id = 11
+----
+10
+
+query I nosort
+SELECT EXTRACT(DAY FROM d) FROM dt WHERE id = 11
+----
+10
+
+query T nosort
+SELECT DATE_TRUNC('year', d) FROM dt WHERE id = 11
+----
+2010-01-01
+
+query T nosort
+SELECT DATE_TRUNC('month', d) FROM dt WHERE id = 11
+----
+2010-10-01
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '10' DAY, d) FROM dt WHERE id = 11
+----
+10
+
+query I nosort
+SELECT DATE_DIFF(d, d - INTERVAL '5' DAY) FROM dt WHERE id = 11
+----
+5
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d + INTERVAL '1' YEAR) FROM dt WHERE id = 11
+----
+2011
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d - INTERVAL '1' YEAR) FROM dt WHERE id = 11
+----
+2009
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '1' DAY, d) FROM dt WHERE id = 11
+----
+1
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '7' DAY, d) FROM dt WHERE id = 11
+----
+7
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '30' DAY, d) FROM dt WHERE id = 11
+----
+30
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '90' DAY, d) FROM dt WHERE id = 11
+----
+90
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '365' DAY, d) FROM dt WHERE id = 11
+----
+365
+
+query I nosort
+SELECT DATE_DIFF(d - INTERVAL '1' DAY, d) FROM dt WHERE id = 11
+----
+-1
+
+query I nosort
+SELECT DATE_DIFF(d - INTERVAL '30' DAY, d) FROM dt WHERE id = 11
+----
+-30
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d) FROM dt WHERE id = 12
+----
+2020
+
+query I nosort
+SELECT EXTRACT(QUARTER FROM d) FROM dt WHERE id = 12
+----
+2
+
+query I nosort
+SELECT EXTRACT(MONTH FROM d) FROM dt WHERE id = 12
+----
+5
+
+query I nosort
+SELECT EXTRACT(DAY FROM d) FROM dt WHERE id = 12
+----
+20
+
+query T nosort
+SELECT DATE_TRUNC('year', d) FROM dt WHERE id = 12
+----
+2020-01-01
+
+query T nosort
+SELECT DATE_TRUNC('month', d) FROM dt WHERE id = 12
+----
+2020-05-01
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '10' DAY, d) FROM dt WHERE id = 12
+----
+10
+
+query I nosort
+SELECT DATE_DIFF(d, d - INTERVAL '5' DAY) FROM dt WHERE id = 12
+----
+5
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d + INTERVAL '1' YEAR) FROM dt WHERE id = 12
+----
+2021
+
+query I nosort
+SELECT EXTRACT(YEAR FROM d - INTERVAL '1' YEAR) FROM dt WHERE id = 12
+----
+2019
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '1' DAY, d) FROM dt WHERE id = 12
+----
+1
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '7' DAY, d) FROM dt WHERE id = 12
+----
+7
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '30' DAY, d) FROM dt WHERE id = 12
+----
+30
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '90' DAY, d) FROM dt WHERE id = 12
+----
+90
+
+query I nosort
+SELECT DATE_DIFF(d + INTERVAL '365' DAY, d) FROM dt WHERE id = 12
+----
+365
+
+query I nosort
+SELECT DATE_DIFF(d - INTERVAL '1' DAY, d) FROM dt WHERE id = 12
+----
+-1
+
+query I nosort
+SELECT DATE_DIFF(d - INTERVAL '30' DAY, d) FROM dt WHERE id = 12
+----
+-30

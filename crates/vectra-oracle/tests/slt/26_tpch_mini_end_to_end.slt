@@ -1,0 +1,2283 @@
+# 26_tpch_mini_end_to_end.slt — VectraDB M07 sqllogictest suite
+
+statement ok
+CREATE TABLE region (r_regionkey BIGINT, r_name VARCHAR)
+
+statement ok
+CREATE TABLE nation (n_nationkey BIGINT, n_name VARCHAR, n_regionkey BIGINT)
+
+statement ok
+CREATE TABLE customer (c_custkey BIGINT, c_nationkey BIGINT, c_mktsegment VARCHAR, c_acctbal DOUBLE)
+
+statement ok
+CREATE TABLE orders (o_orderkey BIGINT, o_custkey BIGINT, o_orderstatus VARCHAR, o_totalprice DOUBLE, o_orderdate VARCHAR)
+
+statement ok
+CREATE TABLE lineitem (l_orderkey BIGINT, l_partkey BIGINT, l_quantity BIGINT, l_extendedprice DOUBLE, l_discount DOUBLE, l_tax DOUBLE, l_returnflag VARCHAR, l_linestatus VARCHAR, l_shipdate VARCHAR)
+
+statement ok
+INSERT INTO region VALUES (0,'AFRICA'),(1,'AMERICA'),(2,'ASIA'),(3,'EUROPE')
+
+statement ok
+INSERT INTO nation VALUES (1,'ALGERIA',0),(2,'BRAZIL',1),(3,'CANADA',1),(4,'CHINA',2),(5,'FRANCE',3),(6,'GERMANY',3)
+
+statement ok
+INSERT INTO customer VALUES (1,2,'BUILDING',500.0),(2,3,'AUTOMOBILE',1200.0),(3,5,'BUILDING',-100.0),(4,6,'MACHINERY',800.0),(5,4,'BUILDING',300.0)
+
+statement ok
+INSERT INTO orders VALUES (10,1,'O',1500.0,'1995-02-10'),(11,2,'F',2500.0,'1995-04-01'),(12,3,'O',800.0,'1995-01-15'),(13,4,'F',3200.0,'1996-05-20'),(14,5,'O',950.0,'1995-03-01')
+
+statement ok
+INSERT INTO lineitem VALUES (10,101,10,1000.0,0.05,0.02,'A','F','1998-08-01'),(10,102,20,2000.0,0.06,0.04,'R','F','1998-08-15'),(11,101,5,500.0,0.02,0.01,'N','O','1998-11-01'),(12,103,15,1500.0,0.07,0.03,'A','F','1995-03-20'),(13,102,30,3000.0,0.05,0.02,'N','O','1996-06-10'),(14,104,25,2500.0,0.04,0.02,'R','F','1995-04-10')
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.00 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+35
+3340.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 0 GROUP BY n_name
+----
+BRAZIL
+2830.000
+CANADA
+490.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= -200.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+12
+1395.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.01 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+35
+3340.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 1 GROUP BY n_name
+----
+BRAZIL
+2830.000
+CANADA
+490.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= -100.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+12
+1395.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.02 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+35
+3340.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 2 GROUP BY n_name
+----
+BRAZIL
+2830.000
+CANADA
+490.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 0.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.03 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+30
+2850.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 3 GROUP BY n_name
+----
+BRAZIL
+2830.000
+CANADA
+490.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 100.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.04 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+30
+2850.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 4 GROUP BY n_name
+----
+BRAZIL
+2830.000
+CANADA
+490.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 200.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.05 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+30
+2850.000
+R
+F
+20
+1880.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 5 GROUP BY n_name
+----
+BRAZIL
+2830.000
+CANADA
+490.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 300.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.06 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+15
+1395.000
+R
+F
+20
+1880.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 6 GROUP BY n_name
+----
+BRAZIL
+2830.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 400.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.07 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+15
+1395.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 7 GROUP BY n_name
+----
+BRAZIL
+2830.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 500.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.00 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+35
+3340.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 8 GROUP BY n_name
+----
+BRAZIL
+2830.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 600.0 GROUP BY o_orderkey
+----
+11
+490.000
+13
+2850.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.01 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+35
+3340.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 9 GROUP BY n_name
+----
+BRAZIL
+2830.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 700.0 GROUP BY o_orderkey
+----
+11
+490.000
+13
+2850.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.02 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+35
+3340.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 10 GROUP BY n_name
+----
+BRAZIL
+2830.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= -200.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+12
+1395.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.03 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+30
+2850.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 11 GROUP BY n_name
+----
+BRAZIL
+1880.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= -100.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+12
+1395.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.04 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+30
+2850.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 12 GROUP BY n_name
+----
+BRAZIL
+1880.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 0.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.05 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+30
+2850.000
+R
+F
+20
+1880.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 13 GROUP BY n_name
+----
+BRAZIL
+1880.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 100.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.06 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+15
+1395.000
+R
+F
+20
+1880.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 14 GROUP BY n_name
+----
+BRAZIL
+1880.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 200.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.07 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+15
+1395.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 15 GROUP BY n_name
+----
+BRAZIL
+1880.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 300.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.00 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+35
+3340.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 16 GROUP BY n_name
+----
+BRAZIL
+1880.000
+CHINA
+2400.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 400.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.01 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+35
+3340.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 17 GROUP BY n_name
+----
+BRAZIL
+1880.000
+CHINA
+2400.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 500.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.02 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+35
+3340.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 18 GROUP BY n_name
+----
+BRAZIL
+1880.000
+CHINA
+2400.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 600.0 GROUP BY o_orderkey
+----
+11
+490.000
+13
+2850.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.03 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+30
+2850.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 19 GROUP BY n_name
+----
+BRAZIL
+1880.000
+CHINA
+2400.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 700.0 GROUP BY o_orderkey
+----
+11
+490.000
+13
+2850.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.04 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+30
+2850.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 20 GROUP BY n_name
+----
+BRAZIL
+1880.000
+CHINA
+2400.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= -200.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+12
+1395.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.05 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+30
+2850.000
+R
+F
+20
+1880.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 21 GROUP BY n_name
+----
+CHINA
+2400.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= -100.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+12
+1395.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.06 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+15
+1395.000
+R
+F
+20
+1880.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 22 GROUP BY n_name
+----
+CHINA
+2400.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 0.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.07 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+15
+1395.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 23 GROUP BY n_name
+----
+CHINA
+2400.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 100.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.00 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+35
+3340.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 24 GROUP BY n_name
+----
+CHINA
+2400.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 200.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.01 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+35
+3340.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 0 GROUP BY n_name
+----
+BRAZIL
+2830.000
+CANADA
+490.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 300.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.02 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+35
+3340.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 1 GROUP BY n_name
+----
+BRAZIL
+2830.000
+CANADA
+490.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 400.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.03 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+30
+2850.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 2 GROUP BY n_name
+----
+BRAZIL
+2830.000
+CANADA
+490.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 500.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.04 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+30
+2850.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 3 GROUP BY n_name
+----
+BRAZIL
+2830.000
+CANADA
+490.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 600.0 GROUP BY o_orderkey
+----
+11
+490.000
+13
+2850.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.05 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+30
+2850.000
+R
+F
+20
+1880.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 4 GROUP BY n_name
+----
+BRAZIL
+2830.000
+CANADA
+490.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 700.0 GROUP BY o_orderkey
+----
+11
+490.000
+13
+2850.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.06 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+15
+1395.000
+R
+F
+20
+1880.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 5 GROUP BY n_name
+----
+BRAZIL
+2830.000
+CANADA
+490.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= -200.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+12
+1395.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.07 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+15
+1395.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 6 GROUP BY n_name
+----
+BRAZIL
+2830.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= -100.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+12
+1395.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.00 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+35
+3340.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 7 GROUP BY n_name
+----
+BRAZIL
+2830.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 0.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.01 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+35
+3340.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 8 GROUP BY n_name
+----
+BRAZIL
+2830.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 100.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.02 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+35
+3340.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 9 GROUP BY n_name
+----
+BRAZIL
+2830.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 200.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.03 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+30
+2850.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 10 GROUP BY n_name
+----
+BRAZIL
+2830.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 300.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.04 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+30
+2850.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 11 GROUP BY n_name
+----
+BRAZIL
+1880.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 400.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.05 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+30
+2850.000
+R
+F
+20
+1880.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 12 GROUP BY n_name
+----
+BRAZIL
+1880.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 500.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.06 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+15
+1395.000
+R
+F
+20
+1880.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 13 GROUP BY n_name
+----
+BRAZIL
+1880.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 600.0 GROUP BY o_orderkey
+----
+11
+490.000
+13
+2850.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.07 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+15
+1395.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 14 GROUP BY n_name
+----
+BRAZIL
+1880.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 700.0 GROUP BY o_orderkey
+----
+11
+490.000
+13
+2850.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.00 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+35
+3340.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 15 GROUP BY n_name
+----
+BRAZIL
+1880.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= -200.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+12
+1395.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.01 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+35
+3340.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 16 GROUP BY n_name
+----
+BRAZIL
+1880.000
+CHINA
+2400.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= -100.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+12
+1395.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.02 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+35
+3340.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 17 GROUP BY n_name
+----
+BRAZIL
+1880.000
+CHINA
+2400.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 0.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.03 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+30
+2850.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 18 GROUP BY n_name
+----
+BRAZIL
+1880.000
+CHINA
+2400.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 100.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.04 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+30
+2850.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 19 GROUP BY n_name
+----
+BRAZIL
+1880.000
+CHINA
+2400.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 200.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.05 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+30
+2850.000
+R
+F
+20
+1880.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 20 GROUP BY n_name
+----
+BRAZIL
+1880.000
+CHINA
+2400.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 300.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.06 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+15
+1395.000
+R
+F
+20
+1880.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 21 GROUP BY n_name
+----
+CHINA
+2400.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 400.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.07 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+15
+1395.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 22 GROUP BY n_name
+----
+CHINA
+2400.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 500.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.00 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+35
+3340.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 23 GROUP BY n_name
+----
+CHINA
+2400.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 600.0 GROUP BY o_orderkey
+----
+11
+490.000
+13
+2850.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.01 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+35
+3340.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 24 GROUP BY n_name
+----
+CHINA
+2400.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 700.0 GROUP BY o_orderkey
+----
+11
+490.000
+13
+2850.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.02 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+35
+3340.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 0 GROUP BY n_name
+----
+BRAZIL
+2830.000
+CANADA
+490.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= -200.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+12
+1395.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.03 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+30
+2850.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 1 GROUP BY n_name
+----
+BRAZIL
+2830.000
+CANADA
+490.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= -100.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+12
+1395.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.04 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+30
+2850.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 2 GROUP BY n_name
+----
+BRAZIL
+2830.000
+CANADA
+490.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 0.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.05 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+30
+2850.000
+R
+F
+20
+1880.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 3 GROUP BY n_name
+----
+BRAZIL
+2830.000
+CANADA
+490.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 100.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.06 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+15
+1395.000
+R
+F
+20
+1880.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 4 GROUP BY n_name
+----
+BRAZIL
+2830.000
+CANADA
+490.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 200.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.07 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+15
+1395.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 5 GROUP BY n_name
+----
+BRAZIL
+2830.000
+CANADA
+490.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 300.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+14
+2400.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.00 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+35
+3340.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 6 GROUP BY n_name
+----
+BRAZIL
+2830.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 400.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.01 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+35
+3340.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 7 GROUP BY n_name
+----
+BRAZIL
+2830.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 500.0 GROUP BY o_orderkey
+----
+10
+2830.000
+11
+490.000
+13
+2850.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.02 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+35
+3340.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 8 GROUP BY n_name
+----
+BRAZIL
+2830.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 600.0 GROUP BY o_orderkey
+----
+11
+490.000
+13
+2850.000
+
+query TTIR rowsort
+SELECT l_returnflag, l_linestatus, SUM(l_quantity), SUM(l_extendedprice * (1.0 - l_discount)) FROM lineitem WHERE l_discount >= 0.03 GROUP BY l_returnflag, l_linestatus
+----
+A
+F
+25
+2345.000
+N
+O
+30
+2850.000
+R
+F
+45
+4280.000
+
+query TR rowsort
+SELECT n_name, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey JOIN nation ON c_nationkey = n_nationkey JOIN region ON n_regionkey = r_regionkey WHERE l_quantity >= 9 GROUP BY n_name
+----
+BRAZIL
+2830.000
+CHINA
+2400.000
+FRANCE
+1395.000
+GERMANY
+2850.000
+
+query IR rowsort
+SELECT o_orderkey, SUM(l_extendedprice * (1.0 - l_discount)) FROM customer JOIN orders ON c_custkey = o_custkey JOIN lineitem ON l_orderkey = o_orderkey WHERE c_acctbal >= 700.0 GROUP BY o_orderkey
+----
+11
+490.000
+13
+2850.000

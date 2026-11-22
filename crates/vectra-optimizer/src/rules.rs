@@ -722,8 +722,8 @@ fn simplify_mark_and_outer_joins(plan: LogicalPlan) -> LogicalPlan {
                         JoinType::LeftOuter if rejects_right => JoinType::Inner,
                         JoinType::RightOuter if rejects_left => JoinType::Inner,
                         JoinType::FullOuter if rejects_left && rejects_right => JoinType::Inner,
-                        JoinType::FullOuter if rejects_right => JoinType::LeftOuter,
-                        JoinType::FullOuter if rejects_left => JoinType::RightOuter,
+                        JoinType::FullOuter if rejects_left => JoinType::LeftOuter,
+                        JoinType::FullOuter if rejects_right => JoinType::RightOuter,
                         other => other,
                     };
                     wrap_filter_if_nonempty(

@@ -1,0 +1,4359 @@
+# 19_order_by_limit_offset_topn.slt — VectraDB M07 sqllogictest suite
+
+statement ok
+CREATE TABLE ord (id BIGINT, a BIGINT, s VARCHAR)
+
+statement ok
+INSERT INTO ord VALUES (1, 10, 'b'), (2, NULL, 'a'), (3, -5, NULL), (4, 10, 'a'), (5, 0, 'c'), (6, NULL, NULL), (7, 25, 'aa'), (8, -5, 'z')
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s ASC NULLS FIRST, id ASC
+----
+6
+NULL
+NULL
+2
+NULL
+a
+3
+-5
+NULL
+8
+-5
+z
+5
+0
+c
+4
+10
+a
+1
+10
+b
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s ASC NULLS FIRST, id ASC LIMIT 1 OFFSET 0
+----
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s ASC NULLS FIRST, id ASC LIMIT 1 OFFSET 1
+----
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s ASC NULLS FIRST, id ASC LIMIT 1 OFFSET 2
+----
+3
+-5
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s ASC NULLS FIRST, id ASC LIMIT 1 OFFSET 4
+----
+5
+0
+c
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s ASC NULLS FIRST, id ASC LIMIT 3 OFFSET 0
+----
+6
+NULL
+NULL
+2
+NULL
+a
+3
+-5
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s ASC NULLS FIRST, id ASC LIMIT 3 OFFSET 1
+----
+2
+NULL
+a
+3
+-5
+NULL
+8
+-5
+z
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s ASC NULLS FIRST, id ASC LIMIT 3 OFFSET 2
+----
+3
+-5
+NULL
+8
+-5
+z
+5
+0
+c
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s ASC NULLS FIRST, id ASC LIMIT 3 OFFSET 4
+----
+5
+0
+c
+4
+10
+a
+1
+10
+b
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s ASC NULLS FIRST, id ASC LIMIT 5 OFFSET 0
+----
+6
+NULL
+NULL
+2
+NULL
+a
+3
+-5
+NULL
+8
+-5
+z
+5
+0
+c
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s ASC NULLS FIRST, id ASC LIMIT 5 OFFSET 1
+----
+2
+NULL
+a
+3
+-5
+NULL
+8
+-5
+z
+5
+0
+c
+4
+10
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s ASC NULLS FIRST, id ASC LIMIT 5 OFFSET 2
+----
+3
+-5
+NULL
+8
+-5
+z
+5
+0
+c
+4
+10
+a
+1
+10
+b
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s ASC NULLS FIRST, id ASC LIMIT 5 OFFSET 4
+----
+5
+0
+c
+4
+10
+a
+1
+10
+b
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s ASC NULLS FIRST, id ASC LIMIT 10 OFFSET 0
+----
+6
+NULL
+NULL
+2
+NULL
+a
+3
+-5
+NULL
+8
+-5
+z
+5
+0
+c
+4
+10
+a
+1
+10
+b
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s ASC NULLS FIRST, id ASC LIMIT 10 OFFSET 1
+----
+2
+NULL
+a
+3
+-5
+NULL
+8
+-5
+z
+5
+0
+c
+4
+10
+a
+1
+10
+b
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s ASC NULLS FIRST, id ASC LIMIT 10 OFFSET 2
+----
+3
+-5
+NULL
+8
+-5
+z
+5
+0
+c
+4
+10
+a
+1
+10
+b
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s ASC NULLS FIRST, id ASC LIMIT 10 OFFSET 4
+----
+5
+0
+c
+4
+10
+a
+1
+10
+b
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s ASC NULLS LAST, id ASC
+----
+2
+NULL
+a
+6
+NULL
+NULL
+8
+-5
+z
+3
+-5
+NULL
+5
+0
+c
+4
+10
+a
+1
+10
+b
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s ASC NULLS LAST, id ASC LIMIT 1 OFFSET 0
+----
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s ASC NULLS LAST, id ASC LIMIT 1 OFFSET 1
+----
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s ASC NULLS LAST, id ASC LIMIT 1 OFFSET 2
+----
+8
+-5
+z
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s ASC NULLS LAST, id ASC LIMIT 1 OFFSET 4
+----
+5
+0
+c
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s ASC NULLS LAST, id ASC LIMIT 3 OFFSET 0
+----
+2
+NULL
+a
+6
+NULL
+NULL
+8
+-5
+z
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s ASC NULLS LAST, id ASC LIMIT 3 OFFSET 1
+----
+6
+NULL
+NULL
+8
+-5
+z
+3
+-5
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s ASC NULLS LAST, id ASC LIMIT 3 OFFSET 2
+----
+8
+-5
+z
+3
+-5
+NULL
+5
+0
+c
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s ASC NULLS LAST, id ASC LIMIT 3 OFFSET 4
+----
+5
+0
+c
+4
+10
+a
+1
+10
+b
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s ASC NULLS LAST, id ASC LIMIT 5 OFFSET 0
+----
+2
+NULL
+a
+6
+NULL
+NULL
+8
+-5
+z
+3
+-5
+NULL
+5
+0
+c
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s ASC NULLS LAST, id ASC LIMIT 5 OFFSET 1
+----
+6
+NULL
+NULL
+8
+-5
+z
+3
+-5
+NULL
+5
+0
+c
+4
+10
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s ASC NULLS LAST, id ASC LIMIT 5 OFFSET 2
+----
+8
+-5
+z
+3
+-5
+NULL
+5
+0
+c
+4
+10
+a
+1
+10
+b
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s ASC NULLS LAST, id ASC LIMIT 5 OFFSET 4
+----
+5
+0
+c
+4
+10
+a
+1
+10
+b
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s ASC NULLS LAST, id ASC LIMIT 10 OFFSET 0
+----
+2
+NULL
+a
+6
+NULL
+NULL
+8
+-5
+z
+3
+-5
+NULL
+5
+0
+c
+4
+10
+a
+1
+10
+b
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s ASC NULLS LAST, id ASC LIMIT 10 OFFSET 1
+----
+6
+NULL
+NULL
+8
+-5
+z
+3
+-5
+NULL
+5
+0
+c
+4
+10
+a
+1
+10
+b
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s ASC NULLS LAST, id ASC LIMIT 10 OFFSET 2
+----
+8
+-5
+z
+3
+-5
+NULL
+5
+0
+c
+4
+10
+a
+1
+10
+b
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s ASC NULLS LAST, id ASC LIMIT 10 OFFSET 4
+----
+5
+0
+c
+4
+10
+a
+1
+10
+b
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s DESC NULLS FIRST, id ASC
+----
+6
+NULL
+NULL
+2
+NULL
+a
+3
+-5
+NULL
+8
+-5
+z
+5
+0
+c
+1
+10
+b
+4
+10
+a
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s DESC NULLS FIRST, id ASC LIMIT 1 OFFSET 0
+----
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s DESC NULLS FIRST, id ASC LIMIT 1 OFFSET 1
+----
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s DESC NULLS FIRST, id ASC LIMIT 1 OFFSET 2
+----
+3
+-5
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s DESC NULLS FIRST, id ASC LIMIT 1 OFFSET 4
+----
+5
+0
+c
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s DESC NULLS FIRST, id ASC LIMIT 3 OFFSET 0
+----
+6
+NULL
+NULL
+2
+NULL
+a
+3
+-5
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s DESC NULLS FIRST, id ASC LIMIT 3 OFFSET 1
+----
+2
+NULL
+a
+3
+-5
+NULL
+8
+-5
+z
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s DESC NULLS FIRST, id ASC LIMIT 3 OFFSET 2
+----
+3
+-5
+NULL
+8
+-5
+z
+5
+0
+c
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s DESC NULLS FIRST, id ASC LIMIT 3 OFFSET 4
+----
+5
+0
+c
+1
+10
+b
+4
+10
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s DESC NULLS FIRST, id ASC LIMIT 5 OFFSET 0
+----
+6
+NULL
+NULL
+2
+NULL
+a
+3
+-5
+NULL
+8
+-5
+z
+5
+0
+c
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s DESC NULLS FIRST, id ASC LIMIT 5 OFFSET 1
+----
+2
+NULL
+a
+3
+-5
+NULL
+8
+-5
+z
+5
+0
+c
+1
+10
+b
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s DESC NULLS FIRST, id ASC LIMIT 5 OFFSET 2
+----
+3
+-5
+NULL
+8
+-5
+z
+5
+0
+c
+1
+10
+b
+4
+10
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s DESC NULLS FIRST, id ASC LIMIT 5 OFFSET 4
+----
+5
+0
+c
+1
+10
+b
+4
+10
+a
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s DESC NULLS FIRST, id ASC LIMIT 10 OFFSET 0
+----
+6
+NULL
+NULL
+2
+NULL
+a
+3
+-5
+NULL
+8
+-5
+z
+5
+0
+c
+1
+10
+b
+4
+10
+a
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s DESC NULLS FIRST, id ASC LIMIT 10 OFFSET 1
+----
+2
+NULL
+a
+3
+-5
+NULL
+8
+-5
+z
+5
+0
+c
+1
+10
+b
+4
+10
+a
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s DESC NULLS FIRST, id ASC LIMIT 10 OFFSET 2
+----
+3
+-5
+NULL
+8
+-5
+z
+5
+0
+c
+1
+10
+b
+4
+10
+a
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s DESC NULLS FIRST, id ASC LIMIT 10 OFFSET 4
+----
+5
+0
+c
+1
+10
+b
+4
+10
+a
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s DESC NULLS LAST, id ASC
+----
+2
+NULL
+a
+6
+NULL
+NULL
+8
+-5
+z
+3
+-5
+NULL
+5
+0
+c
+1
+10
+b
+4
+10
+a
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s DESC NULLS LAST, id ASC LIMIT 1 OFFSET 0
+----
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s DESC NULLS LAST, id ASC LIMIT 1 OFFSET 1
+----
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s DESC NULLS LAST, id ASC LIMIT 1 OFFSET 2
+----
+8
+-5
+z
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s DESC NULLS LAST, id ASC LIMIT 1 OFFSET 4
+----
+5
+0
+c
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s DESC NULLS LAST, id ASC LIMIT 3 OFFSET 0
+----
+2
+NULL
+a
+6
+NULL
+NULL
+8
+-5
+z
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s DESC NULLS LAST, id ASC LIMIT 3 OFFSET 1
+----
+6
+NULL
+NULL
+8
+-5
+z
+3
+-5
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s DESC NULLS LAST, id ASC LIMIT 3 OFFSET 2
+----
+8
+-5
+z
+3
+-5
+NULL
+5
+0
+c
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s DESC NULLS LAST, id ASC LIMIT 3 OFFSET 4
+----
+5
+0
+c
+1
+10
+b
+4
+10
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s DESC NULLS LAST, id ASC LIMIT 5 OFFSET 0
+----
+2
+NULL
+a
+6
+NULL
+NULL
+8
+-5
+z
+3
+-5
+NULL
+5
+0
+c
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s DESC NULLS LAST, id ASC LIMIT 5 OFFSET 1
+----
+6
+NULL
+NULL
+8
+-5
+z
+3
+-5
+NULL
+5
+0
+c
+1
+10
+b
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s DESC NULLS LAST, id ASC LIMIT 5 OFFSET 2
+----
+8
+-5
+z
+3
+-5
+NULL
+5
+0
+c
+1
+10
+b
+4
+10
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s DESC NULLS LAST, id ASC LIMIT 5 OFFSET 4
+----
+5
+0
+c
+1
+10
+b
+4
+10
+a
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s DESC NULLS LAST, id ASC LIMIT 10 OFFSET 0
+----
+2
+NULL
+a
+6
+NULL
+NULL
+8
+-5
+z
+3
+-5
+NULL
+5
+0
+c
+1
+10
+b
+4
+10
+a
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s DESC NULLS LAST, id ASC LIMIT 10 OFFSET 1
+----
+6
+NULL
+NULL
+8
+-5
+z
+3
+-5
+NULL
+5
+0
+c
+1
+10
+b
+4
+10
+a
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s DESC NULLS LAST, id ASC LIMIT 10 OFFSET 2
+----
+8
+-5
+z
+3
+-5
+NULL
+5
+0
+c
+1
+10
+b
+4
+10
+a
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS FIRST, s DESC NULLS LAST, id ASC LIMIT 10 OFFSET 4
+----
+5
+0
+c
+1
+10
+b
+4
+10
+a
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s ASC NULLS FIRST, id ASC
+----
+3
+-5
+NULL
+8
+-5
+z
+5
+0
+c
+4
+10
+a
+1
+10
+b
+7
+25
+aa
+6
+NULL
+NULL
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s ASC NULLS FIRST, id ASC LIMIT 1 OFFSET 0
+----
+3
+-5
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s ASC NULLS FIRST, id ASC LIMIT 1 OFFSET 1
+----
+8
+-5
+z
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s ASC NULLS FIRST, id ASC LIMIT 1 OFFSET 2
+----
+5
+0
+c
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s ASC NULLS FIRST, id ASC LIMIT 1 OFFSET 4
+----
+1
+10
+b
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s ASC NULLS FIRST, id ASC LIMIT 3 OFFSET 0
+----
+3
+-5
+NULL
+8
+-5
+z
+5
+0
+c
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s ASC NULLS FIRST, id ASC LIMIT 3 OFFSET 1
+----
+8
+-5
+z
+5
+0
+c
+4
+10
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s ASC NULLS FIRST, id ASC LIMIT 3 OFFSET 2
+----
+5
+0
+c
+4
+10
+a
+1
+10
+b
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s ASC NULLS FIRST, id ASC LIMIT 3 OFFSET 4
+----
+1
+10
+b
+7
+25
+aa
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s ASC NULLS FIRST, id ASC LIMIT 5 OFFSET 0
+----
+3
+-5
+NULL
+8
+-5
+z
+5
+0
+c
+4
+10
+a
+1
+10
+b
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s ASC NULLS FIRST, id ASC LIMIT 5 OFFSET 1
+----
+8
+-5
+z
+5
+0
+c
+4
+10
+a
+1
+10
+b
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s ASC NULLS FIRST, id ASC LIMIT 5 OFFSET 2
+----
+5
+0
+c
+4
+10
+a
+1
+10
+b
+7
+25
+aa
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s ASC NULLS FIRST, id ASC LIMIT 5 OFFSET 4
+----
+1
+10
+b
+7
+25
+aa
+6
+NULL
+NULL
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s ASC NULLS FIRST, id ASC LIMIT 10 OFFSET 0
+----
+3
+-5
+NULL
+8
+-5
+z
+5
+0
+c
+4
+10
+a
+1
+10
+b
+7
+25
+aa
+6
+NULL
+NULL
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s ASC NULLS FIRST, id ASC LIMIT 10 OFFSET 1
+----
+8
+-5
+z
+5
+0
+c
+4
+10
+a
+1
+10
+b
+7
+25
+aa
+6
+NULL
+NULL
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s ASC NULLS FIRST, id ASC LIMIT 10 OFFSET 2
+----
+5
+0
+c
+4
+10
+a
+1
+10
+b
+7
+25
+aa
+6
+NULL
+NULL
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s ASC NULLS FIRST, id ASC LIMIT 10 OFFSET 4
+----
+1
+10
+b
+7
+25
+aa
+6
+NULL
+NULL
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s ASC NULLS LAST, id ASC
+----
+8
+-5
+z
+3
+-5
+NULL
+5
+0
+c
+4
+10
+a
+1
+10
+b
+7
+25
+aa
+2
+NULL
+a
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s ASC NULLS LAST, id ASC LIMIT 1 OFFSET 0
+----
+8
+-5
+z
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s ASC NULLS LAST, id ASC LIMIT 1 OFFSET 1
+----
+3
+-5
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s ASC NULLS LAST, id ASC LIMIT 1 OFFSET 2
+----
+5
+0
+c
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s ASC NULLS LAST, id ASC LIMIT 1 OFFSET 4
+----
+1
+10
+b
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s ASC NULLS LAST, id ASC LIMIT 3 OFFSET 0
+----
+8
+-5
+z
+3
+-5
+NULL
+5
+0
+c
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s ASC NULLS LAST, id ASC LIMIT 3 OFFSET 1
+----
+3
+-5
+NULL
+5
+0
+c
+4
+10
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s ASC NULLS LAST, id ASC LIMIT 3 OFFSET 2
+----
+5
+0
+c
+4
+10
+a
+1
+10
+b
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s ASC NULLS LAST, id ASC LIMIT 3 OFFSET 4
+----
+1
+10
+b
+7
+25
+aa
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s ASC NULLS LAST, id ASC LIMIT 5 OFFSET 0
+----
+8
+-5
+z
+3
+-5
+NULL
+5
+0
+c
+4
+10
+a
+1
+10
+b
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s ASC NULLS LAST, id ASC LIMIT 5 OFFSET 1
+----
+3
+-5
+NULL
+5
+0
+c
+4
+10
+a
+1
+10
+b
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s ASC NULLS LAST, id ASC LIMIT 5 OFFSET 2
+----
+5
+0
+c
+4
+10
+a
+1
+10
+b
+7
+25
+aa
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s ASC NULLS LAST, id ASC LIMIT 5 OFFSET 4
+----
+1
+10
+b
+7
+25
+aa
+2
+NULL
+a
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s ASC NULLS LAST, id ASC LIMIT 10 OFFSET 0
+----
+8
+-5
+z
+3
+-5
+NULL
+5
+0
+c
+4
+10
+a
+1
+10
+b
+7
+25
+aa
+2
+NULL
+a
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s ASC NULLS LAST, id ASC LIMIT 10 OFFSET 1
+----
+3
+-5
+NULL
+5
+0
+c
+4
+10
+a
+1
+10
+b
+7
+25
+aa
+2
+NULL
+a
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s ASC NULLS LAST, id ASC LIMIT 10 OFFSET 2
+----
+5
+0
+c
+4
+10
+a
+1
+10
+b
+7
+25
+aa
+2
+NULL
+a
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s ASC NULLS LAST, id ASC LIMIT 10 OFFSET 4
+----
+1
+10
+b
+7
+25
+aa
+2
+NULL
+a
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s DESC NULLS FIRST, id ASC
+----
+3
+-5
+NULL
+8
+-5
+z
+5
+0
+c
+1
+10
+b
+4
+10
+a
+7
+25
+aa
+6
+NULL
+NULL
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s DESC NULLS FIRST, id ASC LIMIT 1 OFFSET 0
+----
+3
+-5
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s DESC NULLS FIRST, id ASC LIMIT 1 OFFSET 1
+----
+8
+-5
+z
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s DESC NULLS FIRST, id ASC LIMIT 1 OFFSET 2
+----
+5
+0
+c
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s DESC NULLS FIRST, id ASC LIMIT 1 OFFSET 4
+----
+4
+10
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s DESC NULLS FIRST, id ASC LIMIT 3 OFFSET 0
+----
+3
+-5
+NULL
+8
+-5
+z
+5
+0
+c
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s DESC NULLS FIRST, id ASC LIMIT 3 OFFSET 1
+----
+8
+-5
+z
+5
+0
+c
+1
+10
+b
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s DESC NULLS FIRST, id ASC LIMIT 3 OFFSET 2
+----
+5
+0
+c
+1
+10
+b
+4
+10
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s DESC NULLS FIRST, id ASC LIMIT 3 OFFSET 4
+----
+4
+10
+a
+7
+25
+aa
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s DESC NULLS FIRST, id ASC LIMIT 5 OFFSET 0
+----
+3
+-5
+NULL
+8
+-5
+z
+5
+0
+c
+1
+10
+b
+4
+10
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s DESC NULLS FIRST, id ASC LIMIT 5 OFFSET 1
+----
+8
+-5
+z
+5
+0
+c
+1
+10
+b
+4
+10
+a
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s DESC NULLS FIRST, id ASC LIMIT 5 OFFSET 2
+----
+5
+0
+c
+1
+10
+b
+4
+10
+a
+7
+25
+aa
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s DESC NULLS FIRST, id ASC LIMIT 5 OFFSET 4
+----
+4
+10
+a
+7
+25
+aa
+6
+NULL
+NULL
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s DESC NULLS FIRST, id ASC LIMIT 10 OFFSET 0
+----
+3
+-5
+NULL
+8
+-5
+z
+5
+0
+c
+1
+10
+b
+4
+10
+a
+7
+25
+aa
+6
+NULL
+NULL
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s DESC NULLS FIRST, id ASC LIMIT 10 OFFSET 1
+----
+8
+-5
+z
+5
+0
+c
+1
+10
+b
+4
+10
+a
+7
+25
+aa
+6
+NULL
+NULL
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s DESC NULLS FIRST, id ASC LIMIT 10 OFFSET 2
+----
+5
+0
+c
+1
+10
+b
+4
+10
+a
+7
+25
+aa
+6
+NULL
+NULL
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s DESC NULLS FIRST, id ASC LIMIT 10 OFFSET 4
+----
+4
+10
+a
+7
+25
+aa
+6
+NULL
+NULL
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s DESC NULLS LAST, id ASC
+----
+8
+-5
+z
+3
+-5
+NULL
+5
+0
+c
+1
+10
+b
+4
+10
+a
+7
+25
+aa
+2
+NULL
+a
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s DESC NULLS LAST, id ASC LIMIT 1 OFFSET 0
+----
+8
+-5
+z
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s DESC NULLS LAST, id ASC LIMIT 1 OFFSET 1
+----
+3
+-5
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s DESC NULLS LAST, id ASC LIMIT 1 OFFSET 2
+----
+5
+0
+c
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s DESC NULLS LAST, id ASC LIMIT 1 OFFSET 4
+----
+4
+10
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s DESC NULLS LAST, id ASC LIMIT 3 OFFSET 0
+----
+8
+-5
+z
+3
+-5
+NULL
+5
+0
+c
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s DESC NULLS LAST, id ASC LIMIT 3 OFFSET 1
+----
+3
+-5
+NULL
+5
+0
+c
+1
+10
+b
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s DESC NULLS LAST, id ASC LIMIT 3 OFFSET 2
+----
+5
+0
+c
+1
+10
+b
+4
+10
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s DESC NULLS LAST, id ASC LIMIT 3 OFFSET 4
+----
+4
+10
+a
+7
+25
+aa
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s DESC NULLS LAST, id ASC LIMIT 5 OFFSET 0
+----
+8
+-5
+z
+3
+-5
+NULL
+5
+0
+c
+1
+10
+b
+4
+10
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s DESC NULLS LAST, id ASC LIMIT 5 OFFSET 1
+----
+3
+-5
+NULL
+5
+0
+c
+1
+10
+b
+4
+10
+a
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s DESC NULLS LAST, id ASC LIMIT 5 OFFSET 2
+----
+5
+0
+c
+1
+10
+b
+4
+10
+a
+7
+25
+aa
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s DESC NULLS LAST, id ASC LIMIT 5 OFFSET 4
+----
+4
+10
+a
+7
+25
+aa
+2
+NULL
+a
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s DESC NULLS LAST, id ASC LIMIT 10 OFFSET 0
+----
+8
+-5
+z
+3
+-5
+NULL
+5
+0
+c
+1
+10
+b
+4
+10
+a
+7
+25
+aa
+2
+NULL
+a
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s DESC NULLS LAST, id ASC LIMIT 10 OFFSET 1
+----
+3
+-5
+NULL
+5
+0
+c
+1
+10
+b
+4
+10
+a
+7
+25
+aa
+2
+NULL
+a
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s DESC NULLS LAST, id ASC LIMIT 10 OFFSET 2
+----
+5
+0
+c
+1
+10
+b
+4
+10
+a
+7
+25
+aa
+2
+NULL
+a
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a ASC NULLS LAST, s DESC NULLS LAST, id ASC LIMIT 10 OFFSET 4
+----
+4
+10
+a
+7
+25
+aa
+2
+NULL
+a
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s ASC NULLS FIRST, id ASC
+----
+6
+NULL
+NULL
+2
+NULL
+a
+7
+25
+aa
+4
+10
+a
+1
+10
+b
+5
+0
+c
+3
+-5
+NULL
+8
+-5
+z
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s ASC NULLS FIRST, id ASC LIMIT 1 OFFSET 0
+----
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s ASC NULLS FIRST, id ASC LIMIT 1 OFFSET 1
+----
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s ASC NULLS FIRST, id ASC LIMIT 1 OFFSET 2
+----
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s ASC NULLS FIRST, id ASC LIMIT 1 OFFSET 4
+----
+1
+10
+b
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s ASC NULLS FIRST, id ASC LIMIT 3 OFFSET 0
+----
+6
+NULL
+NULL
+2
+NULL
+a
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s ASC NULLS FIRST, id ASC LIMIT 3 OFFSET 1
+----
+2
+NULL
+a
+7
+25
+aa
+4
+10
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s ASC NULLS FIRST, id ASC LIMIT 3 OFFSET 2
+----
+7
+25
+aa
+4
+10
+a
+1
+10
+b
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s ASC NULLS FIRST, id ASC LIMIT 3 OFFSET 4
+----
+1
+10
+b
+5
+0
+c
+3
+-5
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s ASC NULLS FIRST, id ASC LIMIT 5 OFFSET 0
+----
+6
+NULL
+NULL
+2
+NULL
+a
+7
+25
+aa
+4
+10
+a
+1
+10
+b
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s ASC NULLS FIRST, id ASC LIMIT 5 OFFSET 1
+----
+2
+NULL
+a
+7
+25
+aa
+4
+10
+a
+1
+10
+b
+5
+0
+c
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s ASC NULLS FIRST, id ASC LIMIT 5 OFFSET 2
+----
+7
+25
+aa
+4
+10
+a
+1
+10
+b
+5
+0
+c
+3
+-5
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s ASC NULLS FIRST, id ASC LIMIT 5 OFFSET 4
+----
+1
+10
+b
+5
+0
+c
+3
+-5
+NULL
+8
+-5
+z
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s ASC NULLS FIRST, id ASC LIMIT 10 OFFSET 0
+----
+6
+NULL
+NULL
+2
+NULL
+a
+7
+25
+aa
+4
+10
+a
+1
+10
+b
+5
+0
+c
+3
+-5
+NULL
+8
+-5
+z
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s ASC NULLS FIRST, id ASC LIMIT 10 OFFSET 1
+----
+2
+NULL
+a
+7
+25
+aa
+4
+10
+a
+1
+10
+b
+5
+0
+c
+3
+-5
+NULL
+8
+-5
+z
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s ASC NULLS FIRST, id ASC LIMIT 10 OFFSET 2
+----
+7
+25
+aa
+4
+10
+a
+1
+10
+b
+5
+0
+c
+3
+-5
+NULL
+8
+-5
+z
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s ASC NULLS FIRST, id ASC LIMIT 10 OFFSET 4
+----
+1
+10
+b
+5
+0
+c
+3
+-5
+NULL
+8
+-5
+z
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s ASC NULLS LAST, id ASC
+----
+2
+NULL
+a
+6
+NULL
+NULL
+7
+25
+aa
+4
+10
+a
+1
+10
+b
+5
+0
+c
+8
+-5
+z
+3
+-5
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s ASC NULLS LAST, id ASC LIMIT 1 OFFSET 0
+----
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s ASC NULLS LAST, id ASC LIMIT 1 OFFSET 1
+----
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s ASC NULLS LAST, id ASC LIMIT 1 OFFSET 2
+----
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s ASC NULLS LAST, id ASC LIMIT 1 OFFSET 4
+----
+1
+10
+b
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s ASC NULLS LAST, id ASC LIMIT 3 OFFSET 0
+----
+2
+NULL
+a
+6
+NULL
+NULL
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s ASC NULLS LAST, id ASC LIMIT 3 OFFSET 1
+----
+6
+NULL
+NULL
+7
+25
+aa
+4
+10
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s ASC NULLS LAST, id ASC LIMIT 3 OFFSET 2
+----
+7
+25
+aa
+4
+10
+a
+1
+10
+b
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s ASC NULLS LAST, id ASC LIMIT 3 OFFSET 4
+----
+1
+10
+b
+5
+0
+c
+8
+-5
+z
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s ASC NULLS LAST, id ASC LIMIT 5 OFFSET 0
+----
+2
+NULL
+a
+6
+NULL
+NULL
+7
+25
+aa
+4
+10
+a
+1
+10
+b
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s ASC NULLS LAST, id ASC LIMIT 5 OFFSET 1
+----
+6
+NULL
+NULL
+7
+25
+aa
+4
+10
+a
+1
+10
+b
+5
+0
+c
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s ASC NULLS LAST, id ASC LIMIT 5 OFFSET 2
+----
+7
+25
+aa
+4
+10
+a
+1
+10
+b
+5
+0
+c
+8
+-5
+z
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s ASC NULLS LAST, id ASC LIMIT 5 OFFSET 4
+----
+1
+10
+b
+5
+0
+c
+8
+-5
+z
+3
+-5
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s ASC NULLS LAST, id ASC LIMIT 10 OFFSET 0
+----
+2
+NULL
+a
+6
+NULL
+NULL
+7
+25
+aa
+4
+10
+a
+1
+10
+b
+5
+0
+c
+8
+-5
+z
+3
+-5
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s ASC NULLS LAST, id ASC LIMIT 10 OFFSET 1
+----
+6
+NULL
+NULL
+7
+25
+aa
+4
+10
+a
+1
+10
+b
+5
+0
+c
+8
+-5
+z
+3
+-5
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s ASC NULLS LAST, id ASC LIMIT 10 OFFSET 2
+----
+7
+25
+aa
+4
+10
+a
+1
+10
+b
+5
+0
+c
+8
+-5
+z
+3
+-5
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s ASC NULLS LAST, id ASC LIMIT 10 OFFSET 4
+----
+1
+10
+b
+5
+0
+c
+8
+-5
+z
+3
+-5
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s DESC NULLS FIRST, id ASC
+----
+6
+NULL
+NULL
+2
+NULL
+a
+7
+25
+aa
+1
+10
+b
+4
+10
+a
+5
+0
+c
+3
+-5
+NULL
+8
+-5
+z
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s DESC NULLS FIRST, id ASC LIMIT 1 OFFSET 0
+----
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s DESC NULLS FIRST, id ASC LIMIT 1 OFFSET 1
+----
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s DESC NULLS FIRST, id ASC LIMIT 1 OFFSET 2
+----
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s DESC NULLS FIRST, id ASC LIMIT 1 OFFSET 4
+----
+4
+10
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s DESC NULLS FIRST, id ASC LIMIT 3 OFFSET 0
+----
+6
+NULL
+NULL
+2
+NULL
+a
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s DESC NULLS FIRST, id ASC LIMIT 3 OFFSET 1
+----
+2
+NULL
+a
+7
+25
+aa
+1
+10
+b
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s DESC NULLS FIRST, id ASC LIMIT 3 OFFSET 2
+----
+7
+25
+aa
+1
+10
+b
+4
+10
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s DESC NULLS FIRST, id ASC LIMIT 3 OFFSET 4
+----
+4
+10
+a
+5
+0
+c
+3
+-5
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s DESC NULLS FIRST, id ASC LIMIT 5 OFFSET 0
+----
+6
+NULL
+NULL
+2
+NULL
+a
+7
+25
+aa
+1
+10
+b
+4
+10
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s DESC NULLS FIRST, id ASC LIMIT 5 OFFSET 1
+----
+2
+NULL
+a
+7
+25
+aa
+1
+10
+b
+4
+10
+a
+5
+0
+c
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s DESC NULLS FIRST, id ASC LIMIT 5 OFFSET 2
+----
+7
+25
+aa
+1
+10
+b
+4
+10
+a
+5
+0
+c
+3
+-5
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s DESC NULLS FIRST, id ASC LIMIT 5 OFFSET 4
+----
+4
+10
+a
+5
+0
+c
+3
+-5
+NULL
+8
+-5
+z
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s DESC NULLS FIRST, id ASC LIMIT 10 OFFSET 0
+----
+6
+NULL
+NULL
+2
+NULL
+a
+7
+25
+aa
+1
+10
+b
+4
+10
+a
+5
+0
+c
+3
+-5
+NULL
+8
+-5
+z
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s DESC NULLS FIRST, id ASC LIMIT 10 OFFSET 1
+----
+2
+NULL
+a
+7
+25
+aa
+1
+10
+b
+4
+10
+a
+5
+0
+c
+3
+-5
+NULL
+8
+-5
+z
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s DESC NULLS FIRST, id ASC LIMIT 10 OFFSET 2
+----
+7
+25
+aa
+1
+10
+b
+4
+10
+a
+5
+0
+c
+3
+-5
+NULL
+8
+-5
+z
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s DESC NULLS FIRST, id ASC LIMIT 10 OFFSET 4
+----
+4
+10
+a
+5
+0
+c
+3
+-5
+NULL
+8
+-5
+z
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s DESC NULLS LAST, id ASC
+----
+2
+NULL
+a
+6
+NULL
+NULL
+7
+25
+aa
+1
+10
+b
+4
+10
+a
+5
+0
+c
+8
+-5
+z
+3
+-5
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s DESC NULLS LAST, id ASC LIMIT 1 OFFSET 0
+----
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s DESC NULLS LAST, id ASC LIMIT 1 OFFSET 1
+----
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s DESC NULLS LAST, id ASC LIMIT 1 OFFSET 2
+----
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s DESC NULLS LAST, id ASC LIMIT 1 OFFSET 4
+----
+4
+10
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s DESC NULLS LAST, id ASC LIMIT 3 OFFSET 0
+----
+2
+NULL
+a
+6
+NULL
+NULL
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s DESC NULLS LAST, id ASC LIMIT 3 OFFSET 1
+----
+6
+NULL
+NULL
+7
+25
+aa
+1
+10
+b
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s DESC NULLS LAST, id ASC LIMIT 3 OFFSET 2
+----
+7
+25
+aa
+1
+10
+b
+4
+10
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s DESC NULLS LAST, id ASC LIMIT 3 OFFSET 4
+----
+4
+10
+a
+5
+0
+c
+8
+-5
+z
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s DESC NULLS LAST, id ASC LIMIT 5 OFFSET 0
+----
+2
+NULL
+a
+6
+NULL
+NULL
+7
+25
+aa
+1
+10
+b
+4
+10
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s DESC NULLS LAST, id ASC LIMIT 5 OFFSET 1
+----
+6
+NULL
+NULL
+7
+25
+aa
+1
+10
+b
+4
+10
+a
+5
+0
+c
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s DESC NULLS LAST, id ASC LIMIT 5 OFFSET 2
+----
+7
+25
+aa
+1
+10
+b
+4
+10
+a
+5
+0
+c
+8
+-5
+z
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s DESC NULLS LAST, id ASC LIMIT 5 OFFSET 4
+----
+4
+10
+a
+5
+0
+c
+8
+-5
+z
+3
+-5
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s DESC NULLS LAST, id ASC LIMIT 10 OFFSET 0
+----
+2
+NULL
+a
+6
+NULL
+NULL
+7
+25
+aa
+1
+10
+b
+4
+10
+a
+5
+0
+c
+8
+-5
+z
+3
+-5
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s DESC NULLS LAST, id ASC LIMIT 10 OFFSET 1
+----
+6
+NULL
+NULL
+7
+25
+aa
+1
+10
+b
+4
+10
+a
+5
+0
+c
+8
+-5
+z
+3
+-5
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s DESC NULLS LAST, id ASC LIMIT 10 OFFSET 2
+----
+7
+25
+aa
+1
+10
+b
+4
+10
+a
+5
+0
+c
+8
+-5
+z
+3
+-5
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS FIRST, s DESC NULLS LAST, id ASC LIMIT 10 OFFSET 4
+----
+4
+10
+a
+5
+0
+c
+8
+-5
+z
+3
+-5
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s ASC NULLS FIRST, id ASC
+----
+7
+25
+aa
+4
+10
+a
+1
+10
+b
+5
+0
+c
+3
+-5
+NULL
+8
+-5
+z
+6
+NULL
+NULL
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s ASC NULLS FIRST, id ASC LIMIT 1 OFFSET 0
+----
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s ASC NULLS FIRST, id ASC LIMIT 1 OFFSET 1
+----
+4
+10
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s ASC NULLS FIRST, id ASC LIMIT 1 OFFSET 2
+----
+1
+10
+b
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s ASC NULLS FIRST, id ASC LIMIT 1 OFFSET 4
+----
+3
+-5
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s ASC NULLS FIRST, id ASC LIMIT 3 OFFSET 0
+----
+7
+25
+aa
+4
+10
+a
+1
+10
+b
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s ASC NULLS FIRST, id ASC LIMIT 3 OFFSET 1
+----
+4
+10
+a
+1
+10
+b
+5
+0
+c
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s ASC NULLS FIRST, id ASC LIMIT 3 OFFSET 2
+----
+1
+10
+b
+5
+0
+c
+3
+-5
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s ASC NULLS FIRST, id ASC LIMIT 3 OFFSET 4
+----
+3
+-5
+NULL
+8
+-5
+z
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s ASC NULLS FIRST, id ASC LIMIT 5 OFFSET 0
+----
+7
+25
+aa
+4
+10
+a
+1
+10
+b
+5
+0
+c
+3
+-5
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s ASC NULLS FIRST, id ASC LIMIT 5 OFFSET 1
+----
+4
+10
+a
+1
+10
+b
+5
+0
+c
+3
+-5
+NULL
+8
+-5
+z
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s ASC NULLS FIRST, id ASC LIMIT 5 OFFSET 2
+----
+1
+10
+b
+5
+0
+c
+3
+-5
+NULL
+8
+-5
+z
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s ASC NULLS FIRST, id ASC LIMIT 5 OFFSET 4
+----
+3
+-5
+NULL
+8
+-5
+z
+6
+NULL
+NULL
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s ASC NULLS FIRST, id ASC LIMIT 10 OFFSET 0
+----
+7
+25
+aa
+4
+10
+a
+1
+10
+b
+5
+0
+c
+3
+-5
+NULL
+8
+-5
+z
+6
+NULL
+NULL
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s ASC NULLS FIRST, id ASC LIMIT 10 OFFSET 1
+----
+4
+10
+a
+1
+10
+b
+5
+0
+c
+3
+-5
+NULL
+8
+-5
+z
+6
+NULL
+NULL
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s ASC NULLS FIRST, id ASC LIMIT 10 OFFSET 2
+----
+1
+10
+b
+5
+0
+c
+3
+-5
+NULL
+8
+-5
+z
+6
+NULL
+NULL
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s ASC NULLS FIRST, id ASC LIMIT 10 OFFSET 4
+----
+3
+-5
+NULL
+8
+-5
+z
+6
+NULL
+NULL
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s ASC NULLS LAST, id ASC
+----
+7
+25
+aa
+4
+10
+a
+1
+10
+b
+5
+0
+c
+8
+-5
+z
+3
+-5
+NULL
+2
+NULL
+a
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s ASC NULLS LAST, id ASC LIMIT 1 OFFSET 0
+----
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s ASC NULLS LAST, id ASC LIMIT 1 OFFSET 1
+----
+4
+10
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s ASC NULLS LAST, id ASC LIMIT 1 OFFSET 2
+----
+1
+10
+b
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s ASC NULLS LAST, id ASC LIMIT 1 OFFSET 4
+----
+8
+-5
+z
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s ASC NULLS LAST, id ASC LIMIT 3 OFFSET 0
+----
+7
+25
+aa
+4
+10
+a
+1
+10
+b
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s ASC NULLS LAST, id ASC LIMIT 3 OFFSET 1
+----
+4
+10
+a
+1
+10
+b
+5
+0
+c
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s ASC NULLS LAST, id ASC LIMIT 3 OFFSET 2
+----
+1
+10
+b
+5
+0
+c
+8
+-5
+z
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s ASC NULLS LAST, id ASC LIMIT 3 OFFSET 4
+----
+8
+-5
+z
+3
+-5
+NULL
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s ASC NULLS LAST, id ASC LIMIT 5 OFFSET 0
+----
+7
+25
+aa
+4
+10
+a
+1
+10
+b
+5
+0
+c
+8
+-5
+z
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s ASC NULLS LAST, id ASC LIMIT 5 OFFSET 1
+----
+4
+10
+a
+1
+10
+b
+5
+0
+c
+8
+-5
+z
+3
+-5
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s ASC NULLS LAST, id ASC LIMIT 5 OFFSET 2
+----
+1
+10
+b
+5
+0
+c
+8
+-5
+z
+3
+-5
+NULL
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s ASC NULLS LAST, id ASC LIMIT 5 OFFSET 4
+----
+8
+-5
+z
+3
+-5
+NULL
+2
+NULL
+a
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s ASC NULLS LAST, id ASC LIMIT 10 OFFSET 0
+----
+7
+25
+aa
+4
+10
+a
+1
+10
+b
+5
+0
+c
+8
+-5
+z
+3
+-5
+NULL
+2
+NULL
+a
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s ASC NULLS LAST, id ASC LIMIT 10 OFFSET 1
+----
+4
+10
+a
+1
+10
+b
+5
+0
+c
+8
+-5
+z
+3
+-5
+NULL
+2
+NULL
+a
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s ASC NULLS LAST, id ASC LIMIT 10 OFFSET 2
+----
+1
+10
+b
+5
+0
+c
+8
+-5
+z
+3
+-5
+NULL
+2
+NULL
+a
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s ASC NULLS LAST, id ASC LIMIT 10 OFFSET 4
+----
+8
+-5
+z
+3
+-5
+NULL
+2
+NULL
+a
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s DESC NULLS FIRST, id ASC
+----
+7
+25
+aa
+1
+10
+b
+4
+10
+a
+5
+0
+c
+3
+-5
+NULL
+8
+-5
+z
+6
+NULL
+NULL
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s DESC NULLS FIRST, id ASC LIMIT 1 OFFSET 0
+----
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s DESC NULLS FIRST, id ASC LIMIT 1 OFFSET 1
+----
+1
+10
+b
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s DESC NULLS FIRST, id ASC LIMIT 1 OFFSET 2
+----
+4
+10
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s DESC NULLS FIRST, id ASC LIMIT 1 OFFSET 4
+----
+3
+-5
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s DESC NULLS FIRST, id ASC LIMIT 3 OFFSET 0
+----
+7
+25
+aa
+1
+10
+b
+4
+10
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s DESC NULLS FIRST, id ASC LIMIT 3 OFFSET 1
+----
+1
+10
+b
+4
+10
+a
+5
+0
+c
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s DESC NULLS FIRST, id ASC LIMIT 3 OFFSET 2
+----
+4
+10
+a
+5
+0
+c
+3
+-5
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s DESC NULLS FIRST, id ASC LIMIT 3 OFFSET 4
+----
+3
+-5
+NULL
+8
+-5
+z
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s DESC NULLS FIRST, id ASC LIMIT 5 OFFSET 0
+----
+7
+25
+aa
+1
+10
+b
+4
+10
+a
+5
+0
+c
+3
+-5
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s DESC NULLS FIRST, id ASC LIMIT 5 OFFSET 1
+----
+1
+10
+b
+4
+10
+a
+5
+0
+c
+3
+-5
+NULL
+8
+-5
+z
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s DESC NULLS FIRST, id ASC LIMIT 5 OFFSET 2
+----
+4
+10
+a
+5
+0
+c
+3
+-5
+NULL
+8
+-5
+z
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s DESC NULLS FIRST, id ASC LIMIT 5 OFFSET 4
+----
+3
+-5
+NULL
+8
+-5
+z
+6
+NULL
+NULL
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s DESC NULLS FIRST, id ASC LIMIT 10 OFFSET 0
+----
+7
+25
+aa
+1
+10
+b
+4
+10
+a
+5
+0
+c
+3
+-5
+NULL
+8
+-5
+z
+6
+NULL
+NULL
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s DESC NULLS FIRST, id ASC LIMIT 10 OFFSET 1
+----
+1
+10
+b
+4
+10
+a
+5
+0
+c
+3
+-5
+NULL
+8
+-5
+z
+6
+NULL
+NULL
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s DESC NULLS FIRST, id ASC LIMIT 10 OFFSET 2
+----
+4
+10
+a
+5
+0
+c
+3
+-5
+NULL
+8
+-5
+z
+6
+NULL
+NULL
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s DESC NULLS FIRST, id ASC LIMIT 10 OFFSET 4
+----
+3
+-5
+NULL
+8
+-5
+z
+6
+NULL
+NULL
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s DESC NULLS LAST, id ASC
+----
+7
+25
+aa
+1
+10
+b
+4
+10
+a
+5
+0
+c
+8
+-5
+z
+3
+-5
+NULL
+2
+NULL
+a
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s DESC NULLS LAST, id ASC LIMIT 1 OFFSET 0
+----
+7
+25
+aa
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s DESC NULLS LAST, id ASC LIMIT 1 OFFSET 1
+----
+1
+10
+b
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s DESC NULLS LAST, id ASC LIMIT 1 OFFSET 2
+----
+4
+10
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s DESC NULLS LAST, id ASC LIMIT 1 OFFSET 4
+----
+8
+-5
+z
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s DESC NULLS LAST, id ASC LIMIT 3 OFFSET 0
+----
+7
+25
+aa
+1
+10
+b
+4
+10
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s DESC NULLS LAST, id ASC LIMIT 3 OFFSET 1
+----
+1
+10
+b
+4
+10
+a
+5
+0
+c
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s DESC NULLS LAST, id ASC LIMIT 3 OFFSET 2
+----
+4
+10
+a
+5
+0
+c
+8
+-5
+z
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s DESC NULLS LAST, id ASC LIMIT 3 OFFSET 4
+----
+8
+-5
+z
+3
+-5
+NULL
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s DESC NULLS LAST, id ASC LIMIT 5 OFFSET 0
+----
+7
+25
+aa
+1
+10
+b
+4
+10
+a
+5
+0
+c
+8
+-5
+z
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s DESC NULLS LAST, id ASC LIMIT 5 OFFSET 1
+----
+1
+10
+b
+4
+10
+a
+5
+0
+c
+8
+-5
+z
+3
+-5
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s DESC NULLS LAST, id ASC LIMIT 5 OFFSET 2
+----
+4
+10
+a
+5
+0
+c
+8
+-5
+z
+3
+-5
+NULL
+2
+NULL
+a
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s DESC NULLS LAST, id ASC LIMIT 5 OFFSET 4
+----
+8
+-5
+z
+3
+-5
+NULL
+2
+NULL
+a
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s DESC NULLS LAST, id ASC LIMIT 10 OFFSET 0
+----
+7
+25
+aa
+1
+10
+b
+4
+10
+a
+5
+0
+c
+8
+-5
+z
+3
+-5
+NULL
+2
+NULL
+a
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s DESC NULLS LAST, id ASC LIMIT 10 OFFSET 1
+----
+1
+10
+b
+4
+10
+a
+5
+0
+c
+8
+-5
+z
+3
+-5
+NULL
+2
+NULL
+a
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s DESC NULLS LAST, id ASC LIMIT 10 OFFSET 2
+----
+4
+10
+a
+5
+0
+c
+8
+-5
+z
+3
+-5
+NULL
+2
+NULL
+a
+6
+NULL
+NULL
+
+query IIT nosort
+SELECT id, a, s FROM ord ORDER BY a DESC NULLS LAST, s DESC NULLS LAST, id ASC LIMIT 10 OFFSET 4
+----
+8
+-5
+z
+3
+-5
+NULL
+2
+NULL
+a
+6
+NULL
+NULL

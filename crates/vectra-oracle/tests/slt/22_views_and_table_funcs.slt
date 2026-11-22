@@ -1,0 +1,913 @@
+# 22_views_and_table_funcs.slt — VectraDB M07 sqllogictest suite
+
+statement ok
+CREATE TABLE base_v (id BIGINT, val BIGINT)
+
+statement ok
+INSERT INTO base_v VALUES (1, 10), (2, 20), (3, 30), (4, 40), (5, 50)
+
+statement ok
+CREATE VIEW v_hi AS SELECT id, val * 2 AS doubled FROM base_v WHERE val >= 20
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 1)
+----
+1
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 2)
+----
+3
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 3)
+----
+6
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 4)
+----
+10
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 5)
+----
+15
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 6)
+----
+21
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 7)
+----
+28
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 8)
+----
+36
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 9)
+----
+45
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 10)
+----
+55
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 11)
+----
+66
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 12)
+----
+78
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 13)
+----
+91
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 14)
+----
+105
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 15)
+----
+120
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 16)
+----
+136
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 17)
+----
+153
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 18)
+----
+171
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 19)
+----
+190
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 20)
+----
+210
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 21)
+----
+231
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 22)
+----
+253
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 23)
+----
+276
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 24)
+----
+300
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 25)
+----
+325
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 26)
+----
+351
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 27)
+----
+378
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 28)
+----
+406
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 29)
+----
+435
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 30)
+----
+465
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 31)
+----
+496
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 32)
+----
+528
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 33)
+----
+561
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 34)
+----
+595
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 35)
+----
+630
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 36)
+----
+666
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 37)
+----
+703
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 38)
+----
+741
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 39)
+----
+780
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 40)
+----
+820
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 41)
+----
+861
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 42)
+----
+903
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 43)
+----
+946
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 44)
+----
+990
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 45)
+----
+1035
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 46)
+----
+1081
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 47)
+----
+1128
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 48)
+----
+1176
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 49)
+----
+1225
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 50)
+----
+1275
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 51)
+----
+1326
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 52)
+----
+1378
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 53)
+----
+1431
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 54)
+----
+1485
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 55)
+----
+1540
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 56)
+----
+1596
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 57)
+----
+1653
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 58)
+----
+1711
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 59)
+----
+1770
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 60)
+----
+1830
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 61)
+----
+1891
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 62)
+----
+1953
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 63)
+----
+2016
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 64)
+----
+2080
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 65)
+----
+2145
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 66)
+----
+2211
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 67)
+----
+2278
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 68)
+----
+2346
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 69)
+----
+2415
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 70)
+----
+2485
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 71)
+----
+2556
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 72)
+----
+2628
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 73)
+----
+2701
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 74)
+----
+2775
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 75)
+----
+2850
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 76)
+----
+2926
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 77)
+----
+3003
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 78)
+----
+3081
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 79)
+----
+3160
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 80)
+----
+3240
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 81)
+----
+3321
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 82)
+----
+3403
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 83)
+----
+3486
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 84)
+----
+3570
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 85)
+----
+3655
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 86)
+----
+3741
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 87)
+----
+3828
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 88)
+----
+3916
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 89)
+----
+4005
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 90)
+----
+4095
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 91)
+----
+4186
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 92)
+----
+4278
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 93)
+----
+4371
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 94)
+----
+4465
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 95)
+----
+4560
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 96)
+----
+4656
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 97)
+----
+4753
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 98)
+----
+4851
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 99)
+----
+4950
+
+query I nosort
+SELECT SUM(generate_series) FROM generate_series(1, 100)
+----
+5050
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 2, 2)
+----
+1
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 4, 2)
+----
+2
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 6, 2)
+----
+3
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 8, 2)
+----
+4
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 10, 2)
+----
+5
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 12, 2)
+----
+6
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 14, 2)
+----
+7
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 16, 2)
+----
+8
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 18, 2)
+----
+9
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 20, 2)
+----
+10
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 22, 2)
+----
+11
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 24, 2)
+----
+12
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 26, 2)
+----
+13
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 28, 2)
+----
+14
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 30, 2)
+----
+15
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 32, 2)
+----
+16
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 34, 2)
+----
+17
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 36, 2)
+----
+18
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 38, 2)
+----
+19
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 40, 2)
+----
+20
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 42, 2)
+----
+21
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 44, 2)
+----
+22
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 46, 2)
+----
+23
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 48, 2)
+----
+24
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 50, 2)
+----
+25
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 52, 2)
+----
+26
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 54, 2)
+----
+27
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 56, 2)
+----
+28
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 58, 2)
+----
+29
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 60, 2)
+----
+30
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 62, 2)
+----
+31
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 64, 2)
+----
+32
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 66, 2)
+----
+33
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 68, 2)
+----
+34
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 70, 2)
+----
+35
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 72, 2)
+----
+36
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 74, 2)
+----
+37
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 76, 2)
+----
+38
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 78, 2)
+----
+39
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 80, 2)
+----
+40
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 82, 2)
+----
+41
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 84, 2)
+----
+42
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 86, 2)
+----
+43
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 88, 2)
+----
+44
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 90, 2)
+----
+45
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 92, 2)
+----
+46
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 94, 2)
+----
+47
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 96, 2)
+----
+48
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 98, 2)
+----
+49
+
+query I nosort
+SELECT COUNT(*) FROM generate_series(1, 100, 2)
+----
+50
+
+query I nosort
+SELECT COUNT(*) FROM v_hi WHERE doubled >= 3
+----
+4
+
+query I nosort
+SELECT COUNT(*) FROM v_hi WHERE doubled >= 6
+----
+4
+
+query I nosort
+SELECT COUNT(*) FROM v_hi WHERE doubled >= 9
+----
+4
+
+query I nosort
+SELECT COUNT(*) FROM v_hi WHERE doubled >= 12
+----
+4
+
+query I nosort
+SELECT COUNT(*) FROM v_hi WHERE doubled >= 15
+----
+4
+
+query I nosort
+SELECT COUNT(*) FROM v_hi WHERE doubled >= 18
+----
+4
+
+query I nosort
+SELECT COUNT(*) FROM v_hi WHERE doubled >= 21
+----
+4
+
+query I nosort
+SELECT COUNT(*) FROM v_hi WHERE doubled >= 24
+----
+4
+
+query I nosort
+SELECT COUNT(*) FROM v_hi WHERE doubled >= 27
+----
+4
+
+query I nosort
+SELECT COUNT(*) FROM v_hi WHERE doubled >= 30
+----
+4
+
+query I nosort
+SELECT COUNT(*) FROM v_hi WHERE doubled >= 33
+----
+4
+
+query I nosort
+SELECT COUNT(*) FROM v_hi WHERE doubled >= 36
+----
+4
+
+query I nosort
+SELECT COUNT(*) FROM v_hi WHERE doubled >= 39
+----
+4
+
+query I nosort
+SELECT COUNT(*) FROM v_hi WHERE doubled >= 42
+----
+3
+
+query I nosort
+SELECT COUNT(*) FROM v_hi WHERE doubled >= 45
+----
+3
+
+query I nosort
+SELECT COUNT(*) FROM v_hi WHERE doubled >= 48
+----
+3
+
+query I nosort
+SELECT COUNT(*) FROM v_hi WHERE doubled >= 51
+----
+3
+
+query I nosort
+SELECT COUNT(*) FROM v_hi WHERE doubled >= 54
+----
+3
+
+query I nosort
+SELECT COUNT(*) FROM v_hi WHERE doubled >= 57
+----
+3
+
+query I nosort
+SELECT COUNT(*) FROM v_hi WHERE doubled >= 60
+----
+3
+
+query I nosort
+SELECT COUNT(*) FROM v_hi WHERE doubled >= 63
+----
+2
+
+query I nosort
+SELECT COUNT(*) FROM v_hi WHERE doubled >= 66
+----
+2
+
+query I nosort
+SELECT COUNT(*) FROM v_hi WHERE doubled >= 69
+----
+2
+
+query I nosort
+SELECT COUNT(*) FROM v_hi WHERE doubled >= 72
+----
+2
+
+query I nosort
+SELECT COUNT(*) FROM v_hi WHERE doubled >= 75
+----
+2
+
+query I nosort
+SELECT COUNT(*) FROM v_hi WHERE doubled >= 78
+----
+2
+
+query I nosort
+SELECT COUNT(*) FROM v_hi WHERE doubled >= 81
+----
+1
+
+query I nosort
+SELECT COUNT(*) FROM v_hi WHERE doubled >= 84
+----
+1
+
+query I nosort
+SELECT COUNT(*) FROM v_hi WHERE doubled >= 87
+----
+1
+
+query I nosort
+SELECT COUNT(*) FROM v_hi WHERE doubled >= 90
+----
+1
+
+statement ok
+DROP VIEW v_hi

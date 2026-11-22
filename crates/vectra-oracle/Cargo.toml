@@ -1,0 +1,21 @@
+[package]
+name = "vectra-oracle"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+
+[dependencies]
+vectra-types = { path = "../vectra-types" }
+vectra-expr = { path = "../vectra-expr" }
+vectra-storage = { path = "../vectra-storage" }
+vectra-sql = { path = "../vectra-sql" }
+vectra-optimizer = { path = "../vectra-optimizer" }
+vectra-exec = { path = "../vectra-exec" }
+rusqlite = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+[[bin]]
+name = "vectra-sqlsmith"
+path = "src/bin/vectra-sqlsmith.rs"

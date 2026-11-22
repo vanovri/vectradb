@@ -1,0 +1,1413 @@
+# 23_dml_mvcc_transactions.slt — VectraDB M07 sqllogictest suite
+
+statement ok
+CREATE TABLE acct (id BIGINT, bal BIGINT)
+
+statement ok
+INSERT INTO acct VALUES (1, 100), (2, 200), (3, 300)
+
+statement ok
+ANALYZE acct
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 1 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+101
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+601
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 2 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+103
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+603
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 3 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+106
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+606
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 4 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+110
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+610
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 5 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+115
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+615
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 6 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+121
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+621
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 7 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+128
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+628
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 8 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+136
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+636
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 9 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+145
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+645
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 10 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+155
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+655
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 11 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+166
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+666
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 12 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+178
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+678
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 13 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+191
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+691
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 14 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+205
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+705
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 15 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+220
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+720
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 16 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+236
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+736
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 17 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+253
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+753
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 18 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+271
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+771
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 19 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+290
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+790
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 20 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+310
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+810
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 21 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+331
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+831
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 22 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+353
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+853
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 23 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+376
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+876
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 24 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+400
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+900
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 25 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+425
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+925
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 26 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+451
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+951
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 27 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+478
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+978
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 28 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+506
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+1006
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 29 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+535
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+1035
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 30 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+565
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+1065
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 31 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+596
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+1096
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 32 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+628
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+1128
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 33 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+661
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+1161
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 34 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+695
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+1195
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 35 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+730
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+1230
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 36 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+766
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+1266
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 37 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+803
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+1303
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 38 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+841
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+1341
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 39 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+880
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+1380
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 40 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+920
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+1420
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 41 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+961
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+1461
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 42 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+1003
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+1503
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 43 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+1046
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+1546
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 44 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+1090
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+1590
+
+statement ok
+BEGIN
+
+statement ok
+UPDATE acct SET bal = bal + 45 WHERE id = 1
+
+statement ok
+COMMIT
+
+query I nosort
+SELECT bal FROM acct WHERE id = 1
+----
+1135
+
+statement ok
+BEGIN
+
+statement ok
+DELETE FROM acct WHERE id = 2
+
+statement ok
+INSERT INTO acct VALUES (99, 999)
+
+statement ok
+ROLLBACK
+
+query I nosort
+SELECT SUM(bal) FROM acct
+----
+1635
+
+statement ok
+CREATE TABLE acct_copy AS SELECT id, bal FROM acct WHERE bal > 0
+
+query I nosort
+SELECT COUNT(*) FROM acct_copy
+----
+3

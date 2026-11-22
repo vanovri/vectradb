@@ -1,0 +1,990 @@
+# 21_ctes_recursive_ctes.slt — VectraDB M07 sqllogictest suite
+
+statement ok
+CREATE TABLE graph (src BIGINT, dst BIGINT)
+
+statement ok
+INSERT INTO graph VALUES (1,2),(2,3),(3,4),(4,5),(5,2),(1,6),(6,7),(7,8),(10,11)
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 1) SELECT SUM(x) FROM cnt
+----
+1
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 1) SELECT COUNT(*) FROM cnt
+----
+1
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 2) SELECT SUM(x) FROM cnt
+----
+3
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 2) SELECT COUNT(*) FROM cnt
+----
+2
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 3) SELECT SUM(x) FROM cnt
+----
+6
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 3) SELECT COUNT(*) FROM cnt
+----
+3
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 4) SELECT SUM(x) FROM cnt
+----
+10
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 4) SELECT COUNT(*) FROM cnt
+----
+4
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 5) SELECT SUM(x) FROM cnt
+----
+15
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 5) SELECT COUNT(*) FROM cnt
+----
+5
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 6) SELECT SUM(x) FROM cnt
+----
+21
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 6) SELECT COUNT(*) FROM cnt
+----
+6
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 7) SELECT SUM(x) FROM cnt
+----
+28
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 7) SELECT COUNT(*) FROM cnt
+----
+7
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 8) SELECT SUM(x) FROM cnt
+----
+36
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 8) SELECT COUNT(*) FROM cnt
+----
+8
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 9) SELECT SUM(x) FROM cnt
+----
+45
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 9) SELECT COUNT(*) FROM cnt
+----
+9
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 10) SELECT SUM(x) FROM cnt
+----
+55
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 10) SELECT COUNT(*) FROM cnt
+----
+10
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 11) SELECT SUM(x) FROM cnt
+----
+66
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 11) SELECT COUNT(*) FROM cnt
+----
+11
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 12) SELECT SUM(x) FROM cnt
+----
+78
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 12) SELECT COUNT(*) FROM cnt
+----
+12
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 13) SELECT SUM(x) FROM cnt
+----
+91
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 13) SELECT COUNT(*) FROM cnt
+----
+13
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 14) SELECT SUM(x) FROM cnt
+----
+105
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 14) SELECT COUNT(*) FROM cnt
+----
+14
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 15) SELECT SUM(x) FROM cnt
+----
+120
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 15) SELECT COUNT(*) FROM cnt
+----
+15
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 16) SELECT SUM(x) FROM cnt
+----
+136
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 16) SELECT COUNT(*) FROM cnt
+----
+16
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 17) SELECT SUM(x) FROM cnt
+----
+153
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 17) SELECT COUNT(*) FROM cnt
+----
+17
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 18) SELECT SUM(x) FROM cnt
+----
+171
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 18) SELECT COUNT(*) FROM cnt
+----
+18
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 19) SELECT SUM(x) FROM cnt
+----
+190
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 19) SELECT COUNT(*) FROM cnt
+----
+19
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 20) SELECT SUM(x) FROM cnt
+----
+210
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 20) SELECT COUNT(*) FROM cnt
+----
+20
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 21) SELECT SUM(x) FROM cnt
+----
+231
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 21) SELECT COUNT(*) FROM cnt
+----
+21
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 22) SELECT SUM(x) FROM cnt
+----
+253
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 22) SELECT COUNT(*) FROM cnt
+----
+22
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 23) SELECT SUM(x) FROM cnt
+----
+276
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 23) SELECT COUNT(*) FROM cnt
+----
+23
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 24) SELECT SUM(x) FROM cnt
+----
+300
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 24) SELECT COUNT(*) FROM cnt
+----
+24
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 25) SELECT SUM(x) FROM cnt
+----
+325
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 25) SELECT COUNT(*) FROM cnt
+----
+25
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 26) SELECT SUM(x) FROM cnt
+----
+351
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 26) SELECT COUNT(*) FROM cnt
+----
+26
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 27) SELECT SUM(x) FROM cnt
+----
+378
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 27) SELECT COUNT(*) FROM cnt
+----
+27
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 28) SELECT SUM(x) FROM cnt
+----
+406
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 28) SELECT COUNT(*) FROM cnt
+----
+28
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 29) SELECT SUM(x) FROM cnt
+----
+435
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 29) SELECT COUNT(*) FROM cnt
+----
+29
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 30) SELECT SUM(x) FROM cnt
+----
+465
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 30) SELECT COUNT(*) FROM cnt
+----
+30
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 31) SELECT SUM(x) FROM cnt
+----
+496
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 31) SELECT COUNT(*) FROM cnt
+----
+31
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 32) SELECT SUM(x) FROM cnt
+----
+528
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 32) SELECT COUNT(*) FROM cnt
+----
+32
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 33) SELECT SUM(x) FROM cnt
+----
+561
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 33) SELECT COUNT(*) FROM cnt
+----
+33
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 34) SELECT SUM(x) FROM cnt
+----
+595
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 34) SELECT COUNT(*) FROM cnt
+----
+34
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 35) SELECT SUM(x) FROM cnt
+----
+630
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 35) SELECT COUNT(*) FROM cnt
+----
+35
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 36) SELECT SUM(x) FROM cnt
+----
+666
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 36) SELECT COUNT(*) FROM cnt
+----
+36
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 37) SELECT SUM(x) FROM cnt
+----
+703
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 37) SELECT COUNT(*) FROM cnt
+----
+37
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 38) SELECT SUM(x) FROM cnt
+----
+741
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 38) SELECT COUNT(*) FROM cnt
+----
+38
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 39) SELECT SUM(x) FROM cnt
+----
+780
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 39) SELECT COUNT(*) FROM cnt
+----
+39
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 40) SELECT SUM(x) FROM cnt
+----
+820
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 40) SELECT COUNT(*) FROM cnt
+----
+40
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 41) SELECT SUM(x) FROM cnt
+----
+861
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 41) SELECT COUNT(*) FROM cnt
+----
+41
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 42) SELECT SUM(x) FROM cnt
+----
+903
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 42) SELECT COUNT(*) FROM cnt
+----
+42
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 43) SELECT SUM(x) FROM cnt
+----
+946
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 43) SELECT COUNT(*) FROM cnt
+----
+43
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 44) SELECT SUM(x) FROM cnt
+----
+990
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 44) SELECT COUNT(*) FROM cnt
+----
+44
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 45) SELECT SUM(x) FROM cnt
+----
+1035
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 45) SELECT COUNT(*) FROM cnt
+----
+45
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 46) SELECT SUM(x) FROM cnt
+----
+1081
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 46) SELECT COUNT(*) FROM cnt
+----
+46
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 47) SELECT SUM(x) FROM cnt
+----
+1128
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 47) SELECT COUNT(*) FROM cnt
+----
+47
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 48) SELECT SUM(x) FROM cnt
+----
+1176
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 48) SELECT COUNT(*) FROM cnt
+----
+48
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 49) SELECT SUM(x) FROM cnt
+----
+1225
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 49) SELECT COUNT(*) FROM cnt
+----
+49
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 50) SELECT SUM(x) FROM cnt
+----
+1275
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 50) SELECT COUNT(*) FROM cnt
+----
+50
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 51) SELECT SUM(x) FROM cnt
+----
+1326
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 51) SELECT COUNT(*) FROM cnt
+----
+51
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 52) SELECT SUM(x) FROM cnt
+----
+1378
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 52) SELECT COUNT(*) FROM cnt
+----
+52
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 53) SELECT SUM(x) FROM cnt
+----
+1431
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 53) SELECT COUNT(*) FROM cnt
+----
+53
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 54) SELECT SUM(x) FROM cnt
+----
+1485
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 54) SELECT COUNT(*) FROM cnt
+----
+54
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 55) SELECT SUM(x) FROM cnt
+----
+1540
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 55) SELECT COUNT(*) FROM cnt
+----
+55
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 56) SELECT SUM(x) FROM cnt
+----
+1596
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 56) SELECT COUNT(*) FROM cnt
+----
+56
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 57) SELECT SUM(x) FROM cnt
+----
+1653
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 57) SELECT COUNT(*) FROM cnt
+----
+57
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 58) SELECT SUM(x) FROM cnt
+----
+1711
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 58) SELECT COUNT(*) FROM cnt
+----
+58
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 59) SELECT SUM(x) FROM cnt
+----
+1770
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 59) SELECT COUNT(*) FROM cnt
+----
+59
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 60) SELECT SUM(x) FROM cnt
+----
+1830
+
+query I nosort
+WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM cnt WHERE x < 60) SELECT COUNT(*) FROM cnt
+----
+60
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 1 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 1
+----
+1
+2
+3
+4
+5
+6
+7
+8
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 1 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 2
+----
+2
+3
+4
+5
+6
+7
+8
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 1 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 3
+----
+3
+4
+5
+6
+7
+8
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 1 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 4
+----
+4
+5
+6
+7
+8
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 1 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 5
+----
+5
+6
+7
+8
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 1 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 6
+----
+6
+7
+8
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 2 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 1
+----
+2
+3
+4
+5
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 2 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 2
+----
+2
+3
+4
+5
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 2 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 3
+----
+3
+4
+5
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 2 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 4
+----
+4
+5
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 2 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 5
+----
+5
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 2 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 6
+----
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 3 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 1
+----
+2
+3
+4
+5
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 3 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 2
+----
+2
+3
+4
+5
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 3 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 3
+----
+3
+4
+5
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 3 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 4
+----
+4
+5
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 3 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 5
+----
+5
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 3 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 6
+----
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 4 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 1
+----
+2
+3
+4
+5
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 4 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 2
+----
+2
+3
+4
+5
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 4 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 3
+----
+3
+4
+5
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 4 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 4
+----
+4
+5
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 4 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 5
+----
+5
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 4 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 6
+----
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 5 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 1
+----
+2
+3
+4
+5
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 5 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 2
+----
+2
+3
+4
+5
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 5 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 3
+----
+3
+4
+5
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 5 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 4
+----
+4
+5
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 5 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 5
+----
+5
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 5 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 6
+----
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 6 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 1
+----
+6
+7
+8
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 6 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 2
+----
+6
+7
+8
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 6 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 3
+----
+6
+7
+8
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 6 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 4
+----
+6
+7
+8
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 6 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 5
+----
+6
+7
+8
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 6 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 6
+----
+6
+7
+8
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 7 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 1
+----
+7
+8
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 7 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 2
+----
+7
+8
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 7 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 3
+----
+7
+8
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 7 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 4
+----
+7
+8
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 7 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 5
+----
+7
+8
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 7 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 6
+----
+7
+8
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 8 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 1
+----
+8
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 8 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 2
+----
+8
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 8 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 3
+----
+8
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 8 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 4
+----
+8
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 8 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 5
+----
+8
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 8 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 6
+----
+8
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 10 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 1
+----
+10
+11
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 10 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 2
+----
+10
+11
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 10 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 3
+----
+10
+11
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 10 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 4
+----
+10
+11
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 10 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 5
+----
+10
+11
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 10 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 6
+----
+10
+11
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 11 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 1
+----
+11
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 11 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 2
+----
+11
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 11 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 3
+----
+11
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 11 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 4
+----
+11
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 11 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 5
+----
+11
+
+query I rowsort
+WITH RECURSIVE r(n) AS (SELECT 11 UNION SELECT g.dst FROM r JOIN graph g ON r.n = g.src) SELECT n FROM r WHERE n >= 6
+----
+11

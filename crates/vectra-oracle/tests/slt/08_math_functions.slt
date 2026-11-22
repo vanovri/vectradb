@@ -1,0 +1,1221 @@
+# 08_math_functions.slt — VectraDB M07 sqllogictest suite
+
+query I nosort
+SELECT ABS(-25)
+----
+25
+
+query R nosort
+SELECT CEIL(-24.65)
+----
+-24.000
+
+query R nosort
+SELECT FLOOR(-24.65)
+----
+-25.000
+
+query R nosort
+SELECT ROUND(-24.65, 0)
+----
+-25.000
+
+query I nosort
+SELECT ABS(-24)
+----
+24
+
+query R nosort
+SELECT CEIL(-23.65)
+----
+-23.000
+
+query R nosort
+SELECT FLOOR(-23.65)
+----
+-24.000
+
+query R nosort
+SELECT ROUND(-23.65, 0)
+----
+-24.000
+
+query I nosort
+SELECT ABS(-23)
+----
+23
+
+query R nosort
+SELECT CEIL(-22.65)
+----
+-22.000
+
+query R nosort
+SELECT FLOOR(-22.65)
+----
+-23.000
+
+query R nosort
+SELECT ROUND(-22.65, 0)
+----
+-23.000
+
+query I nosort
+SELECT ABS(-22)
+----
+22
+
+query R nosort
+SELECT CEIL(-21.65)
+----
+-21.000
+
+query R nosort
+SELECT FLOOR(-21.65)
+----
+-22.000
+
+query R nosort
+SELECT ROUND(-21.65, 0)
+----
+-22.000
+
+query I nosort
+SELECT ABS(-21)
+----
+21
+
+query R nosort
+SELECT CEIL(-20.65)
+----
+-20.000
+
+query R nosort
+SELECT FLOOR(-20.65)
+----
+-21.000
+
+query R nosort
+SELECT ROUND(-20.65, 0)
+----
+-21.000
+
+query I nosort
+SELECT ABS(-20)
+----
+20
+
+query R nosort
+SELECT CEIL(-19.65)
+----
+-19.000
+
+query R nosort
+SELECT FLOOR(-19.65)
+----
+-20.000
+
+query R nosort
+SELECT ROUND(-19.65, 0)
+----
+-20.000
+
+query I nosort
+SELECT ABS(-19)
+----
+19
+
+query R nosort
+SELECT CEIL(-18.65)
+----
+-18.000
+
+query R nosort
+SELECT FLOOR(-18.65)
+----
+-19.000
+
+query R nosort
+SELECT ROUND(-18.65, 0)
+----
+-19.000
+
+query I nosort
+SELECT ABS(-18)
+----
+18
+
+query R nosort
+SELECT CEIL(-17.65)
+----
+-17.000
+
+query R nosort
+SELECT FLOOR(-17.65)
+----
+-18.000
+
+query R nosort
+SELECT ROUND(-17.65, 0)
+----
+-18.000
+
+query I nosort
+SELECT ABS(-17)
+----
+17
+
+query R nosort
+SELECT CEIL(-16.65)
+----
+-16.000
+
+query R nosort
+SELECT FLOOR(-16.65)
+----
+-17.000
+
+query R nosort
+SELECT ROUND(-16.65, 0)
+----
+-17.000
+
+query I nosort
+SELECT ABS(-16)
+----
+16
+
+query R nosort
+SELECT CEIL(-15.65)
+----
+-15.000
+
+query R nosort
+SELECT FLOOR(-15.65)
+----
+-16.000
+
+query R nosort
+SELECT ROUND(-15.65, 0)
+----
+-16.000
+
+query I nosort
+SELECT ABS(-15)
+----
+15
+
+query R nosort
+SELECT CEIL(-14.65)
+----
+-14.000
+
+query R nosort
+SELECT FLOOR(-14.65)
+----
+-15.000
+
+query R nosort
+SELECT ROUND(-14.65, 0)
+----
+-15.000
+
+query I nosort
+SELECT ABS(-14)
+----
+14
+
+query R nosort
+SELECT CEIL(-13.65)
+----
+-13.000
+
+query R nosort
+SELECT FLOOR(-13.65)
+----
+-14.000
+
+query R nosort
+SELECT ROUND(-13.65, 0)
+----
+-14.000
+
+query I nosort
+SELECT ABS(-13)
+----
+13
+
+query R nosort
+SELECT CEIL(-12.65)
+----
+-12.000
+
+query R nosort
+SELECT FLOOR(-12.65)
+----
+-13.000
+
+query R nosort
+SELECT ROUND(-12.65, 0)
+----
+-13.000
+
+query I nosort
+SELECT ABS(-12)
+----
+12
+
+query R nosort
+SELECT CEIL(-11.65)
+----
+-11.000
+
+query R nosort
+SELECT FLOOR(-11.65)
+----
+-12.000
+
+query R nosort
+SELECT ROUND(-11.65, 0)
+----
+-12.000
+
+query I nosort
+SELECT ABS(-11)
+----
+11
+
+query R nosort
+SELECT CEIL(-10.65)
+----
+-10.000
+
+query R nosort
+SELECT FLOOR(-10.65)
+----
+-11.000
+
+query R nosort
+SELECT ROUND(-10.65, 0)
+----
+-11.000
+
+query I nosort
+SELECT ABS(-10)
+----
+10
+
+query R nosort
+SELECT CEIL(-9.65)
+----
+-9.000
+
+query R nosort
+SELECT FLOOR(-9.65)
+----
+-10.000
+
+query R nosort
+SELECT ROUND(-9.65, 0)
+----
+-10.000
+
+query I nosort
+SELECT ABS(-9)
+----
+9
+
+query R nosort
+SELECT CEIL(-8.65)
+----
+-8.000
+
+query R nosort
+SELECT FLOOR(-8.65)
+----
+-9.000
+
+query R nosort
+SELECT ROUND(-8.65, 0)
+----
+-9.000
+
+query I nosort
+SELECT ABS(-8)
+----
+8
+
+query R nosort
+SELECT CEIL(-7.65)
+----
+-7.000
+
+query R nosort
+SELECT FLOOR(-7.65)
+----
+-8.000
+
+query R nosort
+SELECT ROUND(-7.65, 0)
+----
+-8.000
+
+query I nosort
+SELECT ABS(-7)
+----
+7
+
+query R nosort
+SELECT CEIL(-6.65)
+----
+-6.000
+
+query R nosort
+SELECT FLOOR(-6.65)
+----
+-7.000
+
+query R nosort
+SELECT ROUND(-6.65, 0)
+----
+-7.000
+
+query I nosort
+SELECT ABS(-6)
+----
+6
+
+query R nosort
+SELECT CEIL(-5.65)
+----
+-5.000
+
+query R nosort
+SELECT FLOOR(-5.65)
+----
+-6.000
+
+query R nosort
+SELECT ROUND(-5.65, 0)
+----
+-6.000
+
+query I nosort
+SELECT ABS(-5)
+----
+5
+
+query R nosort
+SELECT CEIL(-4.65)
+----
+-4.000
+
+query R nosort
+SELECT FLOOR(-4.65)
+----
+-5.000
+
+query R nosort
+SELECT ROUND(-4.65, 0)
+----
+-5.000
+
+query I nosort
+SELECT ABS(-4)
+----
+4
+
+query R nosort
+SELECT CEIL(-3.65)
+----
+-3.000
+
+query R nosort
+SELECT FLOOR(-3.65)
+----
+-4.000
+
+query R nosort
+SELECT ROUND(-3.65, 0)
+----
+-4.000
+
+query I nosort
+SELECT ABS(-3)
+----
+3
+
+query R nosort
+SELECT CEIL(-2.65)
+----
+-2.000
+
+query R nosort
+SELECT FLOOR(-2.65)
+----
+-3.000
+
+query R nosort
+SELECT ROUND(-2.65, 0)
+----
+-3.000
+
+query I nosort
+SELECT ABS(-2)
+----
+2
+
+query R nosort
+SELECT CEIL(-1.65)
+----
+-1.000
+
+query R nosort
+SELECT FLOOR(-1.65)
+----
+-2.000
+
+query R nosort
+SELECT ROUND(-1.65, 0)
+----
+-2.000
+
+query I nosort
+SELECT ABS(-1)
+----
+1
+
+query R nosort
+SELECT CEIL(-0.65)
+----
+0.000
+
+query R nosort
+SELECT FLOOR(-0.65)
+----
+-1.000
+
+query R nosort
+SELECT ROUND(-0.65, 0)
+----
+-1.000
+
+query I nosort
+SELECT ABS(0)
+----
+0
+
+query R nosort
+SELECT CEIL(0.35)
+----
+1.000
+
+query R nosort
+SELECT FLOOR(0.35)
+----
+0.000
+
+query R nosort
+SELECT ROUND(0.35, 0)
+----
+0.000
+
+query I nosort
+SELECT ABS(1)
+----
+1
+
+query R nosort
+SELECT CEIL(1.35)
+----
+2.000
+
+query R nosort
+SELECT FLOOR(1.35)
+----
+1.000
+
+query R nosort
+SELECT ROUND(1.35, 0)
+----
+1.000
+
+query I nosort
+SELECT ABS(2)
+----
+2
+
+query R nosort
+SELECT CEIL(2.35)
+----
+3.000
+
+query R nosort
+SELECT FLOOR(2.35)
+----
+2.000
+
+query R nosort
+SELECT ROUND(2.35, 0)
+----
+2.000
+
+query I nosort
+SELECT ABS(3)
+----
+3
+
+query R nosort
+SELECT CEIL(3.35)
+----
+4.000
+
+query R nosort
+SELECT FLOOR(3.35)
+----
+3.000
+
+query R nosort
+SELECT ROUND(3.35, 0)
+----
+3.000
+
+query I nosort
+SELECT ABS(4)
+----
+4
+
+query R nosort
+SELECT CEIL(4.35)
+----
+5.000
+
+query R nosort
+SELECT FLOOR(4.35)
+----
+4.000
+
+query R nosort
+SELECT ROUND(4.35, 0)
+----
+4.000
+
+query I nosort
+SELECT ABS(5)
+----
+5
+
+query R nosort
+SELECT CEIL(5.35)
+----
+6.000
+
+query R nosort
+SELECT FLOOR(5.35)
+----
+5.000
+
+query R nosort
+SELECT ROUND(5.35, 0)
+----
+5.000
+
+query I nosort
+SELECT ABS(6)
+----
+6
+
+query R nosort
+SELECT CEIL(6.35)
+----
+7.000
+
+query R nosort
+SELECT FLOOR(6.35)
+----
+6.000
+
+query R nosort
+SELECT ROUND(6.35, 0)
+----
+6.000
+
+query I nosort
+SELECT ABS(7)
+----
+7
+
+query R nosort
+SELECT CEIL(7.35)
+----
+8.000
+
+query R nosort
+SELECT FLOOR(7.35)
+----
+7.000
+
+query R nosort
+SELECT ROUND(7.35, 0)
+----
+7.000
+
+query I nosort
+SELECT ABS(8)
+----
+8
+
+query R nosort
+SELECT CEIL(8.35)
+----
+9.000
+
+query R nosort
+SELECT FLOOR(8.35)
+----
+8.000
+
+query R nosort
+SELECT ROUND(8.35, 0)
+----
+8.000
+
+query I nosort
+SELECT ABS(9)
+----
+9
+
+query R nosort
+SELECT CEIL(9.35)
+----
+10.000
+
+query R nosort
+SELECT FLOOR(9.35)
+----
+9.000
+
+query R nosort
+SELECT ROUND(9.35, 0)
+----
+9.000
+
+query I nosort
+SELECT ABS(10)
+----
+10
+
+query R nosort
+SELECT CEIL(10.35)
+----
+11.000
+
+query R nosort
+SELECT FLOOR(10.35)
+----
+10.000
+
+query R nosort
+SELECT ROUND(10.35, 0)
+----
+10.000
+
+query I nosort
+SELECT ABS(11)
+----
+11
+
+query R nosort
+SELECT CEIL(11.35)
+----
+12.000
+
+query R nosort
+SELECT FLOOR(11.35)
+----
+11.000
+
+query R nosort
+SELECT ROUND(11.35, 0)
+----
+11.000
+
+query I nosort
+SELECT ABS(12)
+----
+12
+
+query R nosort
+SELECT CEIL(12.35)
+----
+13.000
+
+query R nosort
+SELECT FLOOR(12.35)
+----
+12.000
+
+query R nosort
+SELECT ROUND(12.35, 0)
+----
+12.000
+
+query I nosort
+SELECT ABS(13)
+----
+13
+
+query R nosort
+SELECT CEIL(13.35)
+----
+14.000
+
+query R nosort
+SELECT FLOOR(13.35)
+----
+13.000
+
+query R nosort
+SELECT ROUND(13.35, 0)
+----
+13.000
+
+query I nosort
+SELECT ABS(14)
+----
+14
+
+query R nosort
+SELECT CEIL(14.35)
+----
+15.000
+
+query R nosort
+SELECT FLOOR(14.35)
+----
+14.000
+
+query R nosort
+SELECT ROUND(14.35, 0)
+----
+14.000
+
+query I nosort
+SELECT ABS(15)
+----
+15
+
+query R nosort
+SELECT CEIL(15.35)
+----
+16.000
+
+query R nosort
+SELECT FLOOR(15.35)
+----
+15.000
+
+query R nosort
+SELECT ROUND(15.35, 0)
+----
+15.000
+
+query I nosort
+SELECT ABS(16)
+----
+16
+
+query R nosort
+SELECT CEIL(16.35)
+----
+17.000
+
+query R nosort
+SELECT FLOOR(16.35)
+----
+16.000
+
+query R nosort
+SELECT ROUND(16.35, 0)
+----
+16.000
+
+query I nosort
+SELECT ABS(17)
+----
+17
+
+query R nosort
+SELECT CEIL(17.35)
+----
+18.000
+
+query R nosort
+SELECT FLOOR(17.35)
+----
+17.000
+
+query R nosort
+SELECT ROUND(17.35, 0)
+----
+17.000
+
+query I nosort
+SELECT ABS(18)
+----
+18
+
+query R nosort
+SELECT CEIL(18.35)
+----
+19.000
+
+query R nosort
+SELECT FLOOR(18.35)
+----
+18.000
+
+query R nosort
+SELECT ROUND(18.35, 0)
+----
+18.000
+
+query I nosort
+SELECT ABS(19)
+----
+19
+
+query R nosort
+SELECT CEIL(19.35)
+----
+20.000
+
+query R nosort
+SELECT FLOOR(19.35)
+----
+19.000
+
+query R nosort
+SELECT ROUND(19.35, 0)
+----
+19.000
+
+query I nosort
+SELECT ABS(20)
+----
+20
+
+query R nosort
+SELECT CEIL(20.35)
+----
+21.000
+
+query R nosort
+SELECT FLOOR(20.35)
+----
+20.000
+
+query R nosort
+SELECT ROUND(20.35, 0)
+----
+20.000
+
+query I nosort
+SELECT ABS(21)
+----
+21
+
+query R nosort
+SELECT CEIL(21.35)
+----
+22.000
+
+query R nosort
+SELECT FLOOR(21.35)
+----
+21.000
+
+query R nosort
+SELECT ROUND(21.35, 0)
+----
+21.000
+
+query I nosort
+SELECT ABS(22)
+----
+22
+
+query R nosort
+SELECT CEIL(22.35)
+----
+23.000
+
+query R nosort
+SELECT FLOOR(22.35)
+----
+22.000
+
+query R nosort
+SELECT ROUND(22.35, 0)
+----
+22.000
+
+query I nosort
+SELECT ABS(23)
+----
+23
+
+query R nosort
+SELECT CEIL(23.35)
+----
+24.000
+
+query R nosort
+SELECT FLOOR(23.35)
+----
+23.000
+
+query R nosort
+SELECT ROUND(23.35, 0)
+----
+23.000
+
+query I nosort
+SELECT ABS(24)
+----
+24
+
+query R nosort
+SELECT CEIL(24.35)
+----
+25.000
+
+query R nosort
+SELECT FLOOR(24.35)
+----
+24.000
+
+query R nosort
+SELECT ROUND(24.35, 0)
+----
+24.000
+
+query I nosort
+SELECT ABS(25)
+----
+25
+
+query R nosort
+SELECT CEIL(25.35)
+----
+26.000
+
+query R nosort
+SELECT FLOOR(25.35)
+----
+25.000
+
+query R nosort
+SELECT ROUND(25.35, 0)
+----
+25.000
+
+query R nosort
+SELECT SQRT(0.0)
+----
+0.000
+
+query R nosort
+SELECT POWER(1.0, 0.0)
+----
+1.000
+
+query R nosort
+SELECT SQRT(1.0)
+----
+1.000
+
+query R nosort
+SELECT POWER(2.0, 1.0)
+----
+2.000
+
+query R nosort
+SELECT SQRT(4.0)
+----
+2.000
+
+query R nosort
+SELECT POWER(3.0, 2.0)
+----
+9.000
+
+query R nosort
+SELECT SQRT(9.0)
+----
+3.000
+
+query R nosort
+SELECT POWER(4.0, 3.0)
+----
+64.000
+
+query R nosort
+SELECT SQRT(16.0)
+----
+4.000
+
+query R nosort
+SELECT POWER(5.0, 0.0)
+----
+1.000
+
+query R nosort
+SELECT SQRT(25.0)
+----
+5.000
+
+query R nosort
+SELECT POWER(1.0, 1.0)
+----
+1.000
+
+query R nosort
+SELECT SQRT(36.0)
+----
+6.000
+
+query R nosort
+SELECT POWER(2.0, 2.0)
+----
+4.000
+
+query R nosort
+SELECT SQRT(49.0)
+----
+7.000
+
+query R nosort
+SELECT POWER(3.0, 3.0)
+----
+27.000
+
+query R nosort
+SELECT SQRT(64.0)
+----
+8.000
+
+query R nosort
+SELECT POWER(4.0, 0.0)
+----
+1.000
+
+query R nosort
+SELECT SQRT(81.0)
+----
+9.000
+
+query R nosort
+SELECT POWER(5.0, 1.0)
+----
+5.000
+
+query R nosort
+SELECT SQRT(100.0)
+----
+10.000
+
+query R nosort
+SELECT POWER(1.0, 2.0)
+----
+1.000
+
+query R nosort
+SELECT SQRT(121.0)
+----
+11.000
+
+query R nosort
+SELECT POWER(2.0, 3.0)
+----
+8.000
+
+query R nosort
+SELECT SQRT(144.0)
+----
+12.000
+
+query R nosort
+SELECT POWER(3.0, 0.0)
+----
+1.000
+
+query R nosort
+SELECT SQRT(169.0)
+----
+13.000
+
+query R nosort
+SELECT POWER(4.0, 1.0)
+----
+4.000
+
+query R nosort
+SELECT SQRT(196.0)
+----
+14.000
+
+query R nosort
+SELECT POWER(5.0, 2.0)
+----
+25.000
+
+query R nosort
+SELECT SQRT(225.0)
+----
+15.000
+
+query R nosort
+SELECT POWER(1.0, 3.0)
+----
+1.000
+
+query R nosort
+SELECT SQRT(256.0)
+----
+16.000
+
+query R nosort
+SELECT POWER(2.0, 0.0)
+----
+1.000
+
+query R nosort
+SELECT SQRT(289.0)
+----
+17.000
+
+query R nosort
+SELECT POWER(3.0, 1.0)
+----
+3.000
+
+query R nosort
+SELECT SQRT(324.0)
+----
+18.000
+
+query R nosort
+SELECT POWER(4.0, 2.0)
+----
+16.000
+
+query R nosort
+SELECT SQRT(361.0)
+----
+19.000
+
+query R nosort
+SELECT POWER(5.0, 3.0)
+----
+125.000

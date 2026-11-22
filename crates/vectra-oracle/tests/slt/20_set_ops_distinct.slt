@@ -1,0 +1,2473 @@
+# 20_set_ops_distinct.slt — VectraDB M07 sqllogictest suite
+
+statement ok
+CREATE TABLE s1 (a BIGINT, b VARCHAR)
+
+statement ok
+CREATE TABLE s2 (a BIGINT, b VARCHAR)
+
+statement ok
+INSERT INTO s1 VALUES (1,'x'),(1,'x'),(2,'y'),(3,NULL),(NULL,'z'),(NULL,NULL)
+
+statement ok
+INSERT INTO s2 VALUES (1,'x'),(2,'y'),(2,'y'),(4,'w'),(NULL,'z'),(NULL,NULL)
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+1
+x
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+1
+x
+1
+x
+1
+x
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+1
+x
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+1
+x
+1
+x
+1
+x
+2
+y
+2
+y
+2
+y
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+1
+x
+2
+y
+3
+NULL
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+1
+x
+1
+x
+1
+x
+2
+y
+2
+y
+2
+y
+3
+NULL
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+3
+NULL
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+1
+x
+2
+y
+3
+NULL
+4
+w
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+1
+x
+1
+x
+1
+x
+2
+y
+2
+y
+2
+y
+3
+NULL
+4
+w
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+3
+NULL
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+1
+x
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+1
+x
+1
+x
+1
+x
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+1
+x
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+1
+x
+1
+x
+1
+x
+2
+y
+2
+y
+2
+y
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+1
+x
+2
+y
+3
+NULL
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+1
+x
+1
+x
+1
+x
+2
+y
+2
+y
+2
+y
+3
+NULL
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+3
+NULL
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+1
+x
+2
+y
+3
+NULL
+4
+w
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+1
+x
+1
+x
+1
+x
+2
+y
+2
+y
+2
+y
+3
+NULL
+4
+w
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+3
+NULL
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+1
+x
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+1
+x
+1
+x
+1
+x
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+1
+x
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+1
+x
+1
+x
+1
+x
+2
+y
+2
+y
+2
+y
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+1
+x
+2
+y
+3
+NULL
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+1
+x
+1
+x
+1
+x
+2
+y
+2
+y
+2
+y
+3
+NULL
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+3
+NULL
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+1
+x
+2
+y
+3
+NULL
+4
+w
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+1
+x
+1
+x
+1
+x
+2
+y
+2
+y
+2
+y
+3
+NULL
+4
+w
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+3
+NULL
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+1
+x
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+1
+x
+1
+x
+1
+x
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+1
+x
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+1
+x
+1
+x
+1
+x
+2
+y
+2
+y
+2
+y
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+1
+x
+2
+y
+3
+NULL
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+1
+x
+1
+x
+1
+x
+2
+y
+2
+y
+2
+y
+3
+NULL
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+3
+NULL
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+1
+x
+2
+y
+3
+NULL
+4
+w
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+1
+x
+1
+x
+1
+x
+2
+y
+2
+y
+2
+y
+3
+NULL
+4
+w
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+3
+NULL
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+1
+x
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+1
+x
+1
+x
+1
+x
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+1
+x
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+1
+x
+1
+x
+1
+x
+2
+y
+2
+y
+2
+y
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+1
+x
+2
+y
+3
+NULL
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+1
+x
+1
+x
+1
+x
+2
+y
+2
+y
+2
+y
+3
+NULL
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+3
+NULL
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+1
+x
+2
+y
+3
+NULL
+4
+w
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+1
+x
+1
+x
+1
+x
+2
+y
+2
+y
+2
+y
+3
+NULL
+4
+w
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+3
+NULL
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+1
+x
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+1
+x
+1
+x
+1
+x
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+1
+x
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+1
+x
+1
+x
+1
+x
+2
+y
+2
+y
+2
+y
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+1
+x
+2
+y
+3
+NULL
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+1
+x
+1
+x
+1
+x
+2
+y
+2
+y
+2
+y
+3
+NULL
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+3
+NULL
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+1
+x
+2
+y
+3
+NULL
+4
+w
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+1
+x
+1
+x
+1
+x
+2
+y
+2
+y
+2
+y
+3
+NULL
+4
+w
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+3
+NULL
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+1
+x
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+1
+x
+1
+x
+1
+x
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+1
+x
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+1
+x
+1
+x
+1
+x
+2
+y
+2
+y
+2
+y
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+1
+x
+2
+y
+3
+NULL
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+1
+x
+1
+x
+1
+x
+2
+y
+2
+y
+2
+y
+3
+NULL
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+3
+NULL
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+1
+x
+2
+y
+3
+NULL
+4
+w
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+1
+x
+1
+x
+1
+x
+2
+y
+2
+y
+2
+y
+3
+NULL
+4
+w
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+3
+NULL
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+1
+x
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+1
+x
+1
+x
+1
+x
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+1
+x
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+1
+x
+1
+x
+1
+x
+2
+y
+2
+y
+2
+y
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+1
+x
+2
+y
+3
+NULL
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+1
+x
+1
+x
+1
+x
+2
+y
+2
+y
+2
+y
+3
+NULL
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+3
+NULL
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+1
+x
+2
+y
+3
+NULL
+4
+w
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+1
+x
+1
+x
+1
+x
+2
+y
+2
+y
+2
+y
+3
+NULL
+4
+w
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+3
+NULL
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+1
+x
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+1
+x
+1
+x
+1
+x
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+1
+x
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+1
+x
+1
+x
+1
+x
+2
+y
+2
+y
+2
+y
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+1
+x
+2
+y
+3
+NULL
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+1
+x
+1
+x
+1
+x
+2
+y
+2
+y
+2
+y
+3
+NULL
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+3
+NULL
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+1
+x
+2
+y
+3
+NULL
+4
+w
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+1
+x
+1
+x
+1
+x
+2
+y
+2
+y
+2
+y
+3
+NULL
+4
+w
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+3
+NULL
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 0 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 0
+----
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+1
+x
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+1
+x
+1
+x
+1
+x
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+1
+x
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 1 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 1
+----
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+1
+x
+1
+x
+1
+x
+2
+y
+2
+y
+2
+y
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 2 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 2
+----
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+1
+x
+2
+y
+3
+NULL
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+1
+x
+1
+x
+1
+x
+2
+y
+2
+y
+2
+y
+3
+NULL
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 3 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 3
+----
+3
+NULL
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 UNION SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+1
+x
+2
+y
+3
+NULL
+4
+w
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 UNION ALL SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+1
+x
+1
+x
+1
+x
+2
+y
+2
+y
+2
+y
+3
+NULL
+4
+w
+NULL
+NULL
+NULL
+NULL
+NULL
+z
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 INTERSECT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+1
+x
+2
+y
+NULL
+NULL
+NULL
+z
+
+query IT rowsort
+SELECT a, b FROM s1 WHERE COALESCE(a, 0) <= 4 EXCEPT SELECT a, b FROM s2 WHERE COALESCE(a, 0) <= 4
+----
+3
+NULL
