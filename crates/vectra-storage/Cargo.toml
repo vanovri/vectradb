@@ -1,0 +1,13 @@
+[package]
+name = "vectra-storage"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+vectra-types = { path = "../vectra-types" }
+vectra-expr = { path = "../vectra-expr" }
+crc32c.workspace = true
+parking_lot.workspace = true
+serde.workspace = true
+serde_json.workspace = true
