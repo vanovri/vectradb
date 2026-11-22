@@ -218,13 +218,15 @@ pub fn unnest_plan(plan: LogicalPlan, col_gen: &mut ColIdGen) -> Result<LogicalP
     }
 }
 
-/// Builds `D = Distinct(Project(clone_fresh(left), active_corr))` returning `(D, orig_corr_id -> domain_col)`.
+/// Builds `D = Distinct(Project(clone_fresh(minimized_left), active_corr))` returning `(D, orig_corr_id -> domain_col)`.
 fn build_domain_plan(
     left: &LogicalPlan,
     active_corr: &[BoundCol],
     col_gen: &mut ColIdGen,
 ) -> (LogicalPlan, HashMap<ColId, BoundCol>) {
-    let (cloned_left, id_map) = clone_plan_fresh(left, col_gen);
+    let needed_ids: BTreeSet<ColId> = active_corr.iter().map(|c| c.id).collect();
+    let minimal_left = minimize_domain_source(left, &needed_ids);
+    let (cloned_left, id_map) = clone_plan_fresh(minimal_left, col_gen);
     let mut proj_exprs = Vec::with_capacity(active_corr.len());
     let mut domain_cols = Vec::with_capacity(active_corr.len());
     let mut corr_to_domain = HashMap::with_capacity(active_corr.len());
@@ -254,6 +256,33 @@ fn build_domain_plan(
         on_cols: domain_cols,
     };
     (distinct, corr_to_domain)
+}
+
+/// Prunes unreferenced CrossJoin siblings when constructing outer domain `D`
+/// (Neumann & Kemper BTW 2015 Section 4 domain minimization).
+fn minimize_domain_source<'a>(
+    plan: &'a LogicalPlan,
+    needed_ids: &BTreeSet<ColId>,
+) -> &'a LogicalPlan {
+    match plan {
+        LogicalPlan::Join {
+            left,
+            right,
+            join_type: JoinType::Cross,
+            condition: None,
+        } => {
+            let l_ids = left.output_col_ids();
+            let r_ids = right.output_col_ids();
+            if needed_ids.is_subset(&l_ids) {
+                minimize_domain_source(left, needed_ids)
+            } else if needed_ids.is_subset(&r_ids) {
+                minimize_domain_source(right, needed_ids)
+            } else {
+                plan
+            }
+        }
+        _ => plan,
+    }
 }
 
 /// Neumann-Kemper recursive pushdown of domain `D` into `node`.

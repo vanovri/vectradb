@@ -1,0 +1,14 @@
+[package]
+name = "vectra-optimizer"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+vectra-types = { path = "../vectra-types" }
+vectra-expr = { path = "../vectra-expr" }
+vectra-storage = { path = "../vectra-storage" }
+vectra-sql = { path = "../vectra-sql" }
+parking_lot.workspace = true
+serde.workspace = true
+serde_json.workspace = true

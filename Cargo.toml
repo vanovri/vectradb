@@ -5,6 +5,7 @@ members = [
     "crates/vectra-expr",
     "crates/vectra-storage",
     "crates/vectra-sql",
+    "crates/vectra-optimizer",
 ]
 
 [workspace.package]

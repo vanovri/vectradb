@@ -745,6 +745,8 @@ impl<'a> Binder<'a> {
         };
 
         // 2. WHERE clause (aggregates strictly forbidden!)
+        // Bind non-subquery conjuncts BEFORE subquery conjuncts so DependentJoin domains
+        // inherit all join predicates and table filters (preventing unjoined CrossJoins in D!).
         if let Some(where_expr) = &select.selection {
             if expr_contains_aggregate(where_expr) {
                 return Err(VectraError::BindError(
@@ -756,12 +758,51 @@ impl<'a> Binder<'a> {
                     "window functions are not allowed in WHERE clause".into(),
                 ));
             }
-            let pred = self.bind_expr(where_expr, &from_scope, &mut plan, false)?;
-            let pred = coerce_expr(pred, LogicalType::Boolean);
-            plan = LogicalPlan::Filter {
-                input: Box::new(plan),
-                predicate: pred,
-            };
+            let mut ast_conjuncts = Vec::new();
+            split_ast_and(where_expr, &mut ast_conjuncts);
+            let mut plain_preds = Vec::new();
+            let mut subq_preds = Vec::new();
+            for c in ast_conjuncts {
+                if expr_contains_subquery(c) {
+                    subq_preds.push(c);
+                } else {
+                    plain_preds.push(c);
+                }
+            }
+            if !plain_preds.is_empty() {
+                let mut acc: Option<LogicalExpr> = None;
+                for p in plain_preds {
+                    let b = coerce_expr(
+                        self.bind_expr(p, &from_scope, &mut plan, false)?,
+                        LogicalType::Boolean,
+                    );
+                    acc = Some(match acc {
+                        None => b,
+                        Some(prev) => LogicalExpr::BinaryOp {
+                            op: BinaryOperator::And,
+                            left: Box::new(prev),
+                            right: Box::new(b),
+                            return_type: LogicalType::Boolean,
+                        },
+                    });
+                }
+                if let Some(pred) = acc {
+                    plan = LogicalPlan::Filter {
+                        input: Box::new(plan),
+                        predicate: pred,
+                    };
+                }
+            }
+            for sp in subq_preds {
+                let pred = coerce_expr(
+                    self.bind_expr(sp, &from_scope, &mut plan, false)?,
+                    LogicalType::Boolean,
+                );
+                plan = LogicalPlan::Filter {
+                    input: Box::new(plan),
+                    predicate: pred,
+                };
+            }
         }
 
         // Expand wildcards in projection early to analyze aggregates & windows.
@@ -3557,6 +3598,21 @@ fn expr_contains_window(expr: &Expr) -> bool {
         | Expr::Cast { expr, .. }
         | Expr::Nested(expr) => expr_contains_window(expr),
         _ => false,
+    }
+}
+
+fn split_ast_and<'a>(expr: &'a Expr, out: &mut Vec<&'a Expr>) {
+    match expr {
+        Expr::BinaryOp {
+            left,
+            op: AstBinaryOp::And,
+            right,
+        } => {
+            split_ast_and(left, out);
+            split_ast_and(right, out);
+        }
+        Expr::Nested(inner) => split_ast_and(inner, out),
+        other => out.push(other),
     }
 }
 
