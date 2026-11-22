@@ -9,6 +9,7 @@ members = [
     "crates/vectra-exec",
     "crates/vectra-oracle",
     "crates/vectra-tpch",
+    "crates/vectra-server",
 ]
 
 [workspace.package]

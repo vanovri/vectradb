@@ -1,0 +1,28 @@
+[package]
+name = "vectra-server"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+
+[dependencies]
+vectra-types = { path = "../vectra-types" }
+vectra-storage = { path = "../vectra-storage" }
+vectra-sql = { path = "../vectra-sql" }
+vectra-optimizer = { path = "../vectra-optimizer" }
+vectra-exec = { path = "../vectra-exec" }
+vectra-tpch = { path = "../vectra-tpch", default-features = false }
+parking_lot = { workspace = true }
+tokio = { workspace = true }
+clap = { workspace = true }
+rustyline = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+[[bin]]
+name = "vectra-server"
+path = "src/bin/vectra-server.rs"
+
+[[bin]]
+name = "vectra-cli"
+path = "src/bin/vectra-cli.rs"
