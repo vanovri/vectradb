@@ -1,0 +1,11 @@
+[package]
+name = "vectra-sql"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+vectra-types = { path = "../vectra-types" }
+vectra-expr = { path = "../vectra-expr" }
+vectra-storage = { path = "../vectra-storage" }
+serde.workspace = true
