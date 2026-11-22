@@ -2,6 +2,7 @@
 resolver = "2"
 members = [
     "crates/vectra-types",
+    "crates/vectra-expr",
 ]
 
 [workspace.package]

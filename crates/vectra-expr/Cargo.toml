@@ -1,0 +1,10 @@
+[package]
+name = "vectra-expr"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+vectra-types = { path = "../vectra-types" }
+memchr.workspace = true
+serde.workspace = true
