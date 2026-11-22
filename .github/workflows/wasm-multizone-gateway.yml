@@ -1,0 +1,101 @@
+name: WASM Multi-Zone Gateway (VectraDB)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "crates/vectra-wasm/**"
+      - "studio/src/wasm/**"
+      - "studio/public/telemetry/summary.json"
+      - "docs/benchmarks/tpch_results.md"
+      - "PROGRESS.md"
+      - "scripts/emit_telemetry_summary.mjs"
+      - "Makefile"
+      - ".github/workflows/wasm-multizone-gateway.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gateway-vectradb-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify-and-dispatch-zone:
+    name: Verify VectraDB Live Gate & Notify Gateway
+    runs-on: ubuntu-latest
+    env:
+      ZONE_SLUG: vectradb
+      WASM_PATH: studio/src/wasm/vectra_wasm_bg.wasm
+      GLUE_PATH: studio/src/wasm/vectra_wasm.js
+      SUMMARY_PATH: studio/public/telemetry/summary.json
+
+    steps:
+      - name: Checkout vectradb
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Verify strict telemetry contract & negative test
+        run: |
+          set -euo pipefail
+          node scripts/emit_telemetry_summary.mjs --verify --strict
+
+          mkdir -p .telemetry-logs
+          rm -f .telemetry-logs/neg.json
+          if node scripts/emit_telemetry_summary.mjs \
+            --report Cargo.toml \
+            --out .telemetry-logs/neg.json \
+            --strict; then
+            echo "::error::Negative strict test unexpectedly exited 0"
+            exit 1
+          fi
+          test ! -e .telemetry-logs/neg.json
+
+      - name: Extract verified zone metadata (zero hardcoded numbers)
+        id: meta
+        run: |
+          set -euo pipefail
+          test -f "$WASM_PATH"
+          test -f "$GLUE_PATH"
+          test -f "$SUMMARY_PATH"
+
+          WASM_SHA=$(sha256sum "$WASM_PATH" | awk '{print $1}')
+          WASM_BYTES=$(stat -c%s "$WASM_PATH")
+          STATUS=$(node -e "const s=JSON.parse(require('fs').readFileSync(process.env.SUMMARY_PATH,'utf8')); if(s.slug!=='vectradb'||s.status!=='VERIFIED_LIVE') process.exit(1); console.log(s.status);")
+
+          {
+            echo "wasm_sha256=${WASM_SHA}"
+            echo "wasm_bytes=${WASM_BYTES}"
+            echo "status=${STATUS}"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Upload VectraDB zone bundle artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: zone-bundle-vectradb-${{ github.sha }}
+          retention-days: 14
+          path: |
+            studio/src/wasm/vectra_wasm_bg.wasm
+            studio/src/wasm/vectra_wasm.js
+            studio/public/telemetry/summary.json
+
+      - name: Dispatch zone-artifact-ready to wasm-multizone-gateway
+        if: ${{ secrets.GATEWAY_DISPATCH_TOKEN != '' }}
+        env:
+          GH_TOKEN: ${{ secrets.GATEWAY_DISPATCH_TOKEN }}
+          GATEWAY_REPO: ${{ vars.GATEWAY_REPO || format('{0}/wasm-multizone-gateway', github.repository_owner) }}
+        run: |
+          gh api "repos/${GATEWAY_REPO}/dispatches" \
+            -f event_type="zone-artifact-ready" \
+            -f "client_payload[slug]=${ZONE_SLUG}" \
+            -f "client_payload[status]=${{ steps.meta.outputs.status }}" \
+            -f "client_payload[source_repo]=${GITHUB_REPOSITORY}" \
+            -f "client_payload[commit_sha]=${GITHUB_SHA}" \
+            -f "client_payload[wasm_bytes]=${{ steps.meta.outputs.wasm_bytes }}" \
+            -f "client_payload[wasm_sha256]=${{ steps.meta.outputs.wasm_sha256 }}" \
+            -f "client_payload[run_id]=${GITHUB_RUN_ID}"
