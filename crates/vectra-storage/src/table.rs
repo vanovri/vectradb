@@ -495,8 +495,8 @@ impl Table {
                 rg_row_base += sb_rows;
 
                 let mut cols: Vec<FlatVector> = Vec::with_capacity(self.schema.len());
-                for c in 0..self.schema.len() {
-                    cols.push(decode_page(&sb.pages[c].raw_bytes, pool)?);
+                for page in sb.pages.iter().take(self.schema.len()) {
+                    cols.push(decode_page(&page.raw_bytes, pool)?);
                 }
 
                 let mut row_vals = Vec::with_capacity(self.schema.len());

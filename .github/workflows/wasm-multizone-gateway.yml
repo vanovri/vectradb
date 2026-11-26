@@ -85,11 +85,14 @@ jobs:
             studio/public/telemetry/summary.json
 
       - name: Dispatch zone-artifact-ready to wasm-multizone-gateway
-        if: ${{ secrets.GATEWAY_DISPATCH_TOKEN != '' }}
         env:
           GH_TOKEN: ${{ secrets.GATEWAY_DISPATCH_TOKEN }}
           GATEWAY_REPO: ${{ vars.GATEWAY_REPO || format('{0}/wasm-multizone-gateway', github.repository_owner) }}
         run: |
+          if [ -z "${GH_TOKEN}" ]; then
+            echo "GATEWAY_DISPATCH_TOKEN not configured; skipping gateway dispatch."
+            exit 0
+          fi
           gh api "repos/${GATEWAY_REPO}/dispatches" \
             -f event_type="zone-artifact-ready" \
             -f "client_payload[slug]=${ZONE_SLUG}" \
