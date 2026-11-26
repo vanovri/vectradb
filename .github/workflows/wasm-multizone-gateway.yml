@@ -85,6 +85,7 @@ jobs:
             studio/public/telemetry/summary.json
 
       - name: Dispatch zone-artifact-ready to wasm-multizone-gateway
+        continue-on-error: true
         env:
           GH_TOKEN: ${{ secrets.GATEWAY_DISPATCH_TOKEN }}
           GATEWAY_REPO: ${{ vars.GATEWAY_REPO || format('{0}/wasm-multizone-gateway', github.repository_owner) }}
